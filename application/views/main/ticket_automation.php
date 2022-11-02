@@ -1,5 +1,5 @@
 <style>
-    #table_support td:nth-child(8) {
+    #table_support td:nth-child(7) {
         text-align: center;
     }
 

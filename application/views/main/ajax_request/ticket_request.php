@@ -1,6 +1,13 @@
 <script>
     $(document).ready(function() {
         $('#table_support').DataTable({
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
+                if (aData[6] == 'Pending') {
+                    $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
+                } else {
+                    $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
+                }
+            },
             language: {
                 search: '',
                 searchPlaceholder: "Search Here...",
@@ -67,4 +74,6 @@
             }
         });
     });
+
+    
 </script>

@@ -120,6 +120,15 @@ class SolutionManagement extends CI_Controller
         }
         //End of PDF upload
 
+        $add_notif = array(
+            'user_id' => 'All',
+            'notif_title' => 'Added new solution',
+            'notif_message' => 'created a new solutions '. $generatedID,
+            'added_by' => $_SESSION['loggedIn']['name'],
+            'added_by_userID' => $_SESSION['loggedIn']['id'],
+            'date_added' => $date_created,
+        );
+
         $insert_solution = array(
             'solutionReference' => $generatedID,
             'solutionDetails' => $this->input->post('solutionDetails'),
@@ -135,11 +144,13 @@ class SolutionManagement extends CI_Controller
             'dateAdded' => $date_created,
         );
 
-        if ($this->db->insert('solutions', $insert_solution))
+        if ($this->db->insert('solutions', $insert_solution)) {
+            $this->db->insert('notification', $add_notif);
             $message = '';
-        else
+        } else {
             $message = 'Error';
-
+        }
+            
         $output = array(
             'message' => $message,
         );
@@ -404,6 +415,15 @@ class SolutionManagement extends CI_Controller
         $id = $new[0];
         $person = $new[1];
 
+        $add_notif = array(
+            'user_id' => $id,
+            'notif_title' => 'Ticket Automation',
+            'notif_message' => 'added to your ticket list ' . $generatedTicket,
+            'added_by' => $_SESSION['loggedIn']['name'],
+            'added_by_userID' => $_SESSION['loggedIn']['id'],
+            'date_added' => $date_created,
+        );
+
         $insert_ticket = array(
             'ticket_no' => $generatedTicket,
             'concern_department' => $this->input->post('concernDepartment'),
@@ -419,10 +439,12 @@ class SolutionManagement extends CI_Controller
             'expected_accomplish' => $this->input->post('date_accomplish'),
         );
 
-        if ($this->db->insert('ticketing', $insert_ticket))
+        if ($this->db->insert('ticketing', $insert_ticket)) {
+            $this->db->insert('notification', $add_notif);
             $message = '';
-        else
+        } else {
             $message = 'Error';
+        }
 
         $output = array(
             'message' => $message,
@@ -448,11 +470,6 @@ class SolutionManagement extends CI_Controller
             $row[] = $concern->expected_accomplish;
             $row[] = $concern->concern_status;
 
-            // if (isset($res->photo) && $res->photo != '')
-            //     $row[] = '<img class="box" src="' . base_url('uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
-            // else
-            //     $row[] = '<img class="box" src="' . base_url('assets/img/avatar.jpg') . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
-
             $data[] = $row;
         }
         $output = array(
@@ -462,5 +479,99 @@ class SolutionManagement extends CI_Controller
             "data" => $data
         );
         echo json_encode($output);
+    }
+
+    public function getNotif()
+    {
+        function calculate_time_span($date)
+        {
+            $seconds  = strtotime(date('Y-m-d H:i:s')) - strtotime($date);
+
+            $months = floor($seconds / (3600 * 24 * 30));
+            $day = floor($seconds / (3600 * 24));
+            $hours = floor($seconds / 3600);
+            $mins = floor(($seconds - ($hours * 3600)) / 60);
+            $secs = floor($seconds % 60);
+
+            if ($seconds < 60) {
+                $number = $secs;
+                $time = $secs . " second";
+            } else if ($seconds < 60 * 60) {
+                $number = $mins;
+                $time = $mins . " minute";
+            } else if ($seconds < 24 * 60 * 60) {
+                $number = $hours;
+                $time = $hours . " hour";
+            } else if ($seconds < 24 * 60 * 60) {
+                $number = $day;
+                $time = $day . " day";
+            } else {
+                $number = $months;
+                $time = $months . " month";
+            }
+
+            $time .= $number  > 1 ? "s" : "";
+
+            $ret = $time . " " . "ago";
+
+            return $ret;
+        }
+
+        $output = '';
+        $userID = $_SESSION['loggedIn']['id'];
+        if (isset($_POST['view'])) {
+            if ($_POST["view"] != '') {
+                $this->db->where('user_id', $_SESSION['loggedIn']['id']);
+                $this->db->where('seen_status', '0');
+                $this->db->update('notification', array('seen_status' => '1'));
+            }
+
+            $query = $this->db->query("
+                        SELECT *
+                        FROM notification WHERE user_id='" . $userID . "' AND seen_status='0' OR user_id='All'
+                        ORDER BY notif_id DESC LIMIT 5
+                        ");
+
+            if ($query->num_rows() > 0) {
+                foreach ($query->result() as $row) {
+
+                    $this->db->where('id', $row->added_by_userID);
+                    $query = $this->db->get('users');
+                    $res = $query->row();
+
+                    $output .= '
+                    
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <img class="box me-2" src="' . base_url('uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">
+                            <div>
+                                <h4>' . $row->added_by . '</h4>
+                                <p>' . $row->notif_message . '</p>
+                                <p>' . calculate_time_span($row->date_added) . '</p>
+                            </div>
+                        </li>
+                    ';
+                }
+            } else {
+                $output .= '<li class="dropdown-header">
+                                No Notification Found
+                            </li>';
+            }
+
+            $status_query  = $this->db->query("
+                        SELECT *
+                        FROM notification WHERE user_id='" . $userID . "' AND seen_status='0' OR user_id='All'
+                        ");
+            $count = $status_query->num_rows();
+
+            $data = array(
+                'notification' => $output,
+                'unseen_notification'  => $count
+            );
+            echo json_encode($data);
+        } // end of first if
     }
 }

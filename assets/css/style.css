@@ -612,6 +612,7 @@ input:checked + .slider:before {
   align-items: center;
   padding: 15px 10px;
   transition: 0.3s;
+  width: 350px;
 }
 
 .header-nav .notifications .notification-item i {

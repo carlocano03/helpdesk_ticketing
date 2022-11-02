@@ -92,15 +92,19 @@
 
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
-                        <span class="badge bg-warning badge-number">4</span>
+                        <span class="badge bg-danger badge-number count"></span>
                     </a><!-- End Notification Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                        <li class="dropdown-header">
-                            You have 4 new notifications
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                        <li>
+                        <div class="hide-notif">
+                            <li class="dropdown-header">
+                                You have <span class="count-notif"></span> new notifications
+                            </li>
+                        </div>
+                        <div id="notifications">
+
+                        </div>
+                        <!-- <li>
                             <hr class="dropdown-divider">
                         </li>
 
@@ -111,53 +115,7 @@
                                 <p>Sample description 1</p>
                                 <p>30 min. ago</p>
                             </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-x-circle text-danger"></i>
-                            <div>
-                                <h4>Sample data 2</h4>
-                                <p>Sample description 2</p>
-                                <p>1 hr. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-check-circle text-success"></i>
-                            <div>
-                                <h4>Sample data 3</h4>
-                                <p>Sample description 3</p>
-                                <p>2 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-info-circle text-primary"></i>
-                            <div>
-                                <h4>Sample data 4</h4>
-                                <p>Sample description 4</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li class="dropdown-footer">
-                            <a href="#">Show all notifications</a>
-                        </li>
+                        </li> -->
 
                     </ul><!-- End Notification Dropdown Items -->
 
@@ -313,7 +271,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="t<?= base_url('solutionmanagement/ticketing') ?>">
+                            <a href="<?= base_url('solutionmanagement/ticketing') ?>">
                                 <i class="bi bi-circle"></i><span>Ticket Automation</span>
                             </a>
                         </li>
