@@ -66,7 +66,7 @@
                     <table class="table table-bordered table-hover table-striped" id="table_solution" width="100%">
                         <thead>
                             <tr>
-                                <th class="text-center" width="13%">Action</th>
+                                <th class="text-center">Action</th>
                                 <th>Reference</th>
                                 <th>Title</th>
                                 <th>Descriptions</th>

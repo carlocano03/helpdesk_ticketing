@@ -120,14 +120,42 @@ class SolutionManagement extends CI_Controller
         }
         //End of PDF upload
 
-        $add_notif = array(
-            'user_id' => 'All',
-            'notif_title' => 'Added new solution',
-            'notif_message' => 'created a new solutions '. $generatedID,
-            'added_by' => $_SESSION['loggedIn']['name'],
-            'added_by_userID' => $_SESSION['loggedIn']['id'],
-            'date_added' => $date_created,
-        );
+        $status_query  = $this->db->query("
+                         SELECT * FROM tomsworld.users
+                         WHERE users.is_active='Active'
+        ");
+        $count = $status_query->num_rows();
+        foreach ($status_query->result() as $row) {
+            // for ($i = 0; $i < $count; $i++) {
+            //     $data[] = array(
+            //         'user_id' => $row->id,
+            //         'notif_title' => 'Added new solution',
+            //         'notif_message' => 'created a new solutions ' . $generatedID,
+            //         'added_by' => $_SESSION['loggedIn']['name'],
+            //         'added_by_userID' => $_SESSION['loggedIn']['id'],
+            //         'date_added' => $date_created,
+            //     );
+            // }
+            $add_notif[] = array(
+                'user_id' => $row->id,
+                'notif_title' => 'Added new solution',
+                'notif_message' => 'created a new solutions ' . $generatedID,
+                'added_by' => $_SESSION['loggedIn']['name'],
+                'added_by_userID' => $_SESSION['loggedIn']['id'],
+                'date_added' => $date_created,
+            );
+        }
+
+
+        // $add_notif = array(
+        //     'user_id' => $row->user_id,
+        //     'notif_title' => 'Added new solution',
+        //     'notif_message' => 'created a new solutions ' . $generatedID,
+        //     'added_by' => $_SESSION['loggedIn']['name'],
+        //     'added_by_userID' => $_SESSION['loggedIn']['id'],
+        //     'date_added' => $date_created,
+        // );
+
 
         $insert_solution = array(
             'solutionReference' => $generatedID,
@@ -145,12 +173,12 @@ class SolutionManagement extends CI_Controller
         );
 
         if ($this->db->insert('solutions', $insert_solution)) {
-            $this->db->insert('notification', $add_notif);
+            $this->db->insert_batch('tomsworld.notification', $add_notif);
             $message = '';
         } else {
             $message = 'Error';
         }
-            
+
         $output = array(
             'message' => $message,
         );
@@ -483,62 +511,30 @@ class SolutionManagement extends CI_Controller
 
     public function getNotif()
     {
-        function calculate_time_span($date)
-        {
-            $seconds  = strtotime(date('Y-m-d H:i:s')) - strtotime($date);
-
-            $months = floor($seconds / (3600 * 24 * 30));
-            $day = floor($seconds / (3600 * 24));
-            $hours = floor($seconds / 3600);
-            $mins = floor(($seconds - ($hours * 3600)) / 60);
-            $secs = floor($seconds % 60);
-
-            if ($seconds < 60) {
-                $number = $secs;
-                $time = $secs . " second";
-            } else if ($seconds < 60 * 60) {
-                $number = $mins;
-                $time = $mins . " minute";
-            } else if ($seconds < 24 * 60 * 60) {
-                $number = $hours;
-                $time = $hours . " hour";
-            } else if ($seconds < 24 * 60 * 60) {
-                $number = $day;
-                $time = $day . " day";
-            } else {
-                $number = $months;
-                $time = $months . " month";
-            }
-
-            $time .= $number  > 1 ? "s" : "";
-
-            $ret = $time . " " . "ago";
-
-            return $ret;
-        }
 
         $output = '';
         $userID = $_SESSION['loggedIn']['id'];
         if (isset($_POST['view'])) {
             if ($_POST["view"] != '') {
-                $this->db->where('user_id', $_SESSION['loggedIn']['id']);
-                $this->db->where('seen_status', '0');
-                $this->db->update('notification', array('seen_status' => '1'));
+                $this->db->where('notification.user_id', $_SESSION['loggedIn']['id']);
+                $this->db->where('notification.seen_status', '0');
+                $this->db->update('tomsworld.notification', array('seen_status' => '1'));
             }
 
             $query = $this->db->query("
                         SELECT *
-                        FROM notification WHERE user_id='" . $userID . "' AND seen_status='0' OR user_id='All'
-                        ORDER BY notif_id DESC LIMIT 5
+                        FROM tomsworld.notification WHERE notification.user_id='" . $userID . "'
+                        AND notification.seen_status='0' OR notification.user_id='All'
+                        ORDER BY notification.notif_id DESC LIMIT 5
                         ");
 
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $row) {
 
-                    $this->db->where('id', $row->added_by_userID);
-                    $query = $this->db->get('users');
+                    $this->db->where('users.id', $row->added_by_userID);
+                    $query = $this->db->get('tomsworld.users');
                     $res = $query->row();
-
+                    $date_created = date('D M j, Y g:i a', strtotime($row->date_added));
                     $output .= '
                     
                         <li>
@@ -550,7 +546,7 @@ class SolutionManagement extends CI_Controller
                             <div>
                                 <h4>' . $row->added_by . '</h4>
                                 <p>' . $row->notif_message . '</p>
-                                <p>' . calculate_time_span($row->date_added) . '</p>
+                                <p>' . $date_created . '</p>
                             </div>
                         </li>
                     ';
@@ -563,7 +559,8 @@ class SolutionManagement extends CI_Controller
 
             $status_query  = $this->db->query("
                         SELECT *
-                        FROM notification WHERE user_id='" . $userID . "' AND seen_status='0' OR user_id='All'
+                        FROM tomsworld.notification WHERE notification.user_id='" . $userID . "' 
+                        AND notification.seen_status='0' OR notification.user_id='All'
                         ");
             $count = $status_query->num_rows();
 

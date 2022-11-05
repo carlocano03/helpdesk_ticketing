@@ -63,9 +63,9 @@
 
         load_unseen_notification();
 
-        setInterval(function() {
-            load_unseen_notification();;
-        }, 1000);
+        // setInterval(function() {
+        //     load_unseen_notification();;
+        // }, 1000);
     });
 </script>
 

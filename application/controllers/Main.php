@@ -18,7 +18,7 @@ class Main extends CI_Controller
         $this->load->model('main_model');
         $this->load->database();
         if (!isset($_SESSION['loggedIn'])) {
-            redirect('user');
+            redirect('../toms-world');
         }
     }
 

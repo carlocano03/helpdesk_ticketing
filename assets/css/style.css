@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Nunito", sans-serif;
   background: #f6f9ff;
   color: #444444;
 }
@@ -707,7 +707,7 @@ input:checked + .slider:before {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 270px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -749,7 +749,7 @@ input:checked + .slider:before {
 
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 260px;
   }
 }
 

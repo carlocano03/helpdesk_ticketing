@@ -104,18 +104,6 @@
                         <div id="notifications">
 
                         </div>
-                        <!-- <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="notification-item">
-                            <i class="bi bi-exclamation-circle text-warning"></i>
-                            <div>
-                                <h4>Sample data 1</h4>
-                                <p>Sample description 1</p>
-                                <p>30 min. ago</p>
-                            </div>
-                        </li> -->
 
                     </ul><!-- End Notification Dropdown Items -->
 
@@ -125,9 +113,9 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <?php if ($_SESSION['loggedIn']['photo'] != '') : ?>
-                            <img src="<?= base_url() ?>uploaded_file/profile/<?= $_SESSION['loggedIn']['photo']; ?>" class="rounded-circle" alt="Pofile-Picture"><br>
+                            <img src="<?= base_url('../toms-world/') ?>uploaded_file/profile/<?= $_SESSION['loggedIn']['photo']; ?>" class="rounded-circle" alt="Pofile-Picture"><br>
                         <?php else : ?>
-                            <img src="<?= base_url() ?>assets/img/avatar.jpg" alt="Profile" class="rounded-circle"><br>
+                            <img src="<?= base_url('../toms-world/') ?>assets/img/avatar.jpg" alt="Profile" class="rounded-circle"><br>
                         <?php endif ?>
                         <span class="d-none d-md-block dropdown-toggle ps-2"><?= $_SESSION['loggedIn']['name']; ?></span>
                     </a><!-- End Profile Iamge Icon -->
