@@ -299,12 +299,6 @@
                 </a>
             </li><!-- End Ticketing Page Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link <?= ($this->uri->segment(2) == 'accountManagement' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/accountManagement') ?>">
-                    <i class="bi bi-person"></i>
-                    <span>Account Management</span>
-                </a>
-            </li><!-- End account Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
