@@ -30,7 +30,8 @@ class Ticket extends CI_Controller
             $no++;
             $row = array();
 
-            $row[] = $ticket->ticket_no;
+            $row[] = '<div>' . $ticket->ticket_no . '</div>
+                      <small class="text-muted"><b>Request by: </b>' . $ticket->request_by . '</small>';
 
             if ($ticket->concern_status == 'Done') {
                 $dateStart = new DateTime($ticket->service_start);
@@ -41,6 +42,9 @@ class Ticket extends CI_Controller
             } else {
                 $row[] = date('D, M j, Y g:i a', strtotime($ticket->date_added));
             }
+
+            $row[] = '<b>' . $ticket->concern . '</b>
+            <div>' . $ticket->concern_remarks . '</div>';
 
             if ($ticket->concern_level == 'Critical')
                 $row[] = '<span class="badge bg-danger">' . $ticket->concern_level . '</span>';
@@ -59,9 +63,7 @@ class Ticket extends CI_Controller
                             <option value="Ongoing">Ongoing</option>
                             <option value="Cancel">Cancel</option>';
 
-            $row[] = '<b>' . $ticket->concern . '</b>
-                      <div>' . $ticket->concern_remarks . '</div>';
-            $row[] = $ticket->request_by;
+            // $row[] = $ticket->request_by;
 
             if ($ticket->concern_status == 'Ongoing')
                 $row[] = '<button class="btn btn-success btn-sm done_ticket" id="' . $ticket->ticket_id . '" data-request="' . $ticket->request_byID . '" data-ticket="' . $ticket->ticket_no . '"><i class="bi bi-check2-square me-2"></i>Done</button>';

@@ -1,7 +1,7 @@
 <style>
-    #table_ticket td:nth-child(3),
     #table_ticket td:nth-child(4),
-    #table_ticket td:nth-child(7) {
+    #table_ticket td:nth-child(5),
+    #table_ticket td:nth-child(6) {
         text-align: center;
     }
 </style>
@@ -41,10 +41,10 @@
                                             <tr>
                                                 <th>Ticket No</th>
                                                 <th>Date Request</th>
+                                                <th>Concern</th>
                                                 <th class="text-center">Level</th>
                                                 <th class="text-center">Status</th>
-                                                <th>Concern</th>
-                                                <th>Request By</th>
+                                                <!-- <th>Request By</th> -->
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
