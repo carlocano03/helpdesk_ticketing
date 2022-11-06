@@ -1,31 +1,37 @@
 <script>
     $(document).ready(function() {
-        $('#table_support').DataTable({
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
-                if (aData[6] == 'Pending') {
-                    $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
-                } else {
-                    $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
-                }
-            },
-            language: {
-                search: '',
-                searchPlaceholder: "Search Here...",
-                paginate: {
-                    next: '<i class="bi bi-chevron-right"></i>',
-                    previous: '<i class="bi bi-chevron-left"></i>'
-                }
-            },
-            "ordering": false,
-            "serverSide": true,
-            "processing": true,
-            "pageLength": 25,
-            "responsive": true,
-            "ajax": {
-                "url": "<?= base_url('solutionmanagement/get_ticket') ?>",
-                "type": "POST"
-            },
-        });
+        tblSupport();
+        function tblSupport() {
+            $('#table_support').DataTable({
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
+                    if (aData[6] == 'Pending') {
+                        $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
+                    } else {
+                        $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
+                    }
+                },
+                language: {
+                    search: '',
+                    searchPlaceholder: "Search Here...",
+                    paginate: {
+                        next: '<i class="bi bi-chevron-right"></i>',
+                        previous: '<i class="bi bi-chevron-left"></i>'
+                    }
+                },
+                "ordering": false,
+                "serverSide": true,
+                "processing": true,
+                "pageLength": 25,
+                "bDestroy": true,
+                "ajax": {
+                    "url": "<?= base_url('solutionmanagement/get_ticket') ?>",
+                    "type": "POST"
+                },
+            });
+        }
+        setInterval(function() {
+            tblSupport();
+        },5000);
     });
 
     $(document).on('change', '#concernDepartment', function() {
@@ -74,6 +80,4 @@
             }
         });
     });
-
-    
 </script>

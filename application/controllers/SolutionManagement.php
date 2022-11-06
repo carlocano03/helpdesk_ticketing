@@ -43,7 +43,7 @@ class SolutionManagement extends CI_Controller
 
     public function ticketing()
     {
-        $data['department'] = $this->db->group_by('department')->get('users')->result();
+        $data['department'] = $this->db->group_by('department')->get('tomsworld.users')->result();
         $this->load->view('partials/__header');
         $this->load->view('main/ticket_automation', $data);
         $this->load->view('partials/__footer');
@@ -447,7 +447,7 @@ class SolutionManagement extends CI_Controller
         );
 
         if ($this->db->insert('ticketing', $insert_ticket)) {
-            $this->db->insert('notification', $add_notif);
+            $this->db->insert('tomsworld.notification', $add_notif);
             $message = '';
         } else {
             $message = 'Error';
