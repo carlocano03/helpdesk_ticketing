@@ -16,6 +16,7 @@ class Main extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('user_model');
         $this->load->model('main_model');
+        $this->load->model('TicketModel');
         $this->load->database();
         if (!isset($_SESSION['loggedIn'])) {
             redirect('../toms-world');
@@ -26,9 +27,17 @@ class Main extends CI_Controller
 
     public function index()
     {
+        $data['critical'] = $this->TicketModel->getCritical();
+        $data['high'] = $this->TicketModel->getHigh();
+        $data['medium'] = $this->TicketModel->getMedium();
+        $data['low'] = $this->TicketModel->getLow();
+        $data['finish'] = $this->TicketModel->getFinish();
+        $data['ongoing'] = $this->TicketModel->getOngoing();
+        $data['pending'] = $this->TicketModel->getPending();
         $this->load->view('partials/__header');
-        $this->load->view('main/dashboard');
+        $this->load->view('main/dashboard', $data);
         $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticketAutomation_request');
     }
 
     //========================================================================================
@@ -57,6 +66,16 @@ class Main extends CI_Controller
         $this->load->view('partials/__header');
         $this->load->view('main/user_profile', $data);
         $this->load->view('partials/__footer');
+    }
+
+    //========================================================================================
+
+    public function ticketMonitoring()
+    {
+        $this->load->view('partials/__header');
+        $this->load->view('main/ticket_monitoring');
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticketAutomation_request');
     }
 
     //========================================================================================

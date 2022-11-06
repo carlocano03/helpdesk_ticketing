@@ -126,16 +126,6 @@ class SolutionManagement extends CI_Controller
         ");
         $count = $status_query->num_rows();
         foreach ($status_query->result() as $row) {
-            // for ($i = 0; $i < $count; $i++) {
-            //     $data[] = array(
-            //         'user_id' => $row->id,
-            //         'notif_title' => 'Added new solution',
-            //         'notif_message' => 'created a new solutions ' . $generatedID,
-            //         'added_by' => $_SESSION['loggedIn']['name'],
-            //         'added_by_userID' => $_SESSION['loggedIn']['id'],
-            //         'date_added' => $date_created,
-            //     );
-            // }
             $add_notif[] = array(
                 'user_id' => $row->id,
                 'notif_title' => 'Added new solution',
@@ -145,17 +135,6 @@ class SolutionManagement extends CI_Controller
                 'date_added' => $date_created,
             );
         }
-
-
-        // $add_notif = array(
-        //     'user_id' => $row->user_id,
-        //     'notif_title' => 'Added new solution',
-        //     'notif_message' => 'created a new solutions ' . $generatedID,
-        //     'added_by' => $_SESSION['loggedIn']['name'],
-        //     'added_by_userID' => $_SESSION['loggedIn']['id'],
-        //     'date_added' => $date_created,
-        // );
-
 
         $insert_solution = array(
             'solutionReference' => $generatedID,
@@ -207,9 +186,9 @@ class SolutionManagement extends CI_Controller
 
 
             if (isset($res->photo) && $res->photo != '')
-                $row[] = '<img class="box" src="' . base_url('uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
+                $row[] = '<img class="box" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
             else
-                $row[] = '<img class="box" src="' . base_url('assets/img/avatar.jpg') . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
+                $row[] = '<img class="box" src="' . base_url('../toms-world/assets/img/avatar.jpg') . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
 
             $row[] = $solution->dateAdded;
             if ($solution->solutionStatus == 'Posted') {
@@ -535,6 +514,12 @@ class SolutionManagement extends CI_Controller
                     $query = $this->db->get('tomsworld.users');
                     $res = $query->row();
                     $date_created = date('D M j, Y g:i a', strtotime($row->date_added));
+                    if ($userID == $row->added_by_userID) {
+                        $added_by = 'You are';
+                    } else {
+                        $added_by = $row->added_by;
+                    }
+
                     $output .= '
                     
                         <li>
@@ -542,9 +527,9 @@ class SolutionManagement extends CI_Controller
                         </li>
 
                         <li class="notification-item">
-                            <img class="box me-2" src="' . base_url('uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">
+                            <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">
                             <div>
-                                <h4>' . $row->added_by . '</h4>
+                                <h4>' . $added_by . '</h4>
                                 <p>' . $row->notif_message . '</p>
                                 <p>' . $date_created . '</p>
                             </div>

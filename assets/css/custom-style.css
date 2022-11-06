@@ -1,0 +1,41 @@
+.guest .card-body {
+    display: flex;
+    align-items: center;
+}
+
+.card-avatar-primary {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.card .card-text h5 {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: 2px underline #fff;
+    text-underline-offset: 5px;
+}
+
+.card .card-text h4 {
+    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card-avatar-primary i {
+    font-size: 28px !important;
+}
+
+.card-primary {
+    background: #ffd32a;
+}
+
+.concern {
+    border: none;
+    background: transparent;
+    outline: none;
+}

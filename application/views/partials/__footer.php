@@ -21,21 +21,11 @@
 <script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="<?= base_url('assets/js/date-time.js') ?>"></script>
 
 <!-- Template Main JS File -->
 <script src="<?= base_url('assets/js/main.js') ?>"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#table_ticket').DataTable({
-            language: {
-                search: '',
-                searchPlaceholder: "Search Here..."
-            },
-            "ordering": false,
-        });
-    });
-</script>
+<link href="<?= base_url('assets/js/jquery.toast.js') ?>" rel="stylesheet">
 
 <script>
     $(document).ready(function() {
@@ -63,9 +53,9 @@
 
         load_unseen_notification();
 
-        // setInterval(function() {
-        //     load_unseen_notification();;
-        // }, 1000);
+        setInterval(function() {
+            load_unseen_notification();;
+        }, 5000);
     });
 </script>
 

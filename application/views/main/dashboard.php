@@ -1,11 +1,25 @@
+<style>
+    #table_ticket td:nth-child(3),
+    #table_ticket td:nth-child(4),
+    #table_ticket td:nth-child(7) {
+        text-align: center;
+    }
+</style>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
         <h1>Dashboard</h1>
         <nav>
-            <ol class="breadcrumb">
+            <!-- <ol class="breadcrumb">
                 <li class="breadcrumb-item active">Date & Time:</li>
-            </ol>
+            </ol> -->
+            <div class="ms-auto me-5 pe-3">
+                <div class="d-flex align-items-center">
+                    <div id="clock" class="me-2"></div>
+                    <div id="date"></div>
+                </div>
+            </div>
         </nav>
     </div><!-- End Page Title -->
 
@@ -25,26 +39,17 @@
                                     <table class="table table-hover table-striped" id="table_ticket" width="100%">
                                         <thead>
                                             <tr>
-                                                <th width="15%">Ticket No</th>
-                                                <th width="23%">Date Request</th>
-                                                <th class="text-center" width="10%">Status</th>
+                                                <th>Ticket No</th>
+                                                <th>Date Request</th>
+                                                <th class="text-center">Level</th>
+                                                <th class="text-center">Status</th>
                                                 <th>Concern</th>
                                                 <th>Request By</th>
-                                                <th class="text-center" width="10%">Action</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>TN-12345</td>
-                                                <td>September 11, 2022 09:03:25 AM</td>
-                                                <td class="text-center"><span class="badge bg-danger">Critical</span></td>
-                                                <td>Sample Concern</td>
-                                                <td>Sample User</td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-danger btn-sm" title="Proceed"><i class="bi bi-box-arrow-right"></i></button>
-                                                    <button class="btn btn-secondary btn-sm" title="Update Ticket"><i class="bi bi-pencil-square"></i></button>
-                                                </td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -63,88 +68,72 @@
                     <h1>Backlogs</h1>
                 </div><!-- End Page Title -->
 
-                <!-- critical -->
-                <div class="card info-card backlogs-card">
-                    <div class="card-body">
-                        <hr>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon d-flex align-items-center justify-content-center">
-                                5
-                            </div>
-                            <div class="ps-3">
-                                <h6>Critical</h6>
-                                <span class="text-success small pt-1 fw-bold"><a href="#" class="text-success"><i class="bi bi-eye-fill me-2"></i>View All</a></span>
-                            </div>
+                <div class="card card-primary guest">
+                    <div class="card-body p-2">
+                        <div class="card-avatar-primary me-3">
+                            <i class="fas fa-exclamation-triangle mx-auto text-danger"></i>
+                        </div>
+                        <div class="card-text">
+                            <h5>CRITICAL</h5>
+                            <h4><?= $critical;?></h4>
                         </div>
                     </div>
-                </div><!-- end critical -->
+                </div>
 
-                <!-- high -->
-                <div class="card info-card backlogs-card">
-                    <div class="card-body">
-                        <hr>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon d-flex align-items-center justify-content-center">
-                                3
-                            </div>
-                            <div class="ps-3">
-                                <h6>High</h6>
-                                <span class="text-success small pt-1 fw-bold"><a href="#" class="text-success"><i class="bi bi-eye-fill me-2"></i>View All</a></span>
-                            </div>
+                <div class="card card-primary guest">
+                    <div class="card-body p-2">
+                        <div class="card-avatar-primary me-3">
+                            <i class="fas fa-exclamation-circle mx-auto text-warning"></i>
+                        </div>
+                        <div class="card-text">
+                            <h5>HIGH</h5>
+                            <h4><?= $high;?></h4>
                         </div>
                     </div>
-                </div><!-- end high -->
+                </div>
 
-                <!-- medium -->
-                <div class="card info-card backlogs-card">
-                    <div class="card-body">
-                        <hr>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon d-flex align-items-center justify-content-center">
-                                10
-                            </div>
-                            <div class="ps-3">
-                                <h6>Medium</h6>
-                                <span class="text-success small pt-1 fw-bold"><a href="#" class="text-success"><i class="bi bi-eye-fill me-2"></i>View All</a></span>
-                            </div>
+                <div class="card card-primary guest">
+                    <div class="card-body p-2">
+                        <div class="card-avatar-primary me-3">
+                            <i class="fas fa-hourglass-start mx-auto text-info"></i>
+                        </div>
+                        <div class="card-text">
+                            <h5>MEDIUM</h5>
+                            <h4><?= $medium;?></h4>
                         </div>
                     </div>
-                </div><!-- end medium -->
+                </div>
 
-                <!-- low -->
-                <div class="card info-card backlogs-card">
-                    <div class="card-body">
-                        <hr>
-                        <div class="d-flex align-items-center">
-                            <div class="card-icon d-flex align-items-center justify-content-center">
-                                7
-                            </div>
-                            <div class="ps-3">
-                                <h6>Low</h6>
-                                <span class="text-success small pt-1 fw-bold"><a href="#" class="text-success"><i class="bi bi-eye-fill me-2"></i>View All</a></span>
-                            </div>
+                <div class="card card-primary guest">
+                    <div class="card-body p-2">
+                        <div class="card-avatar-primary me-3">
+                            <i class="fas fa-address-book mx-auto text-primary"></i>
+                        </div>
+                        <div class="card-text">
+                            <h5>LOW</h5>
+                            <h4><?= $low;?></h4>
                         </div>
                     </div>
-                </div><!-- end low -->
+                </div>
 
                 <!-- critical -->
                 <div class="card info-card backlogs-card">
+                    <div class="card-header">
+                        <i class="bi bi-list-columns-reverse me-2"></i>SUMMARY BREAKDOWN
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Summary Breakdown</h5>
-                        <div class="card-breakdown">
+                        <div class="card-breakdown mt-2">
                             <span><b>Department:</b> Sample Department</span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Accomplished:</b> 0</span>
+                            <span><b>Total Accomplished:</b> <?= $finish;?></span>
+                            <hr class="mt-1 mb-1">
+                            <span><b>Total Ongoing:</b> <?= $ongoing;?></span>
+                            <hr class="mt-1 mb-1">
+                            <span><b>Total Pending:</b> <?= $pending;?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Backlogs:</b> 25</span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Critical:</b> 5</span>
-                            <hr class="mt-1 mb-1">
-                            <span><b>Total High:</b> 3</span>
-                            <hr class="mt-1 mb-1">
-                            <span><b>Total Medium:</b> 10</span>
-                            <hr class="mt-1 mb-1">
-                            <span><b>Total Low:</b> 7</span>
+       
                         </div>
                     </div>
                 </div><!-- end critical -->

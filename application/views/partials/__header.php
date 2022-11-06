@@ -25,9 +25,12 @@
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
     <!-- Template Main CSS File -->
     <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/custom-style.css') ?>" rel="stylesheet">
+    <link href="<?= base_url('assets/css/jquery.toast.css') ?>" rel="stylesheet">
     <style>
         table {
             border-collapse: collapse;
@@ -73,7 +76,7 @@
     </style>
 </head>
 
-<body>
+<body onload="startTime()">
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -129,23 +132,13 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item d-flex align-items-center" href="<?= base_url('main/myProfile') ?>">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
                         </li>
                         <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <!-- <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-gear"></i>
-                                <span>Account Settings</span>
-                            </a>
-                        </li> -->
-                        <!-- <li>
                             <hr class="dropdown-divider">
                         </li> -->
 
@@ -293,30 +286,11 @@
             <li class="nav-heading">Pages</li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="ticket_monitoring.html">
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/ticketMonitoring')?>">
                     <i class="bi bi-person-lines-fill"></i>
                     <span>Ticket Monitoring</span>
                 </a>
             </li><!-- End Ticketing Page Nav -->
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gear"></i><span>General Settings</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="settings-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="department.html">
-                            <i class="bi bi-circle"></i><span>Manage Department</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="user_permission.html">
-                            <i class="bi bi-circle"></i><span>Manage User Permissions </span>
-                        </a>
-                    </li>
-                </ul>
-            </li><!-- End settings Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#">
@@ -331,13 +305,6 @@
                     <span>Backup Database</span>
                 </a>
             </li><!-- End backup db Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="forum_channel.html">
-                    <i class="bi bi-chat-right-text-fill"></i>
-                    <span>Forum Channel</span>
-                </a>
-            </li><!-- End forum Nav -->
 
         </ul>
 
