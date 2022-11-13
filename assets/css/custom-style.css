@@ -31,7 +31,15 @@
 }
 
 .card-primary {
-    background: #ffd32a;
+    background: #bdc3c7;
+}
+
+.card-orange {
+    background: #f39c12;
+}
+
+.card-yellow {
+    background: #f1c40f;
 }
 
 .concern {

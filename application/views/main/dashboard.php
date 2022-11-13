@@ -32,6 +32,48 @@
 
                     <!-- List Tickets -->
                     <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card card-primary guest">
+                                    <div class="card-body p-2">
+                                        <div class="card-avatar-primary me-3">
+                                            <i class="fas fa-exclamation-triangle mx-auto" style="color: #f39c12;"></i>
+                                        </div>
+                                        <div class="card-text">
+                                            <h5>PENDING</h5>
+                                            <h4>0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-primary guest">
+                                    <div class="card-body p-2">
+                                        <div class="card-avatar-primary me-3">
+                                            <i class="fas fa-hourglass-start mx-auto" style="color: #f39c12;"></i>
+                                        </div>
+                                        <div class="card-text">
+                                            <h5>ON-GOING</h5>
+                                            <h4>0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-primary guest">
+                                    <div class="card-body p-2">
+                                        <div class="card-avatar-primary me-3">
+                                            <i class="fas fa-calendar-alt mx-auto" style="color: #f39c12;"></i>
+                                        </div>
+                                        <div class="card-text">
+                                            <h5>ACCOMPLISHED</h5>
+                                            <h4>0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">List of Tickets (Critical / High / Medium / Low)</h5>
@@ -68,50 +110,50 @@
                     <h1>Backlogs</h1>
                 </div><!-- End Page Title -->
 
-                <div class="card card-primary guest">
+                <div class="card bg-danger guest">
                     <div class="card-body p-2">
                         <div class="card-avatar-primary me-3">
                             <i class="fas fa-exclamation-triangle mx-auto text-danger"></i>
                         </div>
                         <div class="card-text">
-                            <h5>CRITICAL</h5>
-                            <h4><?= $critical;?></h4>
+                            <h5 class="text-white">CRITICAL</h5>
+                            <h4 class="text-white"><?= $critical; ?></h4>
                         </div>
                     </div>
                 </div>
 
-                <div class="card card-primary guest">
+                <div class="card card-orange guest">
                     <div class="card-body p-2">
                         <div class="card-avatar-primary me-3">
-                            <i class="fas fa-exclamation-circle mx-auto text-warning"></i>
+                            <i class="fas fa-exclamation-circle mx-auto" style="color: #f39c12;"></i>
                         </div>
                         <div class="card-text">
-                            <h5>HIGH</h5>
-                            <h4><?= $high;?></h4>
+                            <h5 class="text-white">HIGH</h5>
+                            <h4 class="text-white"><?= $high; ?></h4>
                         </div>
                     </div>
                 </div>
 
-                <div class="card card-primary guest">
+                <div class="card card-yellow guest">
                     <div class="card-body p-2">
                         <div class="card-avatar-primary me-3">
-                            <i class="fas fa-hourglass-start mx-auto text-info"></i>
+                            <i class="fas fa-info-circle mx-auto" style="color: #f1c40f;"></i>
                         </div>
                         <div class="card-text">
-                            <h5>MEDIUM</h5>
-                            <h4><?= $medium;?></h4>
+                            <h5 class="text-white">MEDIUM</h5>
+                            <h4 class="text-white"><?= $medium; ?></h4>
                         </div>
                     </div>
                 </div>
 
-                <div class="card card-primary guest">
+                <div class="card bg-success guest">
                     <div class="card-body p-2">
                         <div class="card-avatar-primary me-3">
-                            <i class="fas fa-address-book mx-auto text-primary"></i>
+                            <i class="fas fa-address-book mx-auto text-success"></i>
                         </div>
                         <div class="card-text">
-                            <h5>LOW</h5>
-                            <h4><?= $low;?></h4>
+                            <h5 class="text-white">LOW</h5>
+                            <h4 class="text-white"><?= $low; ?></h4>
                         </div>
                     </div>
                 </div>
@@ -125,15 +167,15 @@
                         <div class="card-breakdown mt-2">
                             <span><b>Department:</b> Sample Department</span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Accomplished:</b> <?= $finish;?></span>
+                            <span><b>Total Accomplished:</b> <?= $finish; ?></span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Ongoing:</b> <?= $ongoing;?></span>
+                            <span><b>Total Ongoing:</b> <?= $ongoing; ?></span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Pending:</b> <?= $pending;?></span>
+                            <span><b>Total Pending:</b> <?= $pending; ?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Backlogs:</b> 25</span>
                             <hr class="mt-1 mb-1">
-       
+
                         </div>
                     </div>
                 </div><!-- end critical -->

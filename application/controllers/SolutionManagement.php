@@ -43,7 +43,7 @@ class SolutionManagement extends CI_Controller
 
     public function ticketing()
     {
-        $data['department'] = $this->db->group_by('department')->get('tomsworld.users')->result();
+        $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
         $this->load->view('partials/__header');
         $this->load->view('main/ticket_automation', $data);
         $this->load->view('partials/__footer');

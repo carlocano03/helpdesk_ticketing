@@ -192,10 +192,11 @@ class SolutionModel extends CI_Model
     function fetch_employee($department)
     {
         $this->db->where('department', $department);
-        $query = $this->db->get('tomsworld.users');
+        $this->db->select("emp_id, CONCAT((f_name),(' '),(l_name)) as fullname");
+        $query = $this->db->get('tomsworld.employee');
         $output = '<option value="">Select Person</option>';
         foreach ($query->result() as $row) {
-            $output .= '<option value="' . $row->id . '|' .$row->name. '">' . $row->name . '</option>';
+            $output .= '<option value="' . $row->emp_id . '|' .$row->fullname. '">' . $row->fullname . '</option>';
         }
         return $output;
     }
