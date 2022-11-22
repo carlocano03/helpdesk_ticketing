@@ -17,7 +17,7 @@ class SolutionManagement extends CI_Controller
         $this->load->model('SolutionModel', 'solution');
         $this->load->database();
         if (!isset($_SESSION['loggedIn'])) {
-            redirect('user');
+            redirect('../toms-world');
         }
     }
 

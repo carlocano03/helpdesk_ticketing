@@ -41,7 +41,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>PENDING</h5>
-                                            <h4>0</h4>
+                                            <h3 class="text-white">0</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>ON-GOING</h5>
-                                            <h4>0</h4>
+                                            <h3 class="text-white">0</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>ACCOMPLISHED</h5>
-                                            <h4>0</h4>
+                                            <h3 class="text-white">0</h3>
                                         </div>
                                     </div>
                                 </div>

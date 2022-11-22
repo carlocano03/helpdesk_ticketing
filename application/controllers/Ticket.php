@@ -21,6 +21,15 @@ class Ticket extends CI_Controller
         }
     }
 
+    public function createTicket()
+    {
+        $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
+        $this->load->view('partials/__header');
+        $this->load->view('main/create_newTicket', $data);
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticket_request');
+    }
+
     public function getTicket()
     {
         $list = $this->TicketModel->getTicket();

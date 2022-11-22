@@ -34,44 +34,64 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Ticket Automation & SLA Monitoring</h1>
+        <h1>Create New Ticket</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Ticket Automation</li>
+                <li class="breadcrumb-item active">Creation of Ticket</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
-    <section class="section profile">
+    <section class="dashboard">
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">List of Created Ticket</h5>
-                <a href="<?= base_url('ticket/createTicket')?>" class="btn btn-success btn-sm" title="Add account">
-                    <i class="bi bi-pencil-square me-2"></i>Create Ticket
-                </a>
-                <button type="button" class="btn btn-secondary btn-sm" title="Export data">
-                    <i class="bi bi-download me-2"></i>Export Data
-                </button>
-                <hr>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped" id="table_support" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Ticket No.</th>
-                                <th>Concern</th>
-                                <th>Concern Person</th>
-                                <th>Department</th>
-                                <th>Remarks</th>
-                                <th>Expected Date</th>
-                                <th class="text-center">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <h5 class="card-title">List of Department</h5>
+                <hr class="mt-0">
 
-                        </tbody>
-                    </table>
+                <div class="row g-2 mt-3">
+                    <!-- ITD Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="#" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/ITD1.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">INFORMATION TECHNOLOGY
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End ITD Card -->
+
+                    <!-- HRD Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="#" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/HRD.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">HUMAN RESOURCE
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End HRD Card -->
+
                 </div>
             </div>
         </div>

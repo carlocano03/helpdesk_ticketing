@@ -186,11 +186,6 @@
                                 <i class="bi bi-circle"></i><span>AI Support</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/ticketing') ?>">
-                                <i class="bi bi-circle"></i><span>Ticket Automation</span>
-                            </a>
-                        </li>
                     </ul>
                 <?php elseif ($this->uri->segment(2) == 'AIsupport') : ?>
                     <a class="nav-link <?= ($this->uri->segment(2) == 'AIsupport' ? 'active' : 'collapsed') ?>" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -207,33 +202,7 @@
                                 <i class="bi bi-circle"></i><span>AI Support</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/ticketing') ?>">
-                                <i class="bi bi-circle"></i><span>Ticket Automation</span>
-                            </a>
-                        </li>
-                    </ul>
 
-                <?php elseif ($this->uri->segment(2) == 'ticketing') : ?>
-                    <a class="nav-link <?= ($this->uri->segment(2) == 'ticketing' ? 'active' : 'collapsed') ?>" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-person-workspace"></i><span>AI Management</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="icons-nav" class="nav-content collapse <?= ($this->uri->segment(2) == 'ticketing' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/solution') ?>">
-                                <i class="bi bi-circle"></i><span>Solutions Management</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/AIsupport') ?>">
-                                <i class="bi bi-circle"></i><span>AI Support</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/ticketing') ?>" class="<?= ($this->uri->segment(2) == 'ticketing' ? 'active' : '') ?>">
-                                <i class="bi bi-circle"></i><span>Ticket Automation</span>
-                            </a>
-                        </li>
                     </ul>
 
                 <?php else : ?>
@@ -251,19 +220,93 @@
                                 <i class="bi bi-circle"></i><span>AI Support</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="<?= base_url('solutionmanagement/ticketing') ?>">
-                                <i class="bi bi-circle"></i><span>Ticket Automation</span>
-                            </a>
-                        </li>
+
                     </ul>
 
                 <?php endif ?>
 
-
-
-
             </li><!-- End Heldesk Nav -->
+
+            <?php if ($this->uri->segment(2) == 'ticketing') : ?>
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketing' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketing' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>" class="<?= ($this->uri->segment(2) == 'ticketing' ? 'active' : '') ?>">
+                            <i class="bi bi-circle"></i><span>Create New Ticket</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('main/ticketMonitoring') ?>">
+                            <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
+                        </a>
+                    </li>
+                </ul>
+
+            <?php elseif ($this->uri->segment(2) == 'ticketMonitoring') : ?>
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>">
+                            <i class="bi bi-circle"></i><span>Create New Ticket</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('main/ticketMonitoring') ?>" class="<?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : '') ?>">
+                            <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
+                        </a>
+                    </li>
+                </ul>
+
+            <?php elseif ($this->uri->segment(2) == 'createTicket') : ?>
+                <a class="nav-link <?= ($this->uri->segment(2) == 'createTicket' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'createTicket' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>"  class="<?= ($this->uri->segment(2) == 'createTicket' ? 'active' : '') ?>">
+                            <i class="bi bi-circle"></i><span>Create New Ticket</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('main/ticketMonitoring') ?>">
+                            <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
+                        </a>
+                    </li>
+                </ul>
+
+            <?php else : ?>
+                <a class="nav-link collapsed" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="ticket-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>">
+                            <i class="bi bi-circle"></i><span>Create New Ticket</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url('main/ticketMonitoring') ?>">
+                            <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif ?>
+
+
+            <!-- <li class="nav-item">
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/ticketMonitoring') ?>">
+                    <i class="bi bi-person-lines-fill"></i>
+                    <span>Ticket Monitoring</span>
+                </a>
+            </li> -->
+            <!-- End Ticketing Page Nav -->
+
+
+            <li class="nav-heading">Pages</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#analytics-nav" data-bs-toggle="collapse" href="#">
@@ -282,15 +325,6 @@
                     </li>
                 </ul>
             </li><!-- End Analytics Nav -->
-
-            <li class="nav-heading">Pages</li>
-
-            <li class="nav-item">
-                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/ticketMonitoring')?>">
-                    <i class="bi bi-person-lines-fill"></i>
-                    <span>Ticket Monitoring</span>
-                </a>
-            </li><!-- End Ticketing Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#">

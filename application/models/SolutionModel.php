@@ -194,7 +194,7 @@ class SolutionModel extends CI_Model
         $this->db->where('department', $department);
         $this->db->select("emp_id, CONCAT((f_name),(' '),(l_name)) as fullname");
         $query = $this->db->get('tomsworld.employee');
-        $output = '<option value="">Select Person</option>';
+        $output = '<option value="">Select Assignee</option>';
         foreach ($query->result() as $row) {
             $output .= '<option value="' . $row->emp_id . '|' .$row->fullname. '">' . $row->fullname . '</option>';
         }
