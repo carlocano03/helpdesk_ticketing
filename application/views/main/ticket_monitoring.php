@@ -21,10 +21,36 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">My Ticket List</h5>
-                <button type="button" class="btn btn-secondary btn-sm" title="Export data">
-                    <i class="bi bi-download me-2"></i>Export Data
-                </button>
                 <hr>
+                <div class="row g-3 mb-2">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-secondary btn-sm" title="Export data">
+                            <i class="bi bi-download me-2"></i>Export Data
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="filter_dept">Department</label>
+                            <select class="form-select form-select-sm" id="filter_dept">
+                                <option value="">Select Department</option>
+                                <?php foreach($department as $row) : ?>
+                                    <option value="<?= $row->department?>"><?= $row->department?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="filter_status">Status</label>
+                            <select class="form-select form-select-sm" id="filter_status">
+                                <option value="">Select Status</option>
+                                <?php foreach($status as $row) : ?>
+                                    <option value="<?= $row->concern_status?>"><?= $row->concern_status?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped" id="table_ticket" width="100%">
                         <thead>

@@ -455,7 +455,7 @@ class SolutionManagement extends CI_Controller
 
         $insert_trail = array(
             'ticket_no' => $generatedTicket,
-            'ticket_status' => 'Ticket submitted. Waiting for response.',
+            'ticket_status' => 'Ticket submitted successfully. Waiting for the response of concern person.',
             'remarks' => 'Submitted',
             'date_added' => $date_created,
         );
@@ -613,7 +613,13 @@ class SolutionManagement extends CI_Controller
             $no++;
             $row = array();
             
-            $row[] = $concern->concern;
+            if ($concern->update_by == NULL) {
+                $row[] = $concern->concern;
+            } else {
+                $row[] = '<div>'.$concern->concern.'</div>
+                          <span class="text-success"><small><b>Updated by:</b> '.$concern->update_by.'</small></span>';
+            }
+            
             $row[] = $concern->evaluate_concern;
             $row[] = $concern->solutions;
 
@@ -641,7 +647,12 @@ class SolutionManagement extends CI_Controller
     public function evaluateConcern()
     {
         $message = '';
-        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('evaluate_concern' => $this->input->post('evaluateConcern')))) {
+        $evaluateConcern = array(
+            'evaluate_concern' => $this->input->post('evaluateConcern'),
+            'update_by' => $_SESSION['loggedIn']['name'],
+            'update_byID' => $_SESSION['loggedIn']['id'],
+        );
+        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', $evaluateConcern)) {
             $message = 'Success';
         } else {
             $message = 'Error';
@@ -653,7 +664,12 @@ class SolutionManagement extends CI_Controller
     public function add_solutions()
     {
         $message = '';
-        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('solutions' => $this->input->post('solutions')))) {
+        $addSolutions = array(
+            'solutions' => $this->input->post('solutions'),
+            'update_by' => $_SESSION['loggedIn']['name'],
+            'update_byID' => $_SESSION['loggedIn']['id'],
+        );
+        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', $addSolutions)) {
             $message = 'Success';
         } else {
             $message = 'Error';

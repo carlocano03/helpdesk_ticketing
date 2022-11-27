@@ -1,5 +1,7 @@
 <script>
     $(document).ready(function() {
+        $('.other_dept').hide(300);
+        $('.co_employee').hide(300);
         var tableTicket = $('#table_ticket').DataTable({
             "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
                 if (aData[4] == 'Pending') {
@@ -23,8 +25,18 @@
             "bDestroy": true,
             "ajax": {
                 "url": "<?= base_url('ticket/getTicket') ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": function(data) {
+                    data.department = $('#filter_dept').val();
+                    data.status = $('#filter_status').val();
+                }
             },
+        });
+        $('#filter_dept').on('change', function() {
+            tableTicket.draw();
+        });
+        $('#filter_status').on('change', function() {
+            tableTicket.draw();
         });
         // setInterval(function() {
         //     getTicket();
@@ -154,5 +166,58 @@
             });
         });
 
+
+        //Transfer Ticket function
+        $(document).on('click', '.transfer_ticket', function() {
+            var ticketNo = $('#ticket').val();
+            var department = $('#concernDept').val()
+            $.ajax({
+                url: "<?php echo base_url(); ?>solutionmanagement/fetch_employee",
+                method: "POST",
+                data: {
+                    department: department
+                },
+                success: function(data) {
+                    $('#co_employee').html(data);
+                    $('#ticketModalTransfer').modal('show');
+                }
+            });
+        });
+
+        $(document).on('change', '#trans_dept', function() {
+            var department = $(this).val();
+
+            $.ajax({
+                url: "<?php echo base_url(); ?>solutionmanagement/fetch_employee",
+                method: "POST",
+                data: {
+                    department: department
+                },
+                success: function(data) {
+                    $('#assignee').html(data);
+                }
+            });
+        });
+
+        $(document).on('change', '#transfer_options', function() {
+            var trans = $(this).val();
+            switch (trans) {
+                case 'other_department':
+                    $('.other_dept').show(300);
+                    $('.co_employee').hide(300);
+                    $('#trans_dept').prop('required', true);
+                    $('#assignee').prop('required', true);
+                    $('#co_employee').prop('required', false);
+                    break;
+            
+                default:
+                    $('.co_employee').show(300);
+                    $('.other_dept').hide(300);
+                    $('#co_employee').prop('required', true);
+                    $('#trans_dept').prop('required', false);
+                    $('#assignee').prop('required', false);
+                    break;
+            }
+        });
     });
 </script>

@@ -199,6 +199,7 @@ class SolutionModel extends CI_Model
     function fetch_employee($department)
     {
         $this->db->where('department', $department);
+        $this->db->where('user_id !=', $_SESSION['loggedIn']['generated_id']);
         $this->db->select("emp_id, CONCAT((f_name),(' '),(l_name)) as fullname");
         $query = $this->db->get('tomsworld.employee');
         $output = '<option value="">Select Assignee</option>';
@@ -283,6 +284,7 @@ class SolutionModel extends CI_Model
     function getTicketTrail($ticketNo)
     {
         $this->db->where('ticket_no', $ticketNo);
+        $this->db->order_by('date_added', 'DESC');
         return $this->db->get('tickettrail')->result();
     }
 }

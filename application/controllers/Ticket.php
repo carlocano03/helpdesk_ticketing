@@ -35,12 +35,34 @@ class Ticket extends CI_Controller
     public function ticketInformation()
     {
         $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
-        $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
-        $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
-        $this->load->view('partials/__header');
-        $this->load->view('main/ticket_info', $data);
-        $this->load->view('partials/__footer');
-        $this->load->view('main/ajax_request/ticketAutomation_request');
+        $ongoing = $this->TicketModel->getOngoingStatus($ticketNo);
+        if ($ongoing->num_rows() > 1) {
+            $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
+            $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+            $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
+            $this->load->view('partials/__header');
+            $this->load->view('main/ticket_info', $data);
+            $this->load->view('partials/__footer');
+            $this->load->view('main/ajax_request/ticketAutomation_request');
+        } else {
+            $date_created = date('Y-m-d H:i:s');
+            $insert_trail = array(
+                'ticket_no' => $ticketNo,
+                'ticket_status' => 'Concern person is already seen your ticket request.',
+                'remarks' => 'Ongoing Process',
+                'date_added' => $date_created,
+            );
+            $this->db->insert('tickettrail', $insert_trail);
+            $this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Ongoing'));
+
+            $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
+            $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+            $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
+            $this->load->view('partials/__header');
+            $this->load->view('main/ticket_info', $data);
+            $this->load->view('partials/__footer');
+            $this->load->view('main/ajax_request/ticketAutomation_request');
+        }
     }
 
     public function getTicket()

@@ -6,7 +6,6 @@
     }
 </style>
 <main id="main" class="main">
-
     <div class="pagetitle">
         <h1>Ticket Automation & SLA Monitoring</h1>
         <nav>
@@ -19,6 +18,7 @@
     <hr>
     <section class="section profile">
         <input type="hidden" id="ticket" value="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
+        <input type="hidden" id="concernDept" value="<?= isset($ticketInfo->concern_department) ? $ticketInfo->concern_department : '' ?>">
         <div class="row">
             <div class="col-md-3">
                 <?php
@@ -67,7 +67,7 @@
                     </table>
                 </div>
                 <div class="text-end">
-                    <button class="btn btn-danger btn-sm"><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
+                    <button class="btn btn-danger btn-sm transfer_ticket" ><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
                 </div>
             </div>
         </div>
@@ -95,3 +95,56 @@
 
     </section>
 </main><!-- End #main -->
+
+<!-- Modal -->
+<div class="modal fade" id="ticketModalTransfer" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h5><i class="bi bi-layer-forward me-2"></i>Transfer Ticket To Other Department/Person</h5>
+                <hr class="mt-0">
+                <form id="addTicket" method="POST">
+                    <div class="form-floating">
+                        <select class="form-select" id="transfer_options" aria-label="Floating label select example" required>
+                            <option value="">Select Option</option>
+                            <option value="other_department">Transfer to other department</option>
+                            <option value="co_employee">Transfer to co-employee</option>
+                        </select>
+                        <label for="transfer_options">Transfer Options</label>
+                    </div>
+                    <hr>
+                    <div class="other_dept">
+                        <div class="form-group mb-3">
+                            <label>Department</label>
+                            <select class="form-select form-select-sm" id="trans_dept" name="trans_dept" aria-label="Default select example">
+                                <option value="">Select Department</option>
+                                <?php foreach($department as $row) : ?>
+                                    <option value="<?= $row->department?>"><?= $row->department?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Assignee</label>
+                            <select class="form-select form-select-sm" id="assignee" name="assignee" aria-label="Default select example">
+                                <option value="">Select Assignee</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="co_employee">
+                        <div class="form-group mb-3">
+                            <label>Assignee to Co-Employee</label>
+                            <select class="form-select form-select-sm" id="co_employee" name="co_employee" aria-label="Default select example">
+                                <option value="">Select Assignee</option>
+                            </select>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal"><i class="bi bi-x-square me-2"></i>Close</button>
+                <button type="submit" class="btn btn-outline-warning text-white"><i class="bi bi-save me-2"></i>Transfer</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

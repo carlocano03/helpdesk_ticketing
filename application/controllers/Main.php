@@ -17,6 +17,7 @@ class Main extends CI_Controller
         $this->load->model('user_model');
         $this->load->model('main_model');
         $this->load->model('TicketModel');
+        $this->load->model('SolutionModel', 'solution');
         $this->load->database();
         if (!isset($_SESSION['loggedIn'])) {
             redirect('../toms-world');
@@ -72,8 +73,10 @@ class Main extends CI_Controller
 
     public function ticketMonitoring()
     {
+        $data['department'] = $this->db->order_by('department', 'ASC')->get('tomsworld.department')->result();
+        $data['status'] = $this->solution->getStatus();
         $this->load->view('partials/__header');
-        $this->load->view('main/ticket_monitoring');
+        $this->load->view('main/ticket_monitoring', $data);
         $this->load->view('partials/__footer');
         $this->load->view('main/ajax_request/ticketAutomation_request');
     }

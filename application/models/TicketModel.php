@@ -49,6 +49,12 @@ class TicketModel extends CI_Model
 
     private function _get_ticket_query()
     {
+        if ($this->input->post('department')) {
+            $this->db->where('request_department', $this->input->post('department'));
+        }
+        if ($this->input->post('status')) {
+            $this->db->where('concern_status', $this->input->post('status'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $i = 0;
@@ -126,6 +132,13 @@ class TicketModel extends CI_Model
         $this->db->where('concern_status', 'Done');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
+    }
+
+    function getOngoingStatus($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->or_where('remarks', 'Ongoing Process');
+        return $this->db->get('tickettrail');
     }
 
 }
