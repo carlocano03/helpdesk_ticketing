@@ -34,6 +34,13 @@
                 <hr>
                 <label><b>Priority Level:</b></label><br>
                 <small><?= isset($ticketInfo->concern_level) ? $ticketInfo->concern_level : '' ?></small>
+                <select name="priority_level" id="priority_level" data-id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>" class="form-select form-select-sm">
+                    <option value="">Select Priority Level</option>
+                    <option value="Critical" <?= (isset($ticketInfo->concern_level) && $ticketInfo->concern_level == 'Critical') ? 'selected' : '' ?>>Critical</option>
+                    <option value="High" <?= (isset($ticketInfo->concern_level) && $ticketInfo->concern_level == 'High') ? 'selected' : '' ?>>High</option>
+                    <option value="Medium" <?= (isset($ticketInfo->concern_level) && $ticketInfo->concern_level == 'Medium') ? 'selected' : '' ?>>Medium</option>
+                    <option value="Low" <?= (isset($ticketInfo->concern_level) && $ticketInfo->concern_level == 'Low') ? 'selected' : '' ?>>Low</option>
+                </select>
                 <hr>
                 <label><b>Date Request:</b></label><br>
                 <small><?= isset($dateCreated) ? $dateCreated : '' ?></small>
@@ -59,6 +66,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="text-end">
+                    <button class="btn btn-danger btn-sm"><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
+                </div>
             </div>
         </div>
         <hr>
@@ -68,15 +78,15 @@
                 <h1>Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?></span></h1>
                 <div class="container">
 
-                    <?php foreach($ticketTrail as $row) : ?>
-                    <div class="timeline-block timeline-block-right">
-                        <div class="marker"></div>
-                        <div class="timeline-content">
-                            <h3><?= $row->remarks;?></h3>
-                            <span><?= date('M D j, Y h:i a', strtotime($row->date_added))?></span>
-                            <p><?= isset($row->ticket_status) ? $row->ticket_status : '' ?></p>
+                    <?php foreach ($ticketTrail as $row) : ?>
+                        <div class="timeline-block timeline-block-right">
+                            <div class="marker"></div>
+                            <div class="timeline-content">
+                                <h3><?= $row->remarks; ?></h3>
+                                <span><?= date('M D j, Y h:i a', strtotime($row->date_added)) ?></span>
+                                <p><?= isset($row->ticket_status) ? $row->ticket_status : '' ?></p>
+                            </div>
                         </div>
-                    </div>
                     <?php endforeach; ?>
 
                 </div>

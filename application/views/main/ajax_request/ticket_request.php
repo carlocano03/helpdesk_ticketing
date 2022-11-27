@@ -1,6 +1,5 @@
 <script>
     $(document).ready(function() {
-
         var tableSupport = $('#table_support').DataTable({
             "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
                 if (aData[4] == 'Pending') {
@@ -225,9 +224,9 @@
             "serverSide": true,
             "processing": true,
             "pageLength": 25,
-            "bDestroy": true,
+            // "bDestroy": true,
             "ajax": {
-                "url": "<?= base_url('SolutionManagement/getTicketInfo/') ?>" + ticketNo,
+                "url": "<?= base_url('SolutionManagement/getTicketInformation/') ?>" + ticketNo,
                 "type": "POST",
             }
         });

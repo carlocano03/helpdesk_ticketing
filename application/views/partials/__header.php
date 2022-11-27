@@ -246,18 +246,18 @@
                     </li>
                 </ul>
 
-            <?php elseif ($this->uri->segment(2) == 'ticketMonitoring') : ?>
-                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+            <?php elseif ($this->uri->segment(2) == 'ticketMonitoring' || $this->uri->segment(2) == 'ticketInformation') : ?>
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' || $this->uri->segment(2) == 'ticketInformation' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
+                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketMonitoring' || $this->uri->segment(2) == 'ticketInformation' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="<?= base_url('solutionmanagement/ticketing') ?>">
                             <i class="bi bi-circle"></i><span>Create New Ticket</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url('main/ticketMonitoring') ?>" class="<?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : '') ?>">
+                        <a href="<?= base_url('main/ticketMonitoring') ?>" class="<?= ($this->uri->segment(2) == 'ticketMonitoring' || $this->uri->segment(2) == 'ticketInformation' ? 'active' : '') ?>">
                             <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
                         </a>
                     </li>

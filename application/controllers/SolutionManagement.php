@@ -591,6 +591,29 @@ class SolutionManagement extends CI_Controller
             $row = array();
             
             $row[] = $concern->concern;
+            $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control evaluate_concern">'.$concern->evaluate_concern.'</textarea>';
+            $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control add_solutions">'.$concern->solutions.'</textarea>';
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
+
+    public function getTicketInformation()
+    {
+        $ticketNo  = $this->uri->segment(3);
+        $list = $this->solution->getTicketConcern($ticketNo);
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $concern) {
+            $no++;
+            $row = array();
+            
+            $row[] = $concern->concern;
             $row[] = $concern->evaluate_concern;
             $row[] = $concern->solutions;
 
@@ -602,29 +625,6 @@ class SolutionManagement extends CI_Controller
         );
         echo json_encode($output);
     }
-
-    // public function getTicketInfo()
-    // {
-    //     $ticketNo  = $this->uri->segment(3);
-    //     $list = $this->solution->getTicketConcern($ticketNo);
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $concern) {
-    //         $no++;
-    //         $row = array();
-            
-    //         $row[] = $concern->concern;
-    //         $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control evaluate_concern">'.$concern->evaluate_concern.'</textarea>';
-    //         $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control add_solutions">'.$concern->solutions.'</textarea>';
-
-    //         $data[] = $row;
-    //     }
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "data" => $data
-    //     );
-    //     echo json_encode($output);
-    // }
 
     public function updateLevel()
     {

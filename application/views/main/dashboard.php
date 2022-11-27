@@ -1,7 +1,5 @@
 <style>
-    #table_ticket td:nth-child(4),
-    #table_ticket td:nth-child(5),
-    #table_ticket td:nth-child(6) {
+    #table_ticket td:nth-child(5) {
         text-align: center;
     }
 </style>
@@ -81,13 +79,11 @@
                                     <table class="table table-hover table-striped" id="table_ticket" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Ticket No</th>
+                                                <th>Ticket No.</th>
+                                                <th>Request By</th>
+                                                <th>Department</th>
                                                 <th>Date Request</th>
-                                                <th>Concern</th>
-                                                <th class="text-center">Level</th>
                                                 <th class="text-center">Status</th>
-                                                <!-- <th>Request By</th> -->
-                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

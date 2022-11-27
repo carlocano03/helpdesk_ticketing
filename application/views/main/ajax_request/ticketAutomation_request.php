@@ -1,104 +1,157 @@
 <script>
     $(document).ready(function() {
-        getTicket();
-
-        function getTicket() {
-            $('#table_ticket').DataTable({
-                language: {
-                    search: '',
-                    searchPlaceholder: "Search Here...",
-                    paginate: {
-                        next: '<i class="bi bi-chevron-right"></i>',
-                        previous: '<i class="bi bi-chevron-left"></i>'
-                    }
-                },
-                "ordering": false,
-                "serverSide": true,
-                "processing": true,
-                "pageLength": 25,
-                "bDestroy": true,
-                "ajax": {
-                    "url": "<?= base_url('ticket/getTicket') ?>",
-                    "type": "POST"
-                },
-            });
-        }
+        var tableTicket = $('#table_ticket').DataTable({
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
+                if (aData[4] == 'Pending') {
+                    $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
+                } else {
+                    $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
+                }
+            },
+            language: {
+                search: '',
+                searchPlaceholder: "Search Here...",
+                paginate: {
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>'
+                }
+            },
+            "ordering": false,
+            "serverSide": true,
+            "processing": true,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": {
+                "url": "<?= base_url('ticket/getTicket') ?>",
+                "type": "POST"
+            },
+        });
         // setInterval(function() {
         //     getTicket();
         // }, 5000);
 
-        $(document).on('change', '.concern', function() {
-            var ticketID = $(this).attr('id');
-            var concernStatus = $(this).val();
-            var requestBy = $(this).data('request');
-            var ticketNo = $(this).data('ticket');
+        $(document).on('click', '.view_ticketInfo', function() {
+            var ticketNo = $(this).attr('id');
+            window.location.href = "<?= base_url('ticket/ticketInformation?ticketNo=') ?>" + ticketNo;
+        });
+        
+        var ticketNo = $('#ticket').val();
+        var tableConcern = $('#table_concern').DataTable({
+            "ordering": false,
+            "searching": false,
+            "lengthChange": false,
+            "info": false,
+            "paging": false,
+            "serverSide": true,
+            "processing": true,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": {
+                "url": "<?= base_url('ticket/getTicketInfo/') ?>" + ticketNo,
+                "type": "POST",
+            }
+        });
 
+        $(document).on('change', '#priority_level', function() {
+            var ticketNo = $(this).data('id');
+            var level = $(this).val();
             $.ajax({
-                url: "<?= base_url('ticket/updateStatus') ?>",
+                url: "<?= base_url('SolutionManagement/updateLevel') ?>",
                 method: "POST",
                 data: {
-                    ticketID: ticketID,
-                    concernStatus: concernStatus,
-                    requestBy: requestBy,
-                    ticketNo: ticketNo
+                    ticketNo: ticketNo,
+                    level: level
                 },
                 dataType: "json",
+                beforeSend: function() {
+                    $('#__loading').show();
+                },
                 success: function(data) {
-                    if (data.success == 'Success') {
+                    if (data.message == 'Success') {
                         Swal.fire(
                             'Thank you!',
-                            'Successfully updated.',
+                            'Updated successfully.',
                             'success'
                         );
-                        var table = $('#table_ticket').DataTable();
-                        table.draw();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
                     } else {
-                        Swal.fire('Error!', 'Something went wrong. Please try again later!', 'error');
+                        Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                     }
+                },
+                complete: function() {
+                    $('#__loading').hide();
+                },
+                error: function() {
+                    $('#__loading').hide();
+                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
                 }
             });
         });
 
-        $(document).on('click', '.done_ticket', function() {
-            var ticketID = $(this).attr('id');
-            var requestBy = $(this).data('request');
-            var ticketNo = $(this).data('ticket');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, its done!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "<?= base_url('ticket/doneTicket') ?>",
-                        method: "POST",
-                        data: {
-                            ticketID: ticketID,
-                            requestBy: requestBy,
-                            ticketNo: ticketNo
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data.success == 'Success') {
-                                Swal.fire(
-                                    'Thank you!',
-                                    'Successfully updated.',
-                                    'success'
-                                );
-                                var table = $('#table_ticket').DataTable();
-                                table.draw();
-                            } else {
-                                Swal.fire('Error!', 'Something went wrong. Please try again later!', 'error');
-                            }
-                        }
-                    });
+        //Add Evaluation
+        $(document).on('change', '.evaluate_concern', function() {
+            var concernID = $(this).attr('id');
+            var evaluateConcern = $(this).val();
+            $.ajax({
+                url: "<?= base_url('SolutionManagement/evaluateConcern') ?>",
+                method: "POST",
+                data: {
+                    concernID: concernID,
+                    evaluateConcern: evaluateConcern
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#__loading').show();
+                },
+                success: function(data) {
+                    if (data.message == 'Success') {
+                        tableConcern.draw();
+                    } else {
+                        Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
+                    }
+                },
+                complete: function() {
+                    $('#__loading').hide();
+                },
+                error: function() {
+                    $('#__loading').hide();
+                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
                 }
-            })
+            });
+        });
+
+        //Add Solutions
+        $(document).on('change', '.add_solutions', function() {
+            var concernID = $(this).attr('id');
+            var solutions = $(this).val();
+            $.ajax({
+                url: "<?= base_url('SolutionManagement/add_solutions') ?>",
+                method: "POST",
+                data: {
+                    concernID: concernID,
+                    solutions: solutions
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#__loading').show();
+                },
+                success: function(data) {
+                    if (data.message == 'Success') {
+                        tableConcern.draw();
+                    } else {
+                        Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
+                    }
+                },
+                complete: function() {
+                    $('#__loading').hide();
+                },
+                error: function() {
+                    $('#__loading').hide();
+                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                }
+            });
         });
 
     });
