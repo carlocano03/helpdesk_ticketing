@@ -77,7 +77,9 @@
 </head>
 
 <body onload="startTime()">
-
+    <div id="__loading" class="mx-auto" style="display: none;">
+        <img src="<?= base_url('assets/img/loader.gif');?>" id="loading-image">
+    </div>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -115,8 +117,8 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <?php if ($_SESSION['loggedIn']['photo'] != '') : ?>
-                            <img src="<?= base_url('../toms-world/') ?>uploaded_file/profile/<?= $_SESSION['loggedIn']['photo']; ?>" class="rounded-circle" alt="Pofile-Picture"><br>
+                        <?php if ($_SESSION['loggedIn']['profile_pic'] != '') : ?>
+                            <img src="<?= base_url('../toms-world/') ?>uploaded_file/profile/<?= $_SESSION['loggedIn']['profile_pic']; ?>" class="rounded-circle" alt="Pofile-Picture"><br>
                         <?php else : ?>
                             <img src="<?= base_url('../toms-world/') ?>assets/img/avatar.jpg" alt="Profile" class="rounded-circle"><br>
                         <?php endif ?>
@@ -227,13 +229,13 @@
 
             </li><!-- End Heldesk Nav -->
 
-            <?php if ($this->uri->segment(2) == 'ticketing') : ?>
-                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketing' ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
+            <?php if ($this->uri->segment(2) == 'ticketing' || $this->uri->segment(2) == 'ticketInfo') : ?>
+                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketing' || $this->uri->segment(2) == 'ticketInfo'  ? 'active' : 'collapsed') ?>" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketing' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
+                <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'ticketing' || $this->uri->segment(2) == 'ticketInfo' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="<?= base_url('solutionmanagement/ticketing') ?>" class="<?= ($this->uri->segment(2) == 'ticketing' ? 'active' : '') ?>">
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>" class="<?= ($this->uri->segment(2) == 'ticketing' || $this->uri->segment(2) == 'ticketInfo' ? 'active' : '') ?>">
                             <i class="bi bi-circle"></i><span>Create New Ticket</span>
                         </a>
                     </li>

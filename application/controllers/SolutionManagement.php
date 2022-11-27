@@ -16,6 +16,7 @@ class SolutionManagement extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('SolutionModel', 'solution');
         $this->load->database();
+        $this->load->library('encrypt');
         if (!isset($_SESSION['loggedIn'])) {
             redirect('../toms-world');
         }
@@ -43,9 +44,21 @@ class SolutionManagement extends CI_Controller
 
     public function ticketing()
     {
-        $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
+        $data['department'] = $this->db->order_by('department', 'ASC')->get('tomsworld.department')->result();
+        $data['status'] = $this->solution->getStatus();
         $this->load->view('partials/__header');
         $this->load->view('main/ticket_automation', $data);
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticket_request');
+    }
+
+    public function ticketInfo()
+    {
+        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
+        $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+        $this->load->view('partials/__header');
+        $this->load->view('main/view_ticket', $data);
         $this->load->view('partials/__footer');
         $this->load->view('main/ajax_request/ticket_request');
     }
@@ -417,13 +430,9 @@ class SolutionManagement extends CI_Controller
         $message = '';
         $date_created = date('Y-m-d H:i:s');
         $generatedTicket = 'TN-' . date('my') . rand(10, 1000);
-        $concernPerson = $this->input->post('concernPerson');
-        $new = explode('|', $concernPerson);
-        $id = $new[0];
-        $person = $new[1];
 
         $add_notif = array(
-            'user_id' => $id,
+            'user_id' => $this->input->post('empID'),
             'notif_title' => 'Ticket Automation',
             'notif_message' => 'added to your ticket list ' . $generatedTicket,
             'added_by' => $_SESSION['loggedIn']['name'],
@@ -433,22 +442,37 @@ class SolutionManagement extends CI_Controller
 
         $insert_ticket = array(
             'ticket_no' => $generatedTicket,
-            'concern_department' => $this->input->post('concernDepartment'),
-            'concern_person' => $person,
-            'concern_personID' => $id,
-            'concern' => $this->input->post('concern'),
-            'concern_level' => $this->input->post('concern_level'),
-            'concern_remarks' => $this->input->post('remarks'),
+            'concern_department' => $this->input->post('dept'),
+            'concern_person' => $this->input->post('concernPerson'),
+            'concern_personID' => $this->input->post('empID'),
+            'concern_level' => $this->input->post('level'),
             'concern_status' => 'Pending',
             'request_by' => $_SESSION['loggedIn']['name'],
             'request_byID' => $_SESSION['loggedIn']['id'],
+            'request_department' => $_SESSION['loggedIn']['department'],
             'date_added' => $date_created,
-            'expected_accomplish' => $this->input->post('date_accomplish'),
+        );
+
+        $insert_trail = array(
+            'ticket_no' => $generatedTicket,
+            'ticket_status' => 'Ticket submitted. Waiting for response.',
+            'remarks' => 'Submitted',
+            'date_added' => $date_created,
         );
 
         if ($this->db->insert('ticketing', $insert_ticket)) {
+            //Insert Concern List
+            $tableConcern = $this->input->post('data_table');
+            for ($i = 0; $i < count($tableConcern); $i++) {
+                $data[] = array(
+                    'ticket_no' => $generatedTicket,
+                    'concern' => $tableConcern[$i]['concern'],
+                );
+                $this->db->insert('ticketconcern', $data[$i]);
+            }
+            $this->db->insert('tickettrail', $insert_trail);
             $this->db->insert('tomsworld.notification', $add_notif);
-            $message = '';
+            $message = 'Success';
         } else {
             $message = 'Error';
         }
@@ -465,16 +489,15 @@ class SolutionManagement extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $concern) {
-
+            $ticketNo = str_replace(['+', '='], '', $this->encrypt->encode($concern->ticket_no));
             $no++;
             $row = array();
-
-            $row[] = $concern->ticket_no;
-            $row[] = $concern->concern;
+            
+            $row[] = '<div>'.$concern->ticket_no.'</div>
+                      <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
             $row[] = $concern->concern_person;
             $row[] = $concern->concern_department;
-            $row[] = $concern->concern_remarks;
-            $row[] = $concern->expected_accomplish;
+            $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
 
             $data[] = $row;
@@ -510,8 +533,8 @@ class SolutionManagement extends CI_Controller
             if ($query->num_rows() > 0) {
                 foreach ($query->result() as $row) {
 
-                    $this->db->where('users.id', $row->added_by_userID);
-                    $query = $this->db->get('tomsworld.users');
+                    $this->db->where('employee.emp_id', $row->added_by_userID);
+                    $query = $this->db->get('tomsworld.employee');
                     $res = $query->row();
                     $date_created = date('D M j, Y g:i a', strtotime($row->date_added));
                     if ($userID == $row->added_by_userID) {
@@ -527,7 +550,7 @@ class SolutionManagement extends CI_Controller
                         </li>
 
                         <li class="notification-item">
-                            <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">
+                            <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">
                             <div>
                                 <h4>' . $added_by . '</h4>
                                 <p>' . $row->notif_message . '</p>
@@ -555,5 +578,87 @@ class SolutionManagement extends CI_Controller
             );
             echo json_encode($data);
         } // end of first if
+    }
+
+    public function getTicketInfo()
+    {
+        $ticketNo  = $this->uri->segment(3);
+        $list = $this->solution->getTicketConcern($ticketNo);
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $concern) {
+            $no++;
+            $row = array();
+            
+            $row[] = $concern->concern;
+            $row[] = $concern->evaluate_concern;
+            $row[] = $concern->solutions;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
+
+    // public function getTicketInfo()
+    // {
+    //     $ticketNo  = $this->uri->segment(3);
+    //     $list = $this->solution->getTicketConcern($ticketNo);
+    //     $data = array();
+    //     $no = $_POST['start'];
+    //     foreach ($list as $concern) {
+    //         $no++;
+    //         $row = array();
+            
+    //         $row[] = $concern->concern;
+    //         $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control evaluate_concern">'.$concern->evaluate_concern.'</textarea>';
+    //         $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control add_solutions">'.$concern->solutions.'</textarea>';
+
+    //         $data[] = $row;
+    //     }
+    //     $output = array(
+    //         "draw" => $_POST['draw'],
+    //         "data" => $data
+    //     );
+    //     echo json_encode($output);
+    // }
+
+    public function updateLevel()
+    {
+        $message = '';
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('concern_level' => $this->input->post('level')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
+    public function evaluateConcern()
+    {
+        $message = '';
+        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('evaluate_concern' => $this->input->post('evaluateConcern')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
+    public function add_solutions()
+    {
+        $message = '';
+        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('solutions' => $this->input->post('solutions')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
     }
 }

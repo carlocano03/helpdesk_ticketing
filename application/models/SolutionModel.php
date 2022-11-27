@@ -28,6 +28,13 @@ class SolutionModel extends CI_Model
         parent::__construct();
         $this->load->database();
     }
+    
+    function getStatus()
+    {
+        $this->db->group_by('concern_status');
+        $this->db->order_by('concern_status', 'ASC');
+        return $this->db->get('ticketing')->result();
+    }
 
     public function get_solution()
     {
@@ -226,6 +233,12 @@ class SolutionModel extends CI_Model
 
     private function _get_ticket_query()
     {
+        if ($this->input->post('department')) {
+            $this->db->where('concern_department', $this->input->post('department'));
+        }
+        if ($this->input->post('status')) {
+            $this->db->where('concern_status', $this->input->post('status'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
         $i = 0;
@@ -253,5 +266,23 @@ class SolutionModel extends CI_Model
             $order = $this->order_ticket;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+    }
+
+    function getTicketInfo($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketing')->row();
+    }
+
+    function getTicketConcern($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketconcern')->result();
+    }
+
+    function getTicketTrail($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('tickettrail')->result();
     }
 }
