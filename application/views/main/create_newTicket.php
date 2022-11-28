@@ -143,13 +143,13 @@
                     </select>
                 </div>
 
-                <div class="mb-3" id="form">
+                <!-- <div class="mb-3" id="form">
                     <label for="form_list">Form</label>
                     <select class="form-select form-select-sm" id="form_list" name="form_list" aria-label=".form-select-sm example">
                         <option value="">Select Form</option>
 
                     </select>
-                </div>
+                </div> -->
                 <hr>
 
                 <!-- IT TICKET FORM -->

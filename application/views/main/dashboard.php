@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>PENDING</h5>
-                                            <h3 class="text-white">0</h3>
+                                            <h3 class="text-white"><?= $pending; ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>ON-GOING</h5>
-                                            <h3 class="text-white">0</h3>
+                                            <h3 class="text-white"><?= $ongoing; ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>ACCOMPLISHED</h5>
-                                            <h3 class="text-white">0</h3>
+                                            <h3 class="text-white"><?= $finish; ?></h3>
                                         </div>
                                     </div>
                                 </div>

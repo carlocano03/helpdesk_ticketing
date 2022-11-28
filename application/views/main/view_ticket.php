@@ -23,20 +23,30 @@
             <div class="col-md-3">
                 <?php
                 $dateAdded = isset($ticketInfo->date_added) ? $ticketInfo->date_added : '';
+                $dateUpdate = isset($ticketInfo->date_last_update) ? $ticketInfo->date_last_update : '';
                 if ($dateAdded == '') {
                     $dateCreated = '';
                 } else {
                     $dateCreated = date('M D, j Y h:i a', strtotime($dateAdded));
                 }
+
+                if ($dateUpdate == '') {
+                    $dateLast = '';
+                } else {
+                    $dateLast = date('M D, j Y h:i a', strtotime($dateUpdate));
+                }
                 ?>
                 <label><b>Ticket No.:</b></label><br>
-                <small><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?></small>
+                <small><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no .' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></small>
                 <hr>
                 <label><b>Priority Level:</b></label><br>
                 <small><?= isset($ticketInfo->concern_level) ? $ticketInfo->concern_level : '' ?></small>
                 <hr>
                 <label><b>Date Request:</b></label><br>
                 <small><?= isset($dateCreated) ? $dateCreated : '' ?></small>
+                <hr>
+                <label><b>Date of Last Update/Seen:</b></label><br>
+                <small><?= isset($dateLast) ? $dateLast : '' ?></small>
                 <hr>
                 <label><b>Requested by:</b></label><br>
                 <small><?= isset($ticketInfo->request_by) ? $ticketInfo->request_by : '' ?></small>
@@ -65,7 +75,7 @@
         <div class="card">
             <div class="card-header"><i class="bi bi-list-columns-reverse me-2"></i>Ticket Trail</div>
             <div class="card-body">
-                <h1>Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?></span></h1>
+                <h3>Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no .' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h3>
                 <div class="container">
 
                     <?php foreach($ticketTrail as $row) : ?>
@@ -75,10 +85,10 @@
                             <h3><?= $row->remarks;?></h3>
                             <span><?= date('M D j, Y h:i a', strtotime($row->date_added))?></span>
                             <p><?= isset($row->ticket_status) ? $row->ticket_status : '' ?></p>
+                            <hr>
                         </div>
                     </div>
                     <?php endforeach; ?>
-
                 </div>
             </div>
         </div>

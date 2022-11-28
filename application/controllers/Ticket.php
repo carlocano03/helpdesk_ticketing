@@ -36,7 +36,7 @@ class Ticket extends CI_Controller
     {
         $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
         $ongoing = $this->TicketModel->getOngoingStatus($ticketNo);
-        if ($ongoing->num_rows() > 1) {
+        if ($ongoing >= 1) {
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
@@ -54,7 +54,7 @@ class Ticket extends CI_Controller
             );
             $this->db->insert('tickettrail', $insert_trail);
             $this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Ongoing'));
-
+            
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
@@ -71,7 +71,7 @@ class Ticket extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $ticket) {
-            $ticketNo = str_replace(['+', '='], '', $this->encrypt->encode($ticket->ticket_no));
+            $ticketNo = $this->encrypt->encode($ticket->ticket_no);
             $no++;
             $row = array();
 

@@ -70,7 +70,7 @@
                         $('#it_form').show('300');
                         $('#form').hide('300');
                     } else {
-                        $('#it_form').hide('300');
+                        $('#it_form').show('300');
                         $('#form').show('300');
                     }
                     $('#department').val(department);
@@ -134,79 +134,80 @@
             var level = $('#level').val();
             var table_data = [];
 
-            switch (dept) {
-                case 'Human Resource Department':
-                    alert('Human Resources');
-                    break;
+            // switch (dept) {
+            //     case 'Human Resource Department':
+            //         alert('Human Resources');
+            //         break;
 
-                    //ITD Form
-                default:
-                    $('#table_body tr').each(function(row, tr) {
-                        var valueOfCell = $(this).find("td:nth-child(2)").html();
-                        if (valueOfCell == '') {
-                            Swal.fire('Warning!', 'Empty table fields found.', 'warning');
-                        } else {
-                            var sub = {
-                                'concern': $(tr).find('td:eq(1)').text()
-                            };
-                            table_data.push(sub);
-                        }
-                    });
+            //         //ITD Form
+            //     default:
+            $('#table_body tr').each(function(row, tr) {
+                $(this).find("td:nth-child(2)").each(function() {
+                    if ($(this).text().trim() != '') {
+                        var sub = {
+                            'concern': $(tr).find('td:eq(1)').text()
+                        };
+                        table_data.push(sub);
 
-                    if (assignee != '' && level != '') {
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: "You want to continue this transactions.",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, proceed'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: "<?= base_url('SolutionManagement/addTicket') ?>",
-                                    method: "POST",
-                                    data: {
-                                        'data_table': table_data,
-                                        empID: empID,
-                                        concernPerson: concernPerson,
-                                        level: level,
-                                        dept: dept,
-                                    },
-                                    dataType: "json",
-                                    beforeSend: function() {
-                                        $('#__loading').show();
-                                    },
-                                    success: function(data) {
-                                        if (data.message == 'Success') {
-                                            Swal.fire(
-                                                'Thank you!',
-                                                'Ticket successfuly submitted.',
-                                                'success'
-                                            );
-                                            setTimeout(function() {
-                                                window.location.href = "<?= base_url('SolutionManagement/ticketing') ?>"
-                                            }, 2000);
-                                        } else {
-                                            Swal.fire('Error!', 'Failed to submit ticket. Please contact system administrator', 'error');
+                        if (assignee != '' && level != '') {
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You want to continue this transactions.",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, proceed'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: "<?= base_url('SolutionManagement/addTicket') ?>",
+                                        method: "POST",
+                                        data: {
+                                            'data_table': table_data,
+                                            empID: empID,
+                                            concernPerson: concernPerson,
+                                            level: level,
+                                            dept: dept,
+                                        },
+                                        dataType: "json",
+                                        beforeSend: function() {
+                                            $('#__loading').show();
+                                        },
+                                        success: function(data) {
+                                            if (data.message == 'Success') {
+                                                Swal.fire(
+                                                    'Thank you!',
+                                                    'Ticket successfuly submitted.',
+                                                    'success'
+                                                );
+                                                setTimeout(function() {
+                                                    window.location.href = "<?= base_url('SolutionManagement/ticketing') ?>"
+                                                }, 2000);
+                                            } else {
+                                                Swal.fire('Error!', 'Failed to submit ticket. Please contact system administrator', 'error');
+                                            }
+                                        },
+                                        complete: function() {
+                                            $('#__loading').hide();
+                                        },
+                                        error: function() {
+                                            $('#__loading').hide();
+                                            Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
                                         }
-                                    },
-                                    complete: function() {
-                                        $('#__loading').hide();
-                                    },
-                                    error: function() {
-                                        $('#__loading').hide();
-                                        Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
-                                    }
-                                });
-                            }
-                        })
+                                    });
+                                }
+                            })
+                        } else {
+                            Swal.fire('Warning!', 'Please fill out the required fields.', 'warning');
+                        }
                     } else {
-                        Swal.fire('Warning!', 'Please fill out the required fields.', 'warning');
+                        Swal.fire('Warning!', 'Empty table fields found.', 'warning');
                     }
-                    break;
-            }
+                });
+            });
+            // break;
+            // }
         });
 
         $(document).on('click', '.view_ticket', function() {

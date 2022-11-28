@@ -489,7 +489,7 @@ class SolutionManagement extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $concern) {
-            $ticketNo = str_replace(['+', '='], '', $this->encrypt->encode($concern->ticket_no));
+            $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
             $row = array();
             
@@ -617,7 +617,7 @@ class SolutionManagement extends CI_Controller
                 $row[] = $concern->concern;
             } else {
                 $row[] = '<div>'.$concern->concern.'</div>
-                          <span class="text-success"><small><b>Updated by:</b> '.$concern->update_by.'</small></span>';
+                          <span class="text-danger"><small><b>Updated by:</b> '.$concern->update_by.'</small></span>';
             }
             
             $row[] = $concern->evaluate_concern;
@@ -634,8 +634,10 @@ class SolutionManagement extends CI_Controller
 
     public function updateLevel()
     {
+        $date_created = date('Y-m-d H:i:s');
         $message = '';
         if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('concern_level' => $this->input->post('level')))) {
+            $this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
             $message = 'Error';
@@ -646,6 +648,9 @@ class SolutionManagement extends CI_Controller
 
     public function evaluateConcern()
     {
+        $this->db->where('concern_id', $this->input->post('concernID'));
+        $res = $this->db->get('ticketconcern')->row();
+        $date_created = date('Y-m-d H:i:s');
         $message = '';
         $evaluateConcern = array(
             'evaluate_concern' => $this->input->post('evaluateConcern'),
@@ -653,6 +658,7 @@ class SolutionManagement extends CI_Controller
             'update_byID' => $_SESSION['loggedIn']['id'],
         );
         if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', $evaluateConcern)) {
+            $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
             $message = 'Error';
@@ -663,6 +669,9 @@ class SolutionManagement extends CI_Controller
 
     public function add_solutions()
     {
+        $this->db->where('concern_id', $this->input->post('concernID'));
+        $res = $this->db->get('ticketconcern')->row();
+        $date_created = date('Y-m-d H:i:s');
         $message = '';
         $addSolutions = array(
             'solutions' => $this->input->post('solutions'),
@@ -670,6 +679,7 @@ class SolutionManagement extends CI_Controller
             'update_byID' => $_SESSION['loggedIn']['id'],
         );
         if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', $addSolutions)) {
+            $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
             $message = 'Error';
