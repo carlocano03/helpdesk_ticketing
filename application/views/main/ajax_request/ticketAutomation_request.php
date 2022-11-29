@@ -46,7 +46,7 @@
             var ticketNo = $(this).attr('id');
             window.location.href = "<?= base_url('ticket/ticketInformation?ticketNo=') ?>" + ticketNo;
         });
-        
+
         var ticketNo = $('#ticket').val();
         var tableConcern = $('#table_concern').DataTable({
             "ordering": false,
@@ -209,7 +209,7 @@
                     $('#assignee').prop('required', true);
                     $('#co_employee').prop('required', false);
                     break;
-            
+
                 default:
                     $('.co_employee').show(300);
                     $('.other_dept').hide(300);
@@ -218,6 +218,44 @@
                     $('#assignee').prop('required', false);
                     break;
             }
+        });
+
+        $(document).on('submit', '#transferTicket', function(event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+
+            $.ajax({
+                url: "<?= base_url() . 'ticket/trasferTicket' ?>",
+                method: "POST",
+                data: new FormData(this),
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $('#__loading').show();
+                },
+                success: function(data) {
+                    if (data.message == 'Success') {
+                        Swal.fire(
+                            'Thank you!',
+                            'Trasferred successfuly.',
+                            'success'
+                        );
+                        setTimeout(function() {
+                            window.location.href = "<?= base_url('main/ticketMonitoring') ?>"
+                        }, 2000);
+                    } else {
+                        Swal.fire('Error!', 'Failed to transfer ticket. Please contact system administrator', 'error');
+                    }
+                },
+                complete: function() {
+                    $('#__loading').hide();
+                },
+                error: function() {
+                    $('#__loading').hide();
+                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                }
+            });
         });
     });
 </script>

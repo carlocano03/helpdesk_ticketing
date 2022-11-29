@@ -115,9 +115,10 @@
             <div class="modal-body">
                 <h5><i class="bi bi-layer-forward me-2"></i>Transfer Ticket To Other Department/Person</h5>
                 <hr class="mt-0">
-                <form id="addTicket" method="POST">
+                <form id="transferTicket" method="POST">
+                    <input type="hidden" id="ticketNo" name="ticketNo" value="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
                     <div class="form-floating">
-                        <select class="form-select" id="transfer_options" aria-label="Floating label select example" required>
+                        <select class="form-select" id="transfer_options" name="transfer_options" aria-label="Floating label select example" required>
                             <option value="">Select Option</option>
                             <option value="other_department">Transfer to other department</option>
                             <option value="co_employee">Transfer to co-employee</option>

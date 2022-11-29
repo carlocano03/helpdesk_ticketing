@@ -617,7 +617,7 @@ class SolutionManagement extends CI_Controller
                 $row[] = $concern->concern;
             } else {
                 $row[] = '<div>'.$concern->concern.'</div>
-                          <span class="text-danger"><small><b>Updated by:</b> '.$concern->update_by.'</small></span>';
+                          <span class="text-danger"><small><b>Evaluated by:</b> '.$concern->update_by.'</small></span>';
             }
             
             $row[] = $concern->evaluate_concern;

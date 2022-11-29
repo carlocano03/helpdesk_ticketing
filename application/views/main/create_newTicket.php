@@ -120,6 +120,287 @@
                         </a>
                     </div><!-- End Accounting Card -->
 
+                    <!-- Pan Asis Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Pan Asia Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/asia.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">PAN ASIA DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Pan Asia Card -->
+
+                    <!-- Payroll Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Payroll Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/payroll.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">PAYROLL DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Payroll Card -->
+
+                    <!-- Operations Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Operations Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/operation.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">OPERATIONS DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Operations Card -->
+
+                    <!-- Business development & Design Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Business development & Design Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/business.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">BUSINESS DEVELOPMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Business development & Design Card -->
+
+                    <!-- Creatives Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Creatives Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/creatives.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">CREATIVES DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Creatives Card -->
+
+                    <!-- Marketing Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Marketing Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/marketing.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">MARKETING DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Marketing Card -->
+
+                    <!-- Legal Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Legal Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/legal.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">LEGAL DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Legal Card -->
+
+                    <!-- Executive Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Executive (Execom)" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/execom.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">EXECUTIVE (EXECOM)
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Executive Card -->
+
+                    <!-- Mechandising Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Mechandising Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">MERCHANDISING DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Mechandising Card -->
+
+                    <!-- Redemption Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Redemption Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">REDEMPTION DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Redemption Card -->
+
+                    <!-- Importation Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Importation Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">IMPORTATIONS DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Importation Card -->
+
+                    <!-- Warehousing Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Warehousing Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">WAREHOUSING DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Warehousing Card -->
+
+                    <!-- Procurement Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Procurement Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">PROCUREMENT DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Procurement Card -->
+
+                    <!-- Technical Card -->
+                    <div class="col-xxl-3 col-md-3">
+                        <a href="" id="openModalTicket" data-dept="Technical Department" data-bs-toggle="modal" style="color: #444444;">
+                            <div class="card info-card menu-card border">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mt-4">
+                                        <div class="card-icon d-flex align-items-center justify-content-center">
+                                            <img src="<?= base_url('assets/img/dept/merchandising.png') ?>" alt="">
+                                        </div>
+                                        <div class="ps-4 text-center">
+                                            <span class="small pt-1 fw-bold">TECHNICAL DEPARTMENT
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- End Technical Card -->
+
+
                 </div>
             </div>
         </div>
