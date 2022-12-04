@@ -37,6 +37,8 @@ class Ticket extends CI_Controller
         $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
         $ongoing = $this->TicketModel->getOngoingStatus($ticketNo);
         if ($ongoing >= 1) {
+            $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
+            $data['count_concern'] = $this->solution->getCountConcern($ticketNo);
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
@@ -55,6 +57,8 @@ class Ticket extends CI_Controller
             $this->db->insert('tickettrail', $insert_trail);
             $this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Ongoing'));
 
+            $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
+            $data['count_concern'] = $this->solution->getCountConcern($ticketNo);
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
@@ -105,7 +109,21 @@ class Ticket extends CI_Controller
 
             $row[] = $concern->concern;
             $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control evaluate_concern">' . $concern->evaluate_concern . '</textarea>';
-            $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
+            
+            if ($concern->support_system == NULL) {
+                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
+                      <select class="form-select form-select-sm support_system" id="'. $concern->concern_id .'">
+                        <option value="">Select Support System</option>
+                        <option value="Via Email">Via Email</option>
+                        <option value="Phone Call">Phone Call</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Onsite">Onsite</option>
+                      </select>';
+            } else {
+                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
+                          <span class="text-danger"><b>Support System: </b>'.$concern->support_system.'</span>';
+            }
+            
 
             $data[] = $row;
         }

@@ -229,6 +229,7 @@ class SolutionModel extends CI_Model
     {
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_status !=', 'Posted');
         return $this->db->count_all_results();
     }
 
@@ -242,6 +243,7 @@ class SolutionModel extends CI_Model
         }
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_status !=', 'Posted');
         $i = 0;
         foreach ($this->ticket_search as $item) // loop column 
         {
@@ -287,4 +289,82 @@ class SolutionModel extends CI_Model
         $this->db->order_by('date_added', 'DESC');
         return $this->db->get('tickettrail')->result();
     }
+
+    //Posted Ticket List
+    public function get_ticketPosted()
+    {
+        $this->_get_ticketPosted_query();
+        if ($_POST['length'] != -1)
+            $this->db->limit($_POST['length'], $_POST['start']);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function count_filtered_ticketPosted()
+    {
+        $this->_get_ticketPosted_query();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_ticketPosted()
+    {
+        $this->db->from($this->ticket);
+        $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_status', 'Posted');
+        return $this->db->count_all_results();
+    }
+
+    private function _get_ticketPosted_query()
+    {
+        if ($this->input->post('department')) {
+            $this->db->where('concern_department', $this->input->post('department'));
+        }
+        if ($this->input->post('status')) {
+            $this->db->where('concern_status', $this->input->post('status'));
+        }
+        $this->db->from($this->ticket);
+        $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_status', 'Posted');
+        $i = 0;
+        foreach ($this->ticket_search as $item) // loop column 
+        {
+            if ($_POST['search']['value']) // if datatable send POST for search
+            {
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $_POST['search']['value']);
+                } else {
+                    $this->db->or_like($item, $_POST['search']['value']);
+                }
+
+                if (count($this->ticket_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        if (isset($_POST['order'])) // here order processing
+        {
+            $this->db->order_by($this->ticket_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else if (isset($this->order_ticket)) {
+            $order = $this->order_ticket;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function getCountSolutions($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->where('solutions', NULL);
+        return $this->db->get('ticketconcern')->num_rows();
+    }
+
+    function getCountConcern($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->where('evaluate_concern', NULL);
+        return $this->db->get('ticketconcern')->num_rows();
+    }
+
 }

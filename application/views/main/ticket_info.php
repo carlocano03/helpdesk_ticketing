@@ -77,7 +77,11 @@
                     </table>
                 </div>
                 <div class="text-end">
-                    <button class="btn btn-success btn-sm" ><i class="bi bi-check2-square me-2"></i>Posted</button>
+
+                    <?php if($count_solutions < 1 && $count_concern < 1) : ?>
+                        <button class="btn btn-success btn-sm" ><i class="bi bi-check2-square me-2"></i>Posted</button>
+                    <?php endif; ?>
+
                     <button class="btn btn-danger btn-sm transfer_ticket" ><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
                 </div>
             </div>

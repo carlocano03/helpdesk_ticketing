@@ -327,6 +327,13 @@
                     </li>
                 </ul>
             </li><!-- End Analytics Nav -->
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <i class="bi bi-files"></i>
+                    <span>Supplementary Forms</span>
+                </a>
+            </li><!-- End supplementary forms Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#">

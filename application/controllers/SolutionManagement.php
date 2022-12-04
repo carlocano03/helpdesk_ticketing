@@ -511,6 +511,34 @@ class SolutionManagement extends CI_Controller
         echo json_encode($output);
     }
 
+    public function get_ticketPosted()
+    {
+        $list = $this->solution->get_ticketPosted();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $concern) {
+            $ticketNo = $this->encrypt->encode($concern->ticket_no);
+            $no++;
+            $row = array();
+            
+            $row[] = '<div>'.$concern->ticket_no.'</div>
+                      <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
+            $row[] = $concern->concern_person;
+            $row[] = $concern->concern_department;
+            $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
+            $row[] = $concern->concern_status;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->solution->count_all_ticketPosted(),
+            "recordsFiltered" => $this->solution->count_filtered_ticketPosted(),
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
+
     public function getNotif()
     {
 
@@ -621,7 +649,14 @@ class SolutionManagement extends CI_Controller
             }
             
             $row[] = $concern->evaluate_concern;
-            $row[] = $concern->solutions;
+
+            if ($concern->support_system == NULL) {
+                $row[] = $concern->solutions;
+            } else {
+                $row[] = '<div>'.$concern->solutions.'</div>
+                          <span class="text-danger"><small><b>Support System:</b> '.$concern->support_system.'</small></span>';
+            }
+            
 
             $data[] = $row;
         }
@@ -687,4 +722,21 @@ class SolutionManagement extends CI_Controller
         $output['message'] = $message;
         echo json_encode($output);
     }
+
+    public function addSupport_system()
+    {
+        $this->db->where('concern_id', $this->input->post('concernID'));
+        $res = $this->db->get('ticketconcern')->row();
+        $date_created = date('Y-m-d H:i:s');
+        $message = '';
+        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
+            $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
 }

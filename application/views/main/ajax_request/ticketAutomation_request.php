@@ -119,7 +119,10 @@
                 },
                 success: function(data) {
                     if (data.message == 'Success') {
-                        tableConcern.draw();
+                        // tableConcern.draw();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
                     } else {
                         Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                     }
@@ -151,7 +154,10 @@
                 },
                 success: function(data) {
                     if (data.message == 'Success') {
-                        tableConcern.draw();
+                        // tableConcern.draw();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
                     } else {
                         Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                     }
@@ -257,5 +263,55 @@
                 }
             });
         });
+
+        //Add Support System
+        $(document).on('change', '.support_system', function() {
+            var concernID = $(this).attr('id');
+            var support_system = $(this).val();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to support through " + support_system,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url('SolutionManagement/addSupport_system') ?>",
+                        method: "POST",
+                        data: {
+                            concernID: concernID,
+                            support_system: support_system
+                        },
+                        dataType: "json",
+                        beforeSend: function() {
+                            $('#__loading').show();
+                        },
+                        success: function(data) {
+                            if (data.message == 'Success') {
+                                // tableConcern.draw();
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
+                            }
+                        },
+                        complete: function() {
+                            $('#__loading').hide();
+                        },
+                        error: function() {
+                            $('#__loading').hide();
+                            Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                        }
+                    });
+                } else {
+                    $(this).val('');
+                }
+            })
+        });
+
     });
 </script>

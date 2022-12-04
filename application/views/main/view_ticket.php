@@ -69,6 +69,11 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="text-end">
+                    <?php if($ticketInfo->concern_status == "Posted") : ?>
+                        <button class="btn btn-success btn-sm ticket_received" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-check2-square me-2"></i>Ticket Received</button>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <hr>
