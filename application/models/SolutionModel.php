@@ -295,7 +295,7 @@ class SolutionModel extends CI_Model
     {
         $this->_get_ticketPosted_query();
         if ($_POST['length'] != -1)
-            $this->db->limit($_POST['length'], $_POST['start']);
+        $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
@@ -310,7 +310,7 @@ class SolutionModel extends CI_Model
     public function count_all_ticketPosted()
     {
         $this->db->from($this->ticket);
-        $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status', 'Posted');
         return $this->db->count_all_results();
     }
@@ -324,7 +324,7 @@ class SolutionModel extends CI_Model
             $this->db->where('concern_status', $this->input->post('status'));
         }
         $this->db->from($this->ticket);
-        $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status', 'Posted');
         $i = 0;
         foreach ($this->ticket_search as $item) // loop column 
@@ -364,6 +364,13 @@ class SolutionModel extends CI_Model
     {
         $this->db->where('ticket_no', $ticketNo);
         $this->db->where('evaluate_concern', NULL);
+        return $this->db->get('ticketconcern')->num_rows();
+    }
+
+    function getCountSupportSystem($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->where('support_system', NULL);
         return $this->db->get('ticketconcern')->num_rows();
     }
 

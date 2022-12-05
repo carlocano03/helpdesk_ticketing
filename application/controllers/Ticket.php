@@ -39,6 +39,7 @@ class Ticket extends CI_Controller
         if ($ongoing >= 1) {
             $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
             $data['count_concern'] = $this->solution->getCountConcern($ticketNo);
+            $data['count_system'] = $this->solution->getCountSupportSystem($ticketNo);
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();
@@ -59,6 +60,7 @@ class Ticket extends CI_Controller
 
             $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
             $data['count_concern'] = $this->solution->getCountConcern($ticketNo);
+            $data['count_system'] = $this->solution->getCountSupportSystem($ticketNo);
             $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
             $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
             $data['department'] = $this->db->group_by('department')->get('tomsworld.department')->result();

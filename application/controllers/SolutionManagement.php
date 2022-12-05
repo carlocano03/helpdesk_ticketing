@@ -184,7 +184,7 @@ class SolutionManagement extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $solution) {
 
-            $query = $this->db->query("SELECT photo FROM users WHERE id='" . $solution->addedUserID . "'");
+            $query = $this->db->query("SELECT profile_pic FROM tomsworld.employee WHERE employee.emp_id='" . $solution->addedUserID . "'");
             $res = $query->row();
 
             $no++;
@@ -198,8 +198,8 @@ class SolutionManagement extends CI_Controller
             $row[] = $solution->solutionStatus;
 
 
-            if (isset($res->photo) && $res->photo != '')
-                $row[] = '<img class="box" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->photo . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
+            if (isset($res->profile_pic) && $res->profile_pic != '')
+                $row[] = '<img class="box" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
             else
                 $row[] = '<img class="box" src="' . base_url('../toms-world/assets/img/avatar.jpg') . '" alt="Pofile-Picture">' . ' ' . $solution->addedBy;
 
@@ -456,7 +456,7 @@ class SolutionManagement extends CI_Controller
         $insert_trail = array(
             'ticket_no' => $generatedTicket,
             'ticket_status' => 'Ticket submitted successfully. Waiting for the response of concern person.',
-            'remarks' => 'Submitted',
+            'remarks' => 'Ticket Created',
             'date_added' => $date_created,
         );
 
@@ -521,10 +521,11 @@ class SolutionManagement extends CI_Controller
             $no++;
             $row = array();
             
+            // <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>
             $row[] = '<div>'.$concern->ticket_no.'</div>
-                      <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
-            $row[] = $concern->concern_person;
-            $row[] = $concern->concern_department;
+                      ';
+            $row[] = $concern->request_by;
+            $row[] = $concern->request_department;
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
 
@@ -731,6 +732,27 @@ class SolutionManagement extends CI_Controller
         $message = '';
         if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
             $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
+    public function postedTicket()
+    {
+        $ticketNo = $this->input->post('ticketNo');
+        $date_created = date('Y-m-d H:i:s');
+        $message = '';
+        $insert_trail = array(
+            'ticket_no' => $ticketNo,
+            'ticket_status' => 'Ticket posted successfully.',
+            'remarks' => 'Posted',
+            'date_added' => $date_created,
+        );
+        if ($this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Posted'))) {
+            $this->db->insert('tickettrail', $insert_trail);
             $message = 'Success';
         } else {
             $message = 'Error';

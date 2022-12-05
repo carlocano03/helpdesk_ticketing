@@ -124,11 +124,12 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">AI Support List</h5>
-                <div class="search-bar float-end me-2">
+                <div class="search-bar me-2">
                     <input class="form-control" autocomplete="off" type="text" name="query" id="searcSupport" placeholder="Enter search keyword" title="Enter search keyword">
                 </div><!-- End Search Bar -->
-                <small><i>If your concern does not fall to any AI Solutions, click "Create Ticket" below.</i></small><br>
+                <!-- <small><i>If your concern does not fall to any AI Solutions, click "Create Ticket" below.</i></small><br>
                 <a href="ticket_automation.html" class="btn btn-outline-danger btn-sm"><i class="bi bi-pencil-square me-2"></i>Create Ticket</a>
+                 -->
                 <hr>
                 <div class="row g-2 ai-support">
                     <div class="col-md-4">

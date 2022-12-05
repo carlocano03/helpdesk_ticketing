@@ -46,7 +46,7 @@ class Main extends CI_Controller
     public function logout()
     {
         $this->session->sess_destroy();
-        redirect('user');
+        redirect('../toms-world');
     }
 
     //========================================================================================
@@ -79,6 +79,17 @@ class Main extends CI_Controller
         $this->load->view('main/ticket_monitoring', $data);
         $this->load->view('partials/__footer');
         $this->load->view('main/ajax_request/ticketAutomation_request');
+    }
+
+    //========================================================================================
+
+    public function forms()
+    {
+        $data['department'] = $this->db->order_by('department', 'ASC')->get('tomsworld.department')->result();
+        $this->load->view('partials/__header');
+        $this->load->view('main/supplementary_forms', $data);
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/form_request');
     }
 
     //========================================================================================

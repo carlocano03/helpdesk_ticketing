@@ -37,7 +37,7 @@
                 }
                 ?>
                 <label><b>Ticket No.:</b></label><br>
-                <small><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no .' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></small>
+                <small><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></small>
                 <hr>
                 <label><b>Priority Level:</b></label><br>
                 <small>(Initial Priority Level: <?= isset($ticketInfo->concern_level) ? $ticketInfo->concern_level : '' ?>)</small>
@@ -78,11 +78,16 @@
                 </div>
                 <div class="text-end">
 
-                    <?php if($count_solutions < 1 && $count_concern < 1) : ?>
-                        <button class="btn btn-success btn-sm" ><i class="bi bi-check2-square me-2"></i>Posted</button>
+                    <?php if ($ticketInfo->concern_status != 'Posted') : ?>
+                        <?php if ($count_solutions < 1 && $count_concern < 1 && $count_system < 1) : ?>
+                            <button type="button" class="btn btn-success btn-sm post_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-check2-square me-2"></i>Posted</button>
+                        <?php endif; ?>
                     <?php endif; ?>
 
-                    <button class="btn btn-danger btn-sm transfer_ticket" ><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
+                    <?php if ($ticketInfo->concern_status != 'Posted') : ?>
+                        <button class="btn btn-danger btn-sm transfer_ticket"><i class="bi bi-layer-forward me-2"></i>Transfer Ticket</button>
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>
@@ -90,7 +95,7 @@
         <div class="card">
             <div class="card-header"><i class="bi bi-list-columns-reverse me-2"></i>Ticket Trail</div>
             <div class="card-body">
-                <h3 class="mt-2">Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no .' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h3>
+                <h3 class="mt-2">Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h3>
                 <div class="container">
 
                     <?php foreach ($ticketTrail as $row) : ?>
@@ -135,8 +140,8 @@
                             <label>Department</label>
                             <select class="form-select form-select-sm" id="trans_dept" name="trans_dept" aria-label="Default select example">
                                 <option value="">Select Department</option>
-                                <?php foreach($department as $row) : ?>
-                                    <option value="<?= $row->department?>"><?= $row->department?></option>
+                                <?php foreach ($department as $row) : ?>
+                                    <option value="<?= $row->department ?>"><?= $row->department ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

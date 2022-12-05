@@ -42,6 +42,37 @@
         //     getTicket();
         // }, 5000);
 
+        //Posted Ticket
+        var tableSupportPosted = $('#table_support_posted').DataTable({
+            language: {
+                search: '',
+                searchPlaceholder: "Search Here...",
+                paginate: {
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>'
+                }
+            },
+            "ordering": false,
+            "serverSide": true,
+            "processing": true,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": {
+                "url": "<?= base_url('solutionmanagement/get_ticketPosted') ?>",
+                "type": "POST",
+                "data": function(data) {
+                    data.department = $('#filter_dept_posted').val();
+                    data.status = $('#filter_status_posted').val();
+                }
+            },
+        });
+        $('#filter_dept_posted').on('change', function() {
+            tableSupportPosted.draw();
+        });
+        $('#filter_status_posted').on('change', function() {
+            tableSupportPosted.draw();
+        });
+
         $(document).on('click', '.view_ticketInfo', function() {
             var ticketNo = $(this).attr('id');
             window.location.href = "<?= base_url('ticket/ticketInformation?ticketNo=') ?>" + ticketNo;
@@ -309,6 +340,54 @@
                     });
                 } else {
                     $(this).val('');
+                }
+            })
+        });
+
+        $(document).on('click', '.post_ticket', function() {
+            var ticketNo = $(this).attr('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to post this ticket " + ticketNo,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url('SolutionManagement/postedTicket') ?>",
+                        method: "POST",
+                        data: {
+                            ticketNo: ticketNo
+                        },
+                        dataType: "json",
+                        beforeSend: function() {
+                            $('#__loading').show();
+                        },
+                        success: function(data) {
+                            if (data.message == 'Success') {
+                                Swal.fire(
+                                    'Thank you!',
+                                    'Posted successfuly.',
+                                    'success'
+                                );
+                                setTimeout(function() {
+                                    window.location.href = "<?= base_url('main/ticketMonitoring') ?>"
+                                }, 2000);
+                            } else {
+                                Swal.fire('Error!', 'Failed to post ticket. Please contact system administrator', 'error');
+                            }
+                        },
+                        complete: function() {
+                            $('#__loading').hide();
+                        },
+                        error: function() {
+                            $('#__loading').hide();
+                            Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                        }
+                    });
                 }
             })
         });

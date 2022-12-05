@@ -37,38 +37,7 @@
             tableSupport.draw();
         });
 
-        //Posted Ticket
-        var tableSupportPosted = $('#table_support_posted').DataTable({
-            language: {
-                search: '',
-                searchPlaceholder: "Search Here...",
-                paginate: {
-                    next: '<i class="bi bi-chevron-right"></i>',
-                    previous: '<i class="bi bi-chevron-left"></i>'
-                }
-            },
-            "ordering": false,
-            "serverSide": true,
-            "processing": true,
-            "pageLength": 25,
-            "bDestroy": true,
-            "ajax": {
-                "url": "<?= base_url('solutionmanagement/get_ticketPosted') ?>",
-                "type": "POST",
-                "data": function(data) {
-                    data.department = $('#filter_dept_posted').val();
-                    data.status = $('#filter_status_posted').val();
-                }
-            },
-        });
-        $('#filter_dept_posted').on('change', function() {
-            tableSupportPosted.draw();
-        });
-        $('#filter_status_posted').on('change', function() {
-            tableSupportPosted.draw();
-        });
-
-
+        
         $(document).on('change', '#concernDepartment', function() {
             var department = $(this).val();
 

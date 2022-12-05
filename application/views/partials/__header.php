@@ -78,7 +78,7 @@
 
 <body onload="startTime()">
     <div id="__loading" class="mx-auto" style="display: none;">
-        <img src="<?= base_url('assets/img/loader.gif');?>" id="loading-image">
+        <img src="<?= base_url('assets/img/loader.gif'); ?>" id="loading-image">
     </div>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -269,7 +269,7 @@
                 </a>
                 <ul id="ticket-nav" class="nav-content <?= ($this->uri->segment(2) == 'createTicket' ? 'show' : '') ?>" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="<?= base_url('solutionmanagement/ticketing') ?>"  class="<?= ($this->uri->segment(2) == 'createTicket' ? 'active' : '') ?>">
+                        <a href="<?= base_url('solutionmanagement/ticketing') ?>" class="<?= ($this->uri->segment(2) == 'createTicket' ? 'active' : '') ?>">
                             <i class="bi bi-circle"></i><span>Create New Ticket</span>
                         </a>
                     </li>
@@ -327,9 +327,9 @@
                     </li>
                 </ul>
             </li><!-- End Analytics Nav -->
-            
+
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link <?= ($this->uri->segment(2) == 'forms' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/forms') ?>">
                     <i class="bi bi-files"></i>
                     <span>Supplementary Forms</span>
                 </a>
