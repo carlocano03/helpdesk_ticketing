@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label>Department</label>
-                        <select class="form-select form-select-sm" id="department">
+                        <select class="form-select form-select-sm" name="department">
                             <option value="">Select Department</option>
                             <?php foreach ($department as $row) : ?>
                                 <option value="<?= $row->department ?>"><?= $row->department ?></option>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label>Document Availability</label>
-                        <select class="form-select form-select-sm" id="doc_availability">
+                        <select class="form-select form-select-sm" name="doc_availability">
                             <option value="">Select Availability</option>
                             <option value="Public">Public</option>
                             <option value="Private">Private</option>
