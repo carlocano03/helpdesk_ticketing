@@ -62,6 +62,15 @@
                 <small><?= isset($ticketInfo->request_department) ? $ticketInfo->request_department : '' ?></small>
             </div>
             <div class="col-md-9">
+                <div>
+                    <select class="form-select form-select-sm support_system" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
+                        <option value="">Select Support System</option>
+                        <option value="Via Email">Via Email</option>
+                        <option value="Phone Call">Phone Call</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Onsite">Onsite</option>
+                    </select>
+                </div>
                 <div class="table-reponsive">
                     <table class="table" id="table_concern" width="100%" cellspacing="0">
                         <thead>

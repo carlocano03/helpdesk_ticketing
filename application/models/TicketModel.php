@@ -56,6 +56,10 @@ class TicketModel extends CI_Model
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
         }
+        if ($this->input->post('from') && $this->input->post('to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('to'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status !=', 'Posted');

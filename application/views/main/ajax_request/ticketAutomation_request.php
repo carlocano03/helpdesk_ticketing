@@ -29,6 +29,8 @@
                 "data": function(data) {
                     data.department = $('#filter_dept').val();
                     data.status = $('#filter_status').val();
+                    data.from = $('#from').val();
+                    data.to = $('#to').val();
                 }
             },
         });
@@ -38,9 +40,31 @@
         $('#filter_status').on('change', function() {
             tableTicket.draw();
         });
-        // setInterval(function() {
-        //     getTicket();
-        // }, 5000);
+        $('#from').on('change', function() {
+            if ($('#from').val() > $('#to').val() && $('#to').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#from').val('');
+            } else {
+                tableTicket.draw();
+            }
+        });
+        $('#to').on('change', function() {
+            if ($('#to').val() < $('#from').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#to').val('');
+            } else {
+                tableTicket.draw();
+            }
+        });
+
 
         //Posted Ticket
         var tableSupportPosted = $('#table_support_posted').DataTable({
@@ -63,6 +87,8 @@
                 "data": function(data) {
                     data.department = $('#filter_dept_posted').val();
                     data.status = $('#filter_status_posted').val();
+                    data.filter_from = $('#filter_from').val();
+                    data.filter_to = $('#filter_to').val();
                 }
             },
         });
@@ -71,6 +97,30 @@
         });
         $('#filter_status_posted').on('change', function() {
             tableSupportPosted.draw();
+        });
+        $('#filter_from').on('change', function() {
+            if ($('#filter_from').val() > $('#to').val() && $('#filter_to').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#filter_from').val('');
+            } else {
+                tableSupportPosted.draw();
+            }
+        });
+        $('#filter_to').on('change', function() {
+            if ($('#filter_to').val() < $('#filter_from').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#filter_to').val('');
+            } else {
+                tableSupportPosted.draw();
+            }
         });
 
         $(document).on('click', '.view_ticketInfo', function() {

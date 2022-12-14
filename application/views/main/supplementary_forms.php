@@ -17,16 +17,28 @@
                 <h5 class="card-title">List of Uploaded Forms</h5>
                 <hr>
                 <div class="row g-3 mb-2">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <a href="#formModal" data-bs-toggle="modal" class="btn btn-success btn-sm" title="Upload forms">
                             <i class="bi bi-upload me-2"></i>Upload Supplementary Forms
                         </a>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="filter_status">From</label>
+                            <input type="date" class="form-control form-control-sm" id="from">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <label class="input-group-text" for="filter_status">To</label>
+                            <input type="date" class="form-control form-control-sm" id="to">
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group input-group-sm mb-3">
                             <label class="input-group-text" for="filter_dept">Department</label>
                             <select class="form-select form-select-sm" id="filter_dept">
-                                <option value="">Select Department</option>
+                                <option value="">Select All</option>
                                 <?php foreach ($department as $row) : ?>
                                     <option value="<?= $row->department ?>"><?= $row->department ?></option>
                                 <?php endforeach; ?>

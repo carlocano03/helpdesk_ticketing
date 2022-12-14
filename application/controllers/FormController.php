@@ -97,4 +97,13 @@ class FormController extends CI_Controller
         );
         echo json_encode($output);
     }
+
+    public function downloadForms()
+    {
+        $doc_id = $_GET['docID'];
+        $this->load->helper('download');
+        $fileInfo = $this->forms->getFormsData($doc_id);
+        $file = 'uploaded_file/forms/' . $fileInfo->doc_path;
+        force_download($file, NULL);
+    }
 }

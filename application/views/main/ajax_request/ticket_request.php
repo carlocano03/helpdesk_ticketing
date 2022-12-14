@@ -27,6 +27,8 @@
                 "data": function(data) {
                     data.department = $('#filter_dept').val();
                     data.status = $('#filter_status').val();
+                    data.from = $('#from').val();
+                    data.to = $('#to').val();
                 }
             },
         });
@@ -36,8 +38,32 @@
         $('#filter_status').on('change', function() {
             tableSupport.draw();
         });
+        $('#from').on('change', function() {
+            if ($('#from').val() > $('#to').val() && $('#to').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#from').val('');
+            } else {
+                tableSupport.draw();
+            }
+        });
+        $('#to').on('change', function() {
+            if ($('#to').val() < $('#from').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#to').val('');
+            } else {
+                tableSupport.draw();
+            }
+        });
 
-        
+
         $(document).on('change', '#concernDepartment', function() {
             var department = $(this).val();
 

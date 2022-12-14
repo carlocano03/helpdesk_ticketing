@@ -56,17 +56,36 @@
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <hr>
                         <div class="row g-3 mb-2">
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-secondary btn-sm" title="Export data">
                                     <i class="bi bi-download me-2"></i>Export Data
                                 </button>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">From</label>
+                                            <input type="date" class="form-control form-control-sm" id="from">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">To</label>
+                                            <input type="date" class="form-control form-control-sm" id="to">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="input-group input-group-sm mb-3">
                                     <label class="input-group-text" for="filter_dept">Department</label>
                                     <select class="form-select form-select-sm" id="filter_dept">
-                                        <option value="">Select Department</option>
+                                        <option value="">Select All</option>
                                         <?php foreach ($department as $row) : ?>
                                             <option value="<?= $row->department ?>"><?= $row->department ?></option>
                                         <?php endforeach; ?>
@@ -77,7 +96,7 @@
                                 <div class="input-group input-group-sm mb-3">
                                     <label class="input-group-text" for="filter_status">Status</label>
                                     <select class="form-select form-select-sm" id="filter_status">
-                                        <option value="">Select Status</option>
+                                        <option value="">Select All</option>
                                         <?php foreach ($status as $row) : ?>
                                             <option value="<?= $row->concern_status ?>"><?= $row->concern_status ?></option>
                                         <?php endforeach; ?>
@@ -112,11 +131,29 @@
                                     <i class="bi bi-download me-2"></i>Export Data
                                 </button>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">From</label>
+                                            <input type="date" class="form-control form-control-sm" id="filter_from">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">To</label>
+                                            <input type="date" class="form-control form-control-sm" id="filter_to">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="input-group input-group-sm mb-3">
                                     <label class="input-group-text" for="filter_dept">Department</label>
                                     <select class="form-select form-select-sm" id="filter_dept_posted">
-                                        <option value="">Select Department</option>
+                                        <option value="">Select All</option>
                                         <?php foreach ($department as $row) : ?>
                                             <option value="<?= $row->department ?>"><?= $row->department ?></option>
                                         <?php endforeach; ?>
@@ -127,7 +164,7 @@
                                 <div class="input-group input-group-sm mb-3">
                                     <label class="input-group-text" for="filter_status">Status</label>
                                     <select class="form-select form-select-sm" id="filter_status_posted">
-                                        <option value="">Select Status</option>
+                                        <option value="">Select All</option>
                                         <?php foreach ($status as $row) : ?>
                                             <option value="<?= $row->concern_status ?>"><?= $row->concern_status ?></option>
                                         <?php endforeach; ?>
@@ -135,7 +172,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="table-responsive">
                             <table class="table table-hover table-striped" id="table_support_posted" width="100%">
                                 <thead>

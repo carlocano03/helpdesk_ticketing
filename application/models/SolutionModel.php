@@ -241,6 +241,10 @@ class SolutionModel extends CI_Model
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
         }
+        if ($this->input->post('from') && $this->input->post('to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('to'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status !=', 'Posted');
@@ -322,6 +326,10 @@ class SolutionModel extends CI_Model
         }
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
+        }
+        if ($this->input->post('filter_from') && $this->input->post('filter_to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('filter_from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('filter_to'));
         }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);

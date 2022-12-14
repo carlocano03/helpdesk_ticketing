@@ -16,8 +16,40 @@
             "responsive": true,
             "ajax": {
                 "url": "<?= base_url('FormController/getForms') ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": function(data) {
+                    data.department = $('#filter_dept').val();
+                    data.from = $('#from').val();
+                    data.to = $('#to').val();
+                }
             },
+        });
+        $('#filter_dept').on('change', function() {
+            tableForms.draw();
+        });
+        $('#from').on('change', function() {
+            if ($('#from').val() > $('#to').val() && $('#to').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#from').val('');
+            } else {
+                tableForms.draw();
+            }
+        });
+        $('#to').on('change', function() {
+            if ($('#to').val() < $('#from').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#to').val('');
+            } else {
+                tableForms.draw();
+            }
         });
 
         $(document).on('submit', '#addForms', function(event) {
@@ -49,6 +81,15 @@
                     Swal.fire('Error!', 'Something went wrong. Please try again later!', 'error');
                 }
             });
+        });
+
+        $(document).on('click', '.download_forms', function() {
+            var doc_id = $(this).attr('id');
+            if (doc_id != '') {
+                window.location.href = "<?= base_url('FormController/downloadForms?docID=')?>" + doc_id;
+            } else {
+                Swal.fire('Error!', 'No document found.', 'error');
+            }
         });
     });
 </script>

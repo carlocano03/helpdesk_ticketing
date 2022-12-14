@@ -726,11 +726,11 @@ class SolutionManagement extends CI_Controller
 
     public function addSupport_system()
     {
-        $this->db->where('concern_id', $this->input->post('concernID'));
+        $this->db->where('ticket_no', $this->input->post('concernID'));
         $res = $this->db->get('ticketconcern')->row();
         $date_created = date('Y-m-d H:i:s');
         $message = '';
-        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
+        if ($this->db->where('ticket_no', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
             $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {

@@ -49,6 +49,13 @@ class FormModel extends CI_Model
 
     private function getForms_query()
     {
+        if ($this->input->post('department')) {
+            $this->db->where('department', $this->input->post('department'));
+        }
+        if ($this->input->post('from') && $this->input->post('to')) {
+            $this->db->where('DATE(date_created) >=', $this->input->post('from'));
+            $this->db->where('DATE(date_created) <=', $this->input->post('to'));
+        }
         $this->db->from($this->forms);
         $i = 0;
         foreach ($this->forms_search as $item) // loop column 
@@ -75,5 +82,12 @@ class FormModel extends CI_Model
             $order = $this->order;
             $this->db->order_by(key($order), $order[key($order)]);
         }
+    }
+
+    function getFormsData($doc_id)
+    {
+        $query = $this->db->where('id', $doc_id)
+                 ->get('supplementary_forms');
+        return $query->row();
     }
 }

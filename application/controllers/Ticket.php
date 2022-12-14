@@ -113,20 +113,11 @@ class Ticket extends CI_Controller
             $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control evaluate_concern">' . $concern->evaluate_concern . '</textarea>';
             
             if ($concern->support_system == NULL) {
-                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
-                      <select class="form-select form-select-sm support_system" id="'. $concern->concern_id .'">
-                        <option value="">Select Support System</option>
-                        <option value="Via Email">Via Email</option>
-                        <option value="Phone Call">Phone Call</option>
-                        <option value="Remote">Remote</option>
-                        <option value="Onsite">Onsite</option>
-                      </select>';
+                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
             } else {
                 $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
                           <span class="text-danger"><b>Support System: </b>'.$concern->support_system.'</span>';
             }
-            
-
             $data[] = $row;
         }
         $output = array(
