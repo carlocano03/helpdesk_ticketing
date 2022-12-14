@@ -4,6 +4,8 @@
             "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
                 if (aData[4] == 'Pending') {
                     $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
+                } else if (aData[4] == 'Posted') {
+                    $('td', nRow).css('background-color', 'transparent');
                 } else {
                     $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
                 }

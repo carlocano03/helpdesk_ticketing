@@ -229,7 +229,7 @@ class SolutionModel extends CI_Model
     {
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
-        $this->db->where('concern_status !=', 'Posted');
+        // $this->db->where('concern_status !=', 'Posted');
         return $this->db->count_all_results();
     }
 
@@ -247,7 +247,7 @@ class SolutionModel extends CI_Model
         }
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
-        $this->db->where('concern_status !=', 'Posted');
+        // $this->db->where('concern_status !=', 'Posted');
         $i = 0;
         foreach ($this->ticket_search as $item) // loop column 
         {
