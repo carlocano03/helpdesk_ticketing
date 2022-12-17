@@ -154,6 +154,18 @@
                     </div>
                 </div>
 
+                <div class="card bg-secondary guest">
+                    <div class="card-body p-2">
+                        <div class="card-avatar-primary me-3">
+                            <i class="bi bi-signpost mx-auto text-secondary"></i>
+                        </div>
+                        <div class="card-text">
+                            <h5 class="text-white">POSTED</h5>
+                            <h4 class="text-white"><?= $posted; ?></h4>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- critical -->
                 <div class="card info-card backlogs-card">
                     <div class="card-header">
@@ -161,15 +173,13 @@
                     </div>
                     <div class="card-body">
                         <div class="card-breakdown mt-2">
-                            <span><b>Department:</b> Sample Department</span>
-                            <hr class="mt-1 mb-1">
                             <span><b>Total Accomplished:</b> <?= $finish; ?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Ongoing:</b> <?= $ongoing; ?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Pending:</b> <?= $pending; ?></span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Backlogs:</b> 25</span>
+                            <span><b>Total Backlogs:</b> <?= $pending + $ongoing + $posted; ?></span>
                             <hr class="mt-1 mb-1">
 
                         </div>

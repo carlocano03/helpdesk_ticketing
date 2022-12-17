@@ -71,6 +71,11 @@
                         <option value="Onsite">Onsite</option>
                     </select>
                 </div>
+                <div class="row g-0 mt-2 duration" style="display: none;">
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control form-control-sm" id="duration_onsite" data-id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>" placeholder="Duration">
+                    </div>
+                </div>
                 <div class="table-reponsive">
                     <table class="table" id="table_concern" width="100%" cellspacing="0">
                         <thead>

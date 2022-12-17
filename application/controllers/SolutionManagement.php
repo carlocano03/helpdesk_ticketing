@@ -761,4 +761,16 @@ class SolutionManagement extends CI_Controller
         echo json_encode($output);
     }
 
+    public function add_duration()
+    {
+        $message = '';
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketconcern', array('duration_onsite' => $this->input->post('duration')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+    
 }

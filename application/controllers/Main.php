@@ -32,6 +32,7 @@ class Main extends CI_Controller
         $data['high'] = $this->TicketModel->getHigh();
         $data['medium'] = $this->TicketModel->getMedium();
         $data['low'] = $this->TicketModel->getLow();
+        $data['posted'] = $this->TicketModel->getPosted();
         $data['finish'] = $this->TicketModel->getFinish();
         $data['ongoing'] = $this->TicketModel->getOngoing();
         $data['pending'] = $this->TicketModel->getPending();

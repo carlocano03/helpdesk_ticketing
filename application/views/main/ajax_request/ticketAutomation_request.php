@@ -203,7 +203,7 @@
                         // tableConcern.draw();
                         setTimeout(function() {
                             location.reload();
-                        }, 2000);
+                        }, 500);
                     } else {
                         Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                     }
@@ -238,7 +238,7 @@
                         // tableConcern.draw();
                         setTimeout(function() {
                             location.reload();
-                        }, 2000);
+                        }, 500);
                     } else {
                         Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                     }
@@ -359,6 +359,7 @@
                 confirmButtonText: 'Yes, proceed'
             }).then((result) => {
                 if (result.isConfirmed) {
+
                     $.ajax({
                         url: "<?= base_url('SolutionManagement/addSupport_system') ?>",
                         method: "POST",
@@ -373,9 +374,15 @@
                         success: function(data) {
                             if (data.message == 'Success') {
                                 // tableConcern.draw();
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 2000);
+
+                                if (support_system == 'Onsite') {
+                                    $('.duration').show(300);
+                                } else {
+                                    $('.duration').hide(300);
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 500);
+                                }
                             } else {
                                 Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
                             }
@@ -440,6 +447,41 @@
                     });
                 }
             })
+        });
+
+        //Add Duration
+        $(document).on('change', '#duration_onsite', function() {
+            var ticketNo = $(this).data('id');
+            var duration = $(this).val();
+            $.ajax({
+                url: "<?= base_url('SolutionManagement/add_duration') ?>",
+                method: "POST",
+                data: {
+                    ticketNo: ticketNo,
+                    duration: duration
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#__loading').show();
+                },
+                success: function(data) {
+                    if (data.message == 'Success') {
+                        // tableConcern.draw();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500);
+                    } else {
+                        Swal.fire('Error!', 'Failed to update. Please contact system administrator', 'error');
+                    }
+                },
+                complete: function() {
+                    $('#__loading').hide();
+                },
+                error: function() {
+                    $('#__loading').hide();
+                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                }
+            });
         });
 
     });
