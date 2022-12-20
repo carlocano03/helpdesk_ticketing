@@ -382,4 +382,23 @@ class SolutionModel extends CI_Model
         return $this->db->get('ticketconcern')->num_rows();
     }
 
+    function getTicketDetails($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketing')->row();
+    }
+
+    function getConcern($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketconcern')->result();
+    }
+
+    function getTrail($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->order_by('trail_id', 'DESC');
+        return $this->db->get('tickettrail')->result();
+    }
+
 }

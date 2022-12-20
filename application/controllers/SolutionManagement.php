@@ -63,6 +63,20 @@ class SolutionManagement extends CI_Controller
         $this->load->view('main/ajax_request/ticket_request');
     }
 
+    public function printTicket()
+    {
+        $ticketNo = $_GET['ticketNo'];
+        require_once 'vendor/autoload.php';
+        $data['ticket'] = $this->solution->getTicketDetails($ticketNo);
+        $data['ticketConcern'] = $this->solution->getConcern($ticketNo);
+        $data['ticketTrail'] = $this->solution->getTrail($ticketNo);
+        $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P']);
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view('pdf/ticket_details', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
     public function addSolution()
     {
         $message = '';
