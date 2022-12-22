@@ -29,6 +29,8 @@
                 "data": function(data) {
                     data.department = $('#filter_dept').val();
                     data.status = $('#filter_status').val();
+                    data.from = $('#from').val();
+                    data.to = $('#to').val();
                 }
             },
         });
@@ -38,8 +40,32 @@
         $('#filter_status').on('change', function() {
             tableSupport.draw();
         });
+        $('#from').on('change', function() {
+            if ($('#from').val() > $('#to').val() && $('#to').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#from').val('');
+            } else {
+                tableSupport.draw();
+            }
+        });
+        $('#to').on('change', function() {
+            if ($('#to').val() < $('#from').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#to').val('');
+            } else {
+                tableSupport.draw();
+            }
+        });
 
-        
+
         $(document).on('change', '#concernDepartment', function() {
             var department = $(this).val();
 
@@ -331,6 +357,24 @@
                     Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
                 }
             });
+        });
+
+        $(document).on('click', '.print_ticket', function() {
+            var ticketNo = $(this).attr('id');
+            var url = "<?= base_url('SolutionManagement/printTicket?ticketNo=') ?>" + ticketNo;
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to print this ticket",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.open(url, 'targetWindow', 'resizable=yes,width=1000,height=1000');
+                }
+            })
         });
 
     });

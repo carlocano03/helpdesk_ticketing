@@ -56,6 +56,10 @@ class TicketModel extends CI_Model
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
         }
+        if ($this->input->post('from') && $this->input->post('to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('to'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status !=', 'Posted');
@@ -90,6 +94,7 @@ class TicketModel extends CI_Model
     {
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_level', 'Critical');
+        $this->db->where('concern_status !=', 'Received');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }
@@ -97,6 +102,7 @@ class TicketModel extends CI_Model
     {
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_level', 'High');
+        $this->db->where('concern_status !=', 'Received');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }
@@ -104,6 +110,14 @@ class TicketModel extends CI_Model
     {
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_level', 'Medium');
+        $this->db->where('concern_status !=', 'Received');
+        $query = $this->db->get('ticketing');
+        return $query->num_rows();
+    }
+    function getPosted()
+    {
+        $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
+        $this->db->where('concern_status', 'Posted');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }
@@ -111,6 +125,7 @@ class TicketModel extends CI_Model
     {
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_level', 'Low');
+        $this->db->where('concern_status !=', 'Received');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }
@@ -131,7 +146,7 @@ class TicketModel extends CI_Model
     function getFinish()
     {
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
-        $this->db->where('concern_status', 'Posted');
+        $this->db->where('concern_status', 'Received');
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }

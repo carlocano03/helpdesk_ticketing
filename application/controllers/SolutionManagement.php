@@ -63,6 +63,20 @@ class SolutionManagement extends CI_Controller
         $this->load->view('main/ajax_request/ticket_request');
     }
 
+    public function printTicket()
+    {
+        $ticketNo = $_GET['ticketNo'];
+        require_once 'vendor/autoload.php';
+        $data['ticket'] = $this->solution->getTicketDetails($ticketNo);
+        $data['ticketConcern'] = $this->solution->getConcern($ticketNo);
+        $data['ticketTrail'] = $this->solution->getTrail($ticketNo);
+        $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P']);
+        $mpdf->showImageErrors = true;
+        $html = $this->load->view('pdf/ticket_details', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
     public function addSolution()
     {
         $message = '';
@@ -726,11 +740,11 @@ class SolutionManagement extends CI_Controller
 
     public function addSupport_system()
     {
-        $this->db->where('concern_id', $this->input->post('concernID'));
+        $this->db->where('ticket_no', $this->input->post('concernID'));
         $res = $this->db->get('ticketconcern')->row();
         $date_created = date('Y-m-d H:i:s');
         $message = '';
-        if ($this->db->where('concern_id', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
+        if ($this->db->where('ticket_no', $this->input->post('concernID'))->update('ticketconcern', array('support_system' => $this->input->post('support_system')))) {
             $this->db->where('ticket_no', $res->ticket_no)->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
@@ -761,4 +775,16 @@ class SolutionManagement extends CI_Controller
         echo json_encode($output);
     }
 
+    public function add_duration()
+    {
+        $message = '';
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketconcern', array('duration_onsite' => $this->input->post('duration')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+    
 }

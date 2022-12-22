@@ -59,11 +59,31 @@
                             <i class="bi bi-download me-2"></i>Export Data
                         </button>
                     </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm mb-3">
+                                    <label class="input-group-text" for="filter_status">From</label>
+                                    <input type="date" class="form-control form-control-sm" id="from">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm mb-3">
+                                    <label class="input-group-text" for="filter_status">To</label>
+                                    <input type="date" class="form-control form-control-sm" id="to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-4">
                         <div class="input-group input-group-sm mb-3">
                             <label class="input-group-text" for="filter_dept">Department</label>
                             <select class="form-select form-select-sm" id="filter_dept">
-                                <option value="">Select Department</option>
+                                <option value="">Select All</option>
                                 <?php foreach ($department as $row) : ?>
                                     <option value="<?= $row->department ?>"><?= $row->department ?></option>
                                 <?php endforeach; ?>
@@ -74,7 +94,7 @@
                         <div class="input-group input-group-sm mb-3">
                             <label class="input-group-text" for="filter_status">Status</label>
                             <select class="form-select form-select-sm" id="filter_status">
-                                <option value="">Select Status</option>
+                                <option value="">Select All</option>
                                 <?php foreach ($status as $row) : ?>
                                     <option value="<?= $row->concern_status ?>"><?= $row->concern_status ?></option>
                                 <?php endforeach; ?>

@@ -241,6 +241,10 @@ class SolutionModel extends CI_Model
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
         }
+        if ($this->input->post('from') && $this->input->post('to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('to'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('request_byID', $_SESSION['loggedIn']['id']);
         // $this->db->where('concern_status !=', 'Posted');
@@ -323,6 +327,10 @@ class SolutionModel extends CI_Model
         if ($this->input->post('status')) {
             $this->db->where('concern_status', $this->input->post('status'));
         }
+        if ($this->input->post('filter_from') && $this->input->post('filter_to')) {
+            $this->db->where('DATE(date_added) >=', $this->input->post('filter_from'));
+            $this->db->where('DATE(date_added) <=', $this->input->post('filter_to'));
+        }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status', 'Posted');
@@ -372,6 +380,25 @@ class SolutionModel extends CI_Model
         $this->db->where('ticket_no', $ticketNo);
         $this->db->where('support_system', NULL);
         return $this->db->get('ticketconcern')->num_rows();
+    }
+
+    function getTicketDetails($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketing')->row();
+    }
+
+    function getConcern($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticketconcern')->result();
+    }
+
+    function getTrail($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        $this->db->order_by('trail_id', 'DESC');
+        return $this->db->get('tickettrail')->result();
     }
 
 }
