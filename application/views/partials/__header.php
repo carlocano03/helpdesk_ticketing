@@ -316,12 +316,12 @@
                 </a>
                 <ul id="analytics-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="analytics.html">
+                        <a href="<?= base_url('../toms-world/user/maintenance') ?>">
                             <i class="bi bi-circle"></i><span>Generate Reports</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="<?= base_url('../toms-world/user/maintenance') ?>">
                             <i class="bi bi-circle"></i><span>Departmental</span>
                         </a>
                     </li>
@@ -336,14 +336,14 @@
             </li><!-- End supplementary forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="<?= base_url('../toms-world/user/maintenance') ?>">
                     <i class="bi bi-download"></i>
                     <span>Export Files</span>
                 </a>
             </li><!-- End export file Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="<?= base_url('../toms-world/user/maintenance') ?>">
                     <i class="bi bi-hdd-rack-fill"></i>
                     <span>Backup Database</span>
                 </a>
