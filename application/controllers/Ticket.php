@@ -110,14 +110,14 @@ class Ticket extends CI_Controller
             $row = array();
 
             $row[] = $concern->concern;
-            $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control evaluate_concern">' . $concern->evaluate_concern . '</textarea>';
-            
-            if ($concern->support_system == NULL) {
-                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
-            } else {
-                $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
-                          <span class="text-danger"><b>Support System: </b>'.$concern->support_system.'</span>';
-            }
+            //$row[] = '<textarea id="' . $concern->concern_id . '" class="form-control evaluate_concern">' . $concern->evaluate_concern . '</textarea>';
+            $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
+            // if ($concern->support_system == NULL) {
+            //     $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
+            // } else {
+            //     $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions mb-2">' . $concern->solutions . '</textarea>
+            //               <span class="text-danger"><b>Support System: </b>'.$concern->support_system.'</span>';
+            // }
             $data[] = $row;
         }
         $output = array(

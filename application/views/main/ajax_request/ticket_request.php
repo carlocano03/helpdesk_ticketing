@@ -203,7 +203,7 @@
                                             if (data.message == 'Success') {
                                                 Swal.fire(
                                                     'Thank you!',
-                                                    'Ticket successfuly submitted.',
+                                                    'Ticket sent.',
                                                     'success'
                                                 );
                                                 setTimeout(function() {

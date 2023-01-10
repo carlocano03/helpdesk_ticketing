@@ -722,9 +722,15 @@ class SolutionManagement extends CI_Controller
         $this->db->where('concern_id', $this->input->post('concernID'));
         $res = $this->db->get('ticketconcern')->row();
         $date_created = date('Y-m-d H:i:s');
+        $sol = $this->input->post('solutions');
+        if ($sol != '') {
+            $solutions = $sol;
+        } else {
+            $solutions = NULL;
+        }
         $message = '';
         $addSolutions = array(
-            'solutions' => $this->input->post('solutions'),
+            'solutions' => $solutions,
             'update_by' => $_SESSION['loggedIn']['name'],
             'update_byID' => $_SESSION['loggedIn']['id'],
         );

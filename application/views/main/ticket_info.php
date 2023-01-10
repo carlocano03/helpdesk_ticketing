@@ -62,7 +62,7 @@
                 <small><?= isset($ticketInfo->request_department) ? $ticketInfo->request_department : '' ?></small>
             </div>
             <div class="col-md-9">
-                <div>
+                <!-- <div>
                     <select class="form-select form-select-sm support_system" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
                         <option value="">Select Support System</option>
                         <option value="Via Email">Via Email</option>
@@ -75,13 +75,13 @@
                     <div class="col-sm-3">
                         <input type="text" class="form-control form-control-sm" id="duration_onsite" data-id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>" placeholder="Duration">
                     </div>
-                </div>
+                </div> -->
                 <div class="table-reponsive">
                     <table class="table" id="table_concern" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Concern</th>
-                                <th>Evaluate Concern</th>
+                                <!-- <th>Evaluate Concern</th> -->
                                 <th>Solutions</th>
                             </tr>
                         </thead>
@@ -93,7 +93,7 @@
                 <div class="text-end">
 
                     <?php if ($ticketInfo->concern_status != 'Posted') : ?>
-                        <?php if ($count_solutions < 1 && $count_concern < 1 && $count_system < 1) : ?>
+                        <?php if ($count_solutions < 1) : ?>
                             <button type="button" class="btn btn-success btn-sm post_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-check2-square me-2"></i>Posted</button>
                         <?php endif; ?>
                     <?php endif; ?>

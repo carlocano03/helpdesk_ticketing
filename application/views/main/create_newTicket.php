@@ -454,7 +454,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-danger btn-sm add_row"><i class="bi bi-plus-square-fill me-2"></i>Add Row</button>
+                    <button class="btn btn-danger btn-sm add_row"><i class="bi bi-plus-square-fill me-2"></i>Add Concern</button>
                     <hr>
                     <div class="mb-3">
                         <label for="concern">Priority Level</label>
