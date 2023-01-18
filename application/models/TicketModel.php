@@ -45,6 +45,7 @@ class TicketModel extends CI_Model
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status !=', 'Posted');
+        $this->db->where('concern_status !=', 'Closed');
         return $this->db->count_all_results();
     }
 
@@ -63,6 +64,7 @@ class TicketModel extends CI_Model
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
         $this->db->where('concern_status !=', 'Posted');
+        $this->db->where('concern_status !=', 'Closed');
         $i = 0;
         foreach ($this->ticket_search as $item) // loop column 
         {

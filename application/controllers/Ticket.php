@@ -56,7 +56,7 @@ class Ticket extends CI_Controller
                 'date_added' => $date_created,
             );
             $this->db->insert('tickettrail', $insert_trail);
-            $this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Ongoing'));
+            $this->db->where('ticket_no', $ticketNo)->update('ticketing', array('concern_status' => 'Ongoing', 'service_start' => $date_created));
 
             $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
             $data['count_concern'] = $this->solution->getCountConcern($ticketNo);

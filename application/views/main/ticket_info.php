@@ -60,8 +60,11 @@
                 <hr>
                 <label><b>Department / Branch:</b></label><br>
                 <small><?= isset($ticketInfo->request_department) ? $ticketInfo->request_department : '' ?></small>
+                <hr>
+                <label><b>Remarks:</b></label><br>
+                <small><?= isset($ticketInfo->remarks) ? $ticketInfo->remarks : '' ?></small>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-5">
                 <!-- <div>
                     <select class="form-select form-select-sm support_system" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
                         <option value="">Select Support System</option>
@@ -104,29 +107,32 @@
 
                 </div>
             </div>
-        </div>
-        <hr>
-        <div class="card">
-            <div class="card-header"><i class="bi bi-list-columns-reverse me-2"></i>Ticket Trail</div>
-            <div class="card-body">
-                <h3 class="mt-2">Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h3>
-                <div class="container">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header"><i class="bi bi-list-columns-reverse me-2"></i>Ticket Trail</div>
+                    <div class="card-body">
+                        <h5 class="mt-2">Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h5>
+                        <div class="container">
 
-                    <?php foreach ($ticketTrail as $row) : ?>
-                        <div class="timeline-block timeline-block-right">
-                            <div class="marker"></div>
-                            <div class="timeline-content">
-                                <h3><?= $row->remarks; ?></h3>
-                                <span><?= date('M D j, Y h:i a', strtotime($row->date_added)) ?></span>
-                                <p><?= isset($row->ticket_status) ? $row->ticket_status : '' ?></p>
-                                <hr>
-                            </div>
+                            <?php foreach ($ticketTrail as $row) : ?>
+                                <div class="timeline-block timeline-block-right">
+                                    <div class="marker"></div>
+                                    <div class="timeline-content">
+                                        <h3><?= $row->remarks; ?></h3>
+                                        <span><?= date('M D j, Y h:i a', strtotime($row->date_added)) ?></span>
+                                        <p><?= isset($row->ticket_status) ? $row->ticket_status : '' ?></p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
                         </div>
-                    <?php endforeach; ?>
-
+                    </div>
                 </div>
             </div>
         </div>
+        <hr>
+
 
     </section>
 </main><!-- End #main -->

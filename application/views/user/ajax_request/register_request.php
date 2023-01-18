@@ -19,8 +19,9 @@
                         'Account successfully created. Please check your email to verify your account!',
                         'success'
                     );
+                    $('#register_form').trigger('reset');
                     setTimeout(function() {
-                        window.location.href = "<?= base_url('user') ?>"
+                        location.reload();
                     }, 2000);
                 }
             },

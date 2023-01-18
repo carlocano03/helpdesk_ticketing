@@ -63,6 +63,17 @@ class SolutionManagement extends CI_Controller
         $this->load->view('main/ajax_request/ticket_request');
     }
 
+    public function closedTicket()
+    {
+        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
+        $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+        $this->load->view('partials/__header');
+        $this->load->view('main/view_closed_ticket', $data);
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticket_request');
+    }
+
     public function printTicket()
     {
         $ticketNo = $_GET['ticketNo'];
@@ -461,6 +472,7 @@ class SolutionManagement extends CI_Controller
             'concern_personID' => $this->input->post('empID'),
             'concern_level' => $this->input->post('level'),
             'concern_status' => 'Pending',
+            'remarks' => $this->input->post('remarks'),
             'request_by' => $_SESSION['loggedIn']['name'],
             'request_byID' => $_SESSION['loggedIn']['id'],
             'request_department' => $_SESSION['loggedIn']['department'],
@@ -534,10 +546,9 @@ class SolutionManagement extends CI_Controller
             $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
             $row = array();
-            
-            // <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>
+
             $row[] = '<div>'.$concern->ticket_no.'</div>
-                      ';
+                      <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
             $row[] = $concern->request_by;
             $row[] = $concern->request_department;
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
@@ -586,21 +597,37 @@ class SolutionManagement extends CI_Controller
                         $added_by = $row->added_by;
                     }
 
-                    $output .= '
-                    
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                    if ($res->profile_pic != '') {
+                        $output .= '
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
-                        <li class="notification-item">
-                            <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">
-                            <div>
-                                <h4>' . $added_by . '</h4>
-                                <p>' . $row->notif_message . '</p>
-                                <p>' . $date_created . '</p>
-                            </div>
-                        </li>
-                    ';
+                            <li class="notification-item">
+                                <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">
+                                <div>
+                                    <h4>' . $added_by . '</h4>
+                                    <p>' . $row->notif_message . '</p>
+                                    <p>' . $date_created . '</p>
+                                </div>
+                            </li>
+                        ';
+                    } else {
+                        $output .= '
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li class="notification-item">
+                                <img class="box me-2" src="' . base_url('assets/img/avatar.jpg') . '" alt="Pofile-Picture">
+                                <div>
+                                    <h4>' . $added_by . '</h4>
+                                    <p>' . $row->notif_message . '</p>
+                                    <p>' . $date_created . '</p>
+                                </div>
+                            </li>
+                        ';
+                    }
                 }
             } else {
                 $output .= '<li class="dropdown-header">
@@ -785,6 +812,42 @@ class SolutionManagement extends CI_Controller
     {
         $message = '';
         if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketconcern', array('duration_onsite' => $this->input->post('duration')))) {
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
+    public function closeTicket()
+    {
+        $date_created = date('Y-m-d H:i:s');
+        $message = '';
+        $closedTicket = array(
+            'date_accomplished' => $date_created,
+            'feedback' => $this->input->post('feedback'),
+            'concern_status' => 'Closed',
+        );
+        $insert_trail = array(
+            'ticket_no' => $this->input->post('ticketNo'),
+            'ticket_status' => 'Closed ticket.',
+            'remarks' => 'Closed',
+            'date_added' => $date_created,
+        );
+
+        $add_notif = array(
+            'user_id' => $this->input->post('empID'),
+            'notif_title' => 'Closed ticket',
+            'notif_message' => 'closed ticket successfulyy ' . $this->input->post('ticketNo'),
+            'added_by' => $_SESSION['loggedIn']['name'],
+            'added_by_userID' => $_SESSION['loggedIn']['id'],
+            'date_added' => $date_created,
+        );
+
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', $closedTicket)) {
+            $this->db->insert('tickettrail', $insert_trail);
+            $this->db->insert('tomsworld.notification', $add_notif);
             $message = 'Success';
         } else {
             $message = 'Error';

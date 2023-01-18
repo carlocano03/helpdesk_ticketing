@@ -128,6 +128,11 @@
             window.location.href = "<?= base_url('ticket/ticketInformation?ticketNo=') ?>" + ticketNo;
         });
 
+        $(document).on('click', '.view_ticket', function() {
+            var ticketNo = $(this).attr('id');
+            window.location.href = "<?= base_url('SolutionManagement/closedTicket?ticketNo=') ?>" + ticketNo;
+        });
+
         var ticketNo = $('#ticket').val();
         var tableConcern = $('#table_concern').DataTable({
             "ordering": false,
