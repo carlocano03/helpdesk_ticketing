@@ -88,6 +88,40 @@ class Ticket extends CI_Controller
             $row[] = date('D M j, Y h:i a', strtotime($ticket->date_added));
             $row[] = $ticket->concern_status;
 
+            if ($ticket->service_start != NULL) {
+                if ($ticket->date_accomplished != NULL) {
+                    $date_accomplished = date('M j, Y H:i:s a', strtotime($ticket->date_accomplished));
+                    $start_date = date('Y-m-d', strtotime($ticket->service_start));
+                    $end_date = date('Y-m-d', strtotime($ticket->date_accomplished));
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                } else {
+                    $date_accomplished = '';
+                    $start_date = date('Y-m-d', strtotime($ticket->service_start));
+                    $end_date = date('Y-m-d');
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                }
+            } else {
+                $days = '';
+            }
+            
+            if ($days == '1') {
+                $countDays = $days. ' day';
+            } else {
+                $countDays = $days. ' days';
+            }
+
+            $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
+
             $data[] = $row;
         }
         $output = array(
