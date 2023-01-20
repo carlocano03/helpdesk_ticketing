@@ -61,17 +61,13 @@
     <table cellspacing="0" id="table_body" width="100%">
         <tr>
             <th>Concern</th>
-            <th>Evaluate Concern</th>
             <th>Solutions</th>
-            <th>Support System</th>
         </tr>
         <tbody>
             <?php foreach($ticketConcern as $row): ?>
                 <tr>
                     <td><?= $row->concern;?></td>
-                    <td><?= $row->evaluate_concern;?></td>
                     <td><?= $row->solutions;?></td>
-                    <td><?= $row->support_system;?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

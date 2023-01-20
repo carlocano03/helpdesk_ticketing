@@ -56,6 +56,9 @@
                 <hr>
                 <label><b>Remarks:</b></label><br>
                 <small><?= isset($ticketInfo->remarks) ? $ticketInfo->remarks : '' ?></small>
+                <hr>
+                <label><b>Feedback:</b></label><br>
+                <small><?= isset($ticketInfo->feedback) ? $ticketInfo->feedback : '' ?></small>
             </div>
             <div class="col-md-5">
                 <div class="table-reponsive">
@@ -74,9 +77,6 @@
                 </div>
                 <div class="text-end">
                     <button type="button" class="btn btn-secondary btn-sm print_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-printer-fill me-2"></i>Print Ticket</button>
-                    <?php if ($ticketInfo->concern_status == "Posted") : ?>
-                        <button class="btn btn-success btn-sm" data-bs-target="#modalReceived" data-bs-toggle="modal"><i class="bi bi-check2-square me-2"></i>Close Ticket</button>
-                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-md-4">
@@ -107,23 +107,3 @@
 
     </section>
 </main><!-- End #main -->
-
-<!-- Modal -->
-<div class="modal fade" id="modalReceived" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h5><i class="bi bi-ticket-detailed me-2"></i>Closed Ticket</h5>
-                <hr class="mt-0">
-                <label for="feedback">Feedbacks</label>
-                <textarea name="feedback" id="feedback" rows="5" class="form-control"></textarea>
-                <input type="hidden" id="ticketNo" value="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
-                <input type="hidden" id="conernID" value="<?= isset($ticketInfo->concern_personID) ? $ticketInfo->concern_personID : '' ?>">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal"><i class="bi bi-x-square me-2"></i>Close</button>
-                <button type="button" class="btn btn-outline-warning text-white" id="closeTicket"><i class="bi bi-save me-2"></i>Close Ticket</button>
-            </div>
-        </div>
-    </div>
-</div>

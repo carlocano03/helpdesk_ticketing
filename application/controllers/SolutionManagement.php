@@ -63,6 +63,17 @@ class SolutionManagement extends CI_Controller
         $this->load->view('main/ajax_request/ticket_request');
     }
 
+    public function closedTicket()
+    {
+        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
+        $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+        $this->load->view('partials/__header');
+        $this->load->view('main/view_closed_ticket', $data);
+        $this->load->view('partials/__footer');
+        $this->load->view('main/ajax_request/ticket_request');
+    }
+
     public function printTicket()
     {
         $ticketNo = $_GET['ticketNo'];
@@ -461,6 +472,7 @@ class SolutionManagement extends CI_Controller
             'concern_personID' => $this->input->post('empID'),
             'concern_level' => $this->input->post('level'),
             'concern_status' => 'Pending',
+            'remarks' => $this->input->post('remarks'),
             'request_by' => $_SESSION['loggedIn']['name'],
             'request_byID' => $_SESSION['loggedIn']['id'],
             'request_department' => $_SESSION['loggedIn']['department'],
@@ -506,13 +518,47 @@ class SolutionManagement extends CI_Controller
             $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
             $row = array();
-            
-            $row[] = '<div>'.$concern->ticket_no.'</div>
-                      <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
+
+            $row[] = '<div>' . $concern->ticket_no . '</div>
+                      <span class="edit-span view_ticket" id="' . $ticketNo . '" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
             $row[] = $concern->concern_person;
             $row[] = $concern->concern_department;
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
+
+            if ($concern->service_start != NULL) {
+                if ($concern->date_accomplished != NULL) {
+                    $date_accomplished = date('M j, Y H:i:s a', strtotime($concern->date_accomplished));
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d', strtotime($concern->date_accomplished));
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                } else {
+                    $date_accomplished = '';
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d');
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                }
+            } else {
+                $days = '';
+            }
+            
+            if ($days == '1') {
+                $countDays = $days. ' day';
+            } else {
+                $countDays = $days. ' days';
+            }
+
+            $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
 
             $data[] = $row;
         }
@@ -534,15 +580,48 @@ class SolutionManagement extends CI_Controller
             $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
             $row = array();
-            
-            // <span class="edit-span view_ticket" id="'.$ticketNo.'" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>
-            $row[] = '<div>'.$concern->ticket_no.'</div>
-                      ';
+
+            $row[] = '<div>' . $concern->ticket_no . '</div>
+                      <span class="edit-span view_ticket" id="' . $ticketNo . '" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
             $row[] = $concern->request_by;
             $row[] = $concern->request_department;
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
 
+            if ($concern->service_start != NULL) {
+                if ($concern->date_accomplished != NULL) {
+                    $date_accomplished = date('M j, Y H:i:s a', strtotime($concern->date_accomplished));
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d', strtotime($concern->date_accomplished));
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                } else {
+                    $date_accomplished = '';
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d');
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                }
+            } else {
+                $days = '';
+            }
+            
+            if ($days == '1') {
+                $countDays = $days. ' day';
+            } else {
+                $countDays = $days. ' days';
+            }
+
+            $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
+            
             $data[] = $row;
         }
         $output = array(
@@ -586,21 +665,37 @@ class SolutionManagement extends CI_Controller
                         $added_by = $row->added_by;
                     }
 
-                    $output .= '
-                    
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                    if ($res->profile_pic != '') {
+                        $output .= '
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
 
-                        <li class="notification-item">
-                            <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">
-                            <div>
-                                <h4>' . $added_by . '</h4>
-                                <p>' . $row->notif_message . '</p>
-                                <p>' . $date_created . '</p>
-                            </div>
-                        </li>
-                    ';
+                            <li class="notification-item">
+                                <img class="box me-2" src="' . base_url('../toms-world/uploaded_file/profile/') . '' . $res->profile_pic . '" alt="Pofile-Picture">
+                                <div>
+                                    <h4>' . $added_by . '</h4>
+                                    <p>' . $row->notif_message . '</p>
+                                    <p>' . $date_created . '</p>
+                                </div>
+                            </li>
+                        ';
+                    } else {
+                        $output .= '
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+
+                            <li class="notification-item">
+                                <img class="box me-2" src="' . base_url('assets/img/avatar.jpg') . '" alt="Pofile-Picture">
+                                <div>
+                                    <h4>' . $added_by . '</h4>
+                                    <p>' . $row->notif_message . '</p>
+                                    <p>' . $date_created . '</p>
+                                </div>
+                            </li>
+                        ';
+                    }
                 }
             } else {
                 $output .= '<li class="dropdown-header">
@@ -632,10 +727,10 @@ class SolutionManagement extends CI_Controller
         foreach ($list as $concern) {
             $no++;
             $row = array();
-            
+
             $row[] = $concern->concern;
-            $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control evaluate_concern">'.$concern->evaluate_concern.'</textarea>';
-            $row[] = '<textarea id="'.$concern->concern_id.'" class="form-control add_solutions">'.$concern->solutions.'</textarea>';
+            $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control evaluate_concern">' . $concern->evaluate_concern . '</textarea>';
+            $row[] = '<textarea id="' . $concern->concern_id . '" class="form-control add_solutions">' . $concern->solutions . '</textarea>';
 
             $data[] = $row;
         }
@@ -655,23 +750,23 @@ class SolutionManagement extends CI_Controller
         foreach ($list as $concern) {
             $no++;
             $row = array();
-            
+
             if ($concern->update_by == NULL) {
                 $row[] = $concern->concern;
             } else {
-                $row[] = '<div>'.$concern->concern.'</div>
-                          <span class="text-danger"><small><b>Evaluated by:</b> '.$concern->update_by.'</small></span>';
+                $row[] = '<div>' . $concern->concern . '</div>
+                          <span class="text-danger"><small><b>Evaluated by:</b> ' . $concern->update_by . '</small></span>';
             }
-            
+
             $row[] = $concern->evaluate_concern;
 
             if ($concern->support_system == NULL) {
                 $row[] = $concern->solutions;
             } else {
-                $row[] = '<div>'.$concern->solutions.'</div>
-                          <span class="text-danger"><small><b>Support System:</b> '.$concern->support_system.'</small></span>';
+                $row[] = '<div>' . $concern->solutions . '</div>
+                          <span class="text-danger"><small><b>Support System:</b> ' . $concern->support_system . '</small></span>';
             }
-            
+
 
             $data[] = $row;
         }
@@ -722,9 +817,15 @@ class SolutionManagement extends CI_Controller
         $this->db->where('concern_id', $this->input->post('concernID'));
         $res = $this->db->get('ticketconcern')->row();
         $date_created = date('Y-m-d H:i:s');
+        $sol = $this->input->post('solutions');
+        if ($sol != '') {
+            $solutions = $sol;
+        } else {
+            $solutions = NULL;
+        }
         $message = '';
         $addSolutions = array(
-            'solutions' => $this->input->post('solutions'),
+            'solutions' => $solutions,
             'update_by' => $_SESSION['loggedIn']['name'],
             'update_byID' => $_SESSION['loggedIn']['id'],
         );
@@ -786,5 +887,40 @@ class SolutionManagement extends CI_Controller
         $output['message'] = $message;
         echo json_encode($output);
     }
-    
+
+    public function closeTicket()
+    {
+        $date_created = date('Y-m-d H:i:s');
+        $message = '';
+        $closedTicket = array(
+            'date_accomplished' => $date_created,
+            'feedback' => $this->input->post('feedback'),
+            'concern_status' => 'Closed',
+        );
+        $insert_trail = array(
+            'ticket_no' => $this->input->post('ticketNo'),
+            'ticket_status' => 'Closed ticket.',
+            'remarks' => 'Closed',
+            'date_added' => $date_created,
+        );
+
+        $add_notif = array(
+            'user_id' => $this->input->post('empID'),
+            'notif_title' => 'Closed ticket',
+            'notif_message' => 'closed ticket successfulyy ' . $this->input->post('ticketNo'),
+            'added_by' => $_SESSION['loggedIn']['name'],
+            'added_by_userID' => $_SESSION['loggedIn']['id'],
+            'date_added' => $date_created,
+        );
+
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', $closedTicket)) {
+            $this->db->insert('tickettrail', $insert_trail);
+            $this->db->insert('tomsworld.notification', $add_notif);
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
 }

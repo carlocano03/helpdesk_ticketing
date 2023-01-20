@@ -1,6 +1,8 @@
 <style>
     #table_ticket td:nth-child(5),
-    #table_support_posted td:nth-child(5) {
+    #table_ticket td:nth-child(6),
+    #table_support_posted td:nth-child(5),
+    #table_support_posted td:nth-child(6) {
         text-align: center;
     }
 
@@ -113,6 +115,7 @@
                                         <th>Department</th>
                                         <th>Date Request</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Days Count</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -181,6 +184,7 @@
                                         <th>Department</th>
                                         <th>Date Request</th>
                                         <th class="text-center">Status</th>
+                                        <th class="text-center">Days Count</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -81,6 +81,20 @@
             });
         });
 
+        $(document).on('change', '#department', function() {
+            var department = $(this).val();
+            $.ajax({
+                url: "<?php echo base_url(); ?>solutionmanagement/fetch_employee",
+                method: "POST",
+                data: {
+                    department: department
+                },
+                success: function(data) {
+                    $('#concernPerson').html(data);
+                }
+            });
+        });
+
         $(document).on('click', '#openModalTicket', function() {
             var department = $(this).data('dept');
             $.ajax({
@@ -136,7 +150,7 @@
             rowIdx--;
         });
 
-        $('#it_form').hide('300');
+        // $('#it_form').hide('300');
         $(document).on('change', '#concernDepartment', function() {
             var dept = $(this).val();
             switch (dept) {
@@ -153,19 +167,13 @@
         //Add Ticket Function
         $(document).on('click', '#createTicket', function() {
             var dept = $('#department').val();
+            var remarks = $('#remarks').val();
             var assignee = $('#concernPerson').val().split('|');
             var empID = assignee[0];
             var concernPerson = assignee[1];
             var level = $('#level').val();
             var table_data = [];
 
-            // switch (dept) {
-            //     case 'Human Resource Department':
-            //         alert('Human Resources');
-            //         break;
-
-            //         //ITD Form
-            //     default:
             $('#table_body tr').each(function(row, tr) {
                 $(this).find("td:nth-child(2)").each(function() {
                     if ($(this).text().trim() != '') {
@@ -174,7 +182,7 @@
                         };
                         table_data.push(sub);
 
-                        if (assignee != '' && level != '') {
+                        if (assignee != '' && level != '' && dept != '' && remarks != '') {
                             Swal.fire({
                                 title: 'Are you sure?',
                                 text: "You want to continue this transactions.",
@@ -194,6 +202,7 @@
                                             concernPerson: concernPerson,
                                             level: level,
                                             dept: dept,
+                                            remarks: remarks,
                                         },
                                         dataType: "json",
                                         beforeSend: function() {
@@ -203,7 +212,7 @@
                                             if (data.message == 'Success') {
                                                 Swal.fire(
                                                     'Thank you!',
-                                                    'Ticket successfuly submitted.',
+                                                    'Ticket sent.',
                                                     'success'
                                                 );
                                                 setTimeout(function() {
@@ -375,6 +384,63 @@
                     window.open(url, 'targetWindow', 'resizable=yes,width=1000,height=1000');
                 }
             })
+        });
+
+        $(document).on('click', '#closeTicket', function() {
+            var feedback = $('#feedback').val();
+            var ticketNo = $('#ticketNo').val();
+            var empID = $('#conernID').val();
+
+            if (feedback != '') {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, proceed'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "<?= base_url('SolutionManagement/closeTicket') ?>",
+                            method: "POST",
+                            data: {
+                                ticketNo: ticketNo,
+                                feedback: feedback,
+                                empID: empID
+                            },
+                            dataType: "json",
+                            beforeSend: function() {
+                                $('#__loading').show();
+                            },
+                            success: function(data) {
+                                if (data.message == 'Success') {
+                                    Swal.fire(
+                                        'Thank you!',
+                                        'Closed ticket.',
+                                        'success'
+                                    );
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 2000);
+                                } else {
+                                    Swal.fire('Error!', 'Failed to close ticket. Please contact system administrator', 'error');
+                                }
+                            },
+                            complete: function() {
+                                $('#__loading').hide();
+                            },
+                            error: function() {
+                                $('#__loading').hide();
+                                Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                            }
+                        });
+                    }
+                })
+            } else {
+                Swal.fire('Warning!', 'Please input some feedbacks. Thank you!', 'warning');
+            }
         });
 
     });
