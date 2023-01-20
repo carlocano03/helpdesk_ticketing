@@ -95,6 +95,16 @@ class Main extends CI_Controller
 
     //========================================================================================
 
+    public function analytics()
+    {
+        // $data['department'] = $this->db->order_by('department', 'ASC')->get('tomsworld.department')->result();
+        $this->load->view('partials/__header');
+        $this->load->view('main/analytics');
+        $this->load->view('partials/__footer');
+    }
+
+    //========================================================================================
+
     public function get_accountData()
     {
         $list = $this->user_model->get_accountData();
