@@ -153,7 +153,6 @@
                         <?php endforeach;?>
                     </select>
                 </div>
-
                 <div class="mb-3">
                     <label for="concern">Assignee</label>
                     <input type="hidden" name="department" id="department">
@@ -162,7 +161,6 @@
 
                     </select>
                 </div>
-
                 <!-- <div class="mb-3" id="form">
                     <label for="form_list">Form</label>
                     <select class="form-select form-select-sm" id="form_list" name="form_list" aria-label=".form-select-sm example">
@@ -195,10 +193,10 @@
                     </table>
                     <button class="btn btn-danger btn-sm add_row"><i class="bi bi-plus-square-fill me-2"></i>Add Concern</button>
                     <hr>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="remarks">Remarks</label>
                         <textarea name="remarks" id="remarks" class="form-control"></textarea>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="concern">Priority Level</label>
                         <select class="form-select form-select-sm" id="level" name="level" aria-label=".form-select-sm example">

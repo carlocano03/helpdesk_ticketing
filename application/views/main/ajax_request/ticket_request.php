@@ -167,13 +167,12 @@
         //Add Ticket Function
         $(document).on('click', '#createTicket', function() {
             var dept = $('#department').val();
-            var remarks = $('#remarks').val();
             var assignee = $('#concernPerson').val().split('|');
             var empID = assignee[0];
             var concernPerson = assignee[1];
             var level = $('#level').val();
             var table_data = [];
-
+            var form_data = new FormData();
             $('#table_body tr').each(function(row, tr) {
                 $(this).find("td:nth-child(2)").each(function() {
                     if ($(this).text().trim() != '') {
@@ -182,7 +181,7 @@
                         };
                         table_data.push(sub);
 
-                        if (assignee != '' && level != '' && dept != '' && remarks != '') {
+                        if (assignee != '' && level != '' && dept != '') {
                             Swal.fire({
                                 title: 'Are you sure?',
                                 text: "You want to continue this transactions.",
@@ -202,7 +201,6 @@
                                             concernPerson: concernPerson,
                                             level: level,
                                             dept: dept,
-                                            remarks: remarks,
                                         },
                                         dataType: "json",
                                         beforeSend: function() {

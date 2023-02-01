@@ -21,7 +21,7 @@
 <script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="<?= base_url('assets/js/date-time.js') ?>"></script>
+<!-- <script src="<?= base_url('assets/js/date-time.js') ?>"></script> -->
 
 <!-- Template Main JS File -->
 <script src="<?= base_url('assets/js/main.js') ?>"></script>

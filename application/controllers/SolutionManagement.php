@@ -472,7 +472,7 @@ class SolutionManagement extends CI_Controller
             'concern_personID' => $this->input->post('empID'),
             'concern_level' => $this->input->post('level'),
             'concern_status' => 'Pending',
-            'remarks' => $this->input->post('remarks'),
+            // 'remarks' => $this->input->post('remarks'),
             'request_by' => $_SESSION['loggedIn']['name'],
             'request_byID' => $_SESSION['loggedIn']['id'],
             'request_department' => $_SESSION['loggedIn']['department'],
@@ -514,6 +514,7 @@ class SolutionManagement extends CI_Controller
         $list = $this->solution->get_ticket();
         $data = array();
         $no = $_POST['start'];
+        $date_accomplished = '';
         foreach ($list as $concern) {
             $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
@@ -554,6 +555,8 @@ class SolutionManagement extends CI_Controller
             
             if ($days == '1') {
                 $countDays = $days. ' day';
+            } elseif ($days == '') {
+                $countDays = '';
             } else {
                 $countDays = $days. ' days';
             }
@@ -576,6 +579,7 @@ class SolutionManagement extends CI_Controller
         $list = $this->solution->get_ticketPosted();
         $data = array();
         $no = $_POST['start'];
+        $date_accomplished = '';
         foreach ($list as $concern) {
             $ticketNo = $this->encrypt->encode($concern->ticket_no);
             $no++;
@@ -616,6 +620,8 @@ class SolutionManagement extends CI_Controller
             
             if ($days == '1') {
                 $countDays = $days. ' day';
+            } elseif ($days == '') {
+                $countDays = '';
             } else {
                 $countDays = $days. ' days';
             }
@@ -781,7 +787,8 @@ class SolutionManagement extends CI_Controller
     {
         $date_created = date('Y-m-d H:i:s');
         $message = '';
-        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('concern_level' => $this->input->post('level')))) {
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('
+        ', array('concern_level' => $this->input->post('level')))) {
             $this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
