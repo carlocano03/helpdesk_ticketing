@@ -298,19 +298,9 @@
                 </ul>
             <?php endif ?>
 
-
-            <!-- <li class="nav-item">
-                <a class="nav-link <?= ($this->uri->segment(2) == 'ticketMonitoring' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/ticketMonitoring') ?>">
-                    <i class="bi bi-person-lines-fill"></i>
-                    <span>Ticket Monitoring</span>
-                </a>
-            </li> -->
-            <!-- End Ticketing Page Nav -->
-
-
             <li class="nav-heading">Pages</li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#analytics-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-graph-up-arrow"></i><span>Analytics</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -326,14 +316,23 @@
                         </a>
                     </li>
                 </ul>
-            </li><!-- End Analytics Nav -->
+            </li> -->
+
+            <li class="nav-item">
+                <a class="nav-link <?= ($this->uri->segment(2) == 'analytics' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/analytics') ?>">
+                    <i class="bi bi-circle"></i>
+                    <span>Analytics Report</span>
+                </a>
+            </li>
+            <!-- End Analytics Nav -->
 
             <li class="nav-item">
                 <a class="nav-link <?= ($this->uri->segment(2) == 'forms' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/forms') ?>">
                     <i class="bi bi-files"></i>
                     <span>Supplementary Forms</span>
                 </a>
-            </li><!-- End supplementary forms Nav -->
+            </li>
+            <!-- End supplementary forms Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url('../toms-world/user/maintenance') ?>">
