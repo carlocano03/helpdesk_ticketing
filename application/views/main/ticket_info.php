@@ -96,9 +96,7 @@
                 <div class="text-end">
 
                     <?php if ($ticketInfo->concern_status != 'Posted') : ?>
-                        <?php if ($count_solutions < 1) : ?>
-                            <button type="button" class="btn btn-success btn-sm post_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-check2-square me-2"></i>Posted</button>
-                        <?php endif; ?>
+                        <button type="button" <?= $count_solutions < 1 ? '' : 'disabled'?> class="btn btn-success btn-sm post_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-check2-square me-2"></i>Posted</button>
                     <?php endif; ?>
 
                     <?php if ($ticketInfo->concern_status != 'Posted') : ?>

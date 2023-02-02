@@ -214,7 +214,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal"><i class="bi bi-x-square me-2"></i>Close</button>
-                <button type="button" class="btn btn-outline-warning text-white" id="createTicket"><i class="bi bi-save me-2"></i>Save Ticket</button>
+                <button type="button" class="btn btn-outline-warning text-white" id="createTicket"><i class="bi bi-save me-2"></i>Send Ticket</button>
             </div>
         </div>
     </div>

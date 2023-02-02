@@ -81,6 +81,7 @@ class SolutionManagement extends CI_Controller
         $data['ticket'] = $this->solution->getTicketDetails($ticketNo);
         $data['ticketConcern'] = $this->solution->getConcern($ticketNo);
         $data['ticketTrail'] = $this->solution->getTrail($ticketNo);
+        $data['requestBy'] = $this->db->where('emp_id', $data['ticket']->request_byID)->get('tomsworld.employee')->row();
         $mpdf = new \Mpdf\Mpdf(['format' => 'A4-P']);
         $mpdf->showImageErrors = true;
         $html = $this->load->view('pdf/ticket_details', $data, true);

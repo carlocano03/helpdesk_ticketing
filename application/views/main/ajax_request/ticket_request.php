@@ -184,12 +184,13 @@
                         if (assignee != '' && level != '' && dept != '') {
                             Swal.fire({
                                 title: 'Are you sure?',
-                                text: "You want to continue this transactions.",
+                                text: "Do you want to send this ticket.",
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Yes, proceed'
+                                confirmButtonText: 'Yes, Send Now',
+                                cancelButtonText: 'No, Cancel',
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     $.ajax({

@@ -316,38 +316,51 @@
             event.preventDefault();
             event.stopImmediatePropagation();
 
-            $.ajax({
-                url: "<?= base_url() . 'ticket/trasferTicket' ?>",
-                method: "POST",
-                data: new FormData(this),
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                beforeSend: function() {
-                    $('#__loading').show();
-                },
-                success: function(data) {
-                    if (data.message == 'Success') {
-                        Swal.fire(
-                            'Thank you!',
-                            'Trasferred successfuly.',
-                            'success'
-                        );
-                        setTimeout(function() {
-                            window.location.href = "<?= base_url('main/ticketMonitoring') ?>"
-                        }, 2000);
-                    } else {
-                        Swal.fire('Error!', 'Failed to transfer ticket. Please contact system administrator', 'error');
-                    }
-                },
-                complete: function() {
-                    $('#__loading').hide();
-                },
-                error: function() {
-                    $('#__loading').hide();
-                    Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to transfer this ticket.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Transfer',
+                cancelButtonText: 'No, Cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url() . 'ticket/trasferTicket' ?>",
+                        method: "POST",
+                        data: new FormData(this),
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function() {
+                            $('#__loading').show();
+                        },
+                        success: function(data) {
+                            if (data.message == 'Success') {
+                                Swal.fire(
+                                    'Thank you!',
+                                    'Trasferred successfuly.',
+                                    'success'
+                                );
+                                setTimeout(function() {
+                                    window.location.href = "<?= base_url('main/ticketMonitoring') ?>"
+                                }, 2000);
+                            } else {
+                                Swal.fire('Error!', 'Failed to transfer ticket. Please contact system administrator', 'error');
+                            }
+                        },
+                        complete: function() {
+                            $('#__loading').hide();
+                        },
+                        error: function() {
+                            $('#__loading').hide();
+                            Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                        }
+                    });
                 }
-            });
+            })
         });
 
         //Add Support System
@@ -415,7 +428,8 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, proceed'
+                confirmButtonText: 'Yes, Post Now',
+                cancelButtonText: 'No, Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({

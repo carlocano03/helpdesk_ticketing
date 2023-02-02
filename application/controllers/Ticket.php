@@ -76,6 +76,7 @@ class Ticket extends CI_Controller
         $list = $this->TicketModel->getTicket();
         $data = array();
         $no = $_POST['start'];
+        $date_accomplished = '';
         foreach ($list as $ticket) {
             $ticketNo = $this->encrypt->encode($ticket->ticket_no);
             $no++;
@@ -116,6 +117,8 @@ class Ticket extends CI_Controller
             
             if ($days == '1') {
                 $countDays = $days. ' day';
+            } elseif ($days == '') {
+                $countDays = '';
             } else {
                 $countDays = $days. ' days';
             }
@@ -176,8 +179,8 @@ class Ticket extends CI_Controller
                 );
                 $insert_trail = array(
                     'ticket_no' => $this->input->post('ticketNo'),
-                    'ticket_status' => 'Ticket transferred to other department.',
-                    'remarks' => 'Transferred to other department',
+                    'ticket_status' => 'Ticket transferred to other department. Trasferred by: '.$_SESSION['loggedIn']['name'],
+                    'remarks' => 'Transferred to other department.',
                     'date_added' => $date_created,
                 );
                 if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', $updateDept)) {
@@ -194,7 +197,7 @@ class Ticket extends CI_Controller
                 );
                 $insert_trail = array(
                     'ticket_no' => $this->input->post('ticketNo'),
-                    'ticket_status' => 'Ticket transferred to co-employee.',
+                    'ticket_status' => 'Ticket transferred to co-employee. Trasferred by: '.$_SESSION['loggedIn']['name'],
                     'remarks' => 'Transferred',
                     'date_added' => $date_created,
                 );

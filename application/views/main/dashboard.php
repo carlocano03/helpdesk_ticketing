@@ -64,7 +64,7 @@
                                             <i class="fas fa-calendar-alt mx-auto" style="color: #f39c12;"></i>
                                         </div>
                                         <div class="card-text">
-                                            <h5>ACCOMPLISHED</h5>
+                                            <h5>POSTED TICKETS</h5>
                                             <h3 class="text-white"><?= $finish; ?></h3>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
 
-                <div class="card bg-secondary guest">
+                <!-- <div class="card bg-secondary guest">
                     <div class="card-body p-2">
                         <div class="card-avatar-primary me-3">
                             <i class="bi bi-signpost mx-auto text-secondary"></i>
@@ -164,7 +164,7 @@
                             <h4 class="text-white"><?= $posted; ?></h4>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- critical -->
                 <div class="card info-card backlogs-card">
