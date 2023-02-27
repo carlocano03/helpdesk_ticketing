@@ -73,6 +73,10 @@
                     </table>
                 </div>
                 <div class="text-end">
+                    <?php if ($ticketAttachmentCount->num_rows() > 0) : ?>
+                        <button class="btn btn-primary btn-sm download_attachment" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-download me-2"></i>Download Attachment</button>
+                    <?php endif; ?>
+
                     <button type="button" class="btn btn-secondary btn-sm print_ticket" id="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>"><i class="bi bi-printer-fill me-2"></i>Print Ticket</button>
                     <?php if ($ticketInfo->concern_status == "Posted") : ?>
                         <button class="btn btn-success btn-sm" data-bs-target="#modalReceived" data-bs-toggle="modal"><i class="bi bi-check2-square me-2"></i>Close Ticket</button>

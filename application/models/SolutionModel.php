@@ -36,6 +36,18 @@ class SolutionModel extends CI_Model
         return $this->db->get('ticketing')->result();
     }
 
+    function ticketAttachment($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticket_attachment');
+    }
+
+    function downloadAttachment($ticket_no)
+    {
+        $this->db->where('ticket_no', $ticket_no);
+        return $this->db->get('ticket_attachment')->row_array();
+    }
+
     public function get_solution()
     {
         $this->get_solution_query();

@@ -166,13 +166,19 @@
 
         //Add Ticket Function
         $(document).on('click', '#createTicket', function() {
+
             var dept = $('#department').val();
             var assignee = $('#concernPerson').val().split('|');
             var empID = assignee[0];
             var concernPerson = assignee[1];
             var level = $('#level').val();
             var table_data = [];
+
+            var fileInput = $('#attachment')[0];
+            var file = fileInput.files[0];
             var form_data = new FormData();
+            
+            form_data.append('file', file);
             $('#table_body tr').each(function(row, tr) {
                 $(this).find("td:nth-child(2)").each(function() {
                     if ($(this).text().trim() != '') {
@@ -214,6 +220,22 @@
                                                     'Ticket sent.',
                                                     'success'
                                                 );
+                                                //===================
+                                                
+                                                form_data.append('ticket_no', data.ticket);
+                                                form_data.append('ticket_id', data.ticket_id);
+                                                $.ajax({
+                                                    url: "<?= base_url('SolutionManagement/addTicket_attachment') ?>",
+                                                    method: "POST",
+                                                    data: form_data,
+                                                    contentType: false,
+                                                    processData: false,
+                                                    success: function(data) {
+                                                        console.log(data);
+                                                    }
+                                                });
+                                                //===================
+
                                                 setTimeout(function() {
                                                     window.location.href = "<?= base_url('SolutionManagement/ticketing') ?>"
                                                 }, 2000);
@@ -442,5 +464,9 @@
             }
         });
 
+        $(document).on('click', '.download_attachment', function(){
+            var ticketNo = $(this).attr('id');
+            window.location.href = "<?= base_url('SolutionManagement/downloadAttachment/');?>" + ticketNo;
+        });
     });
 </script>

@@ -193,10 +193,10 @@
                     </table>
                     <button class="btn btn-danger btn-sm add_row"><i class="bi bi-plus-square-fill me-2"></i>Add Concern</button>
                     <hr>
-                    <!-- <div class="mb-3">
-                        <label for="remarks">Remarks</label>
-                        <textarea name="remarks" id="remarks" class="form-control"></textarea>
-                    </div> -->
+                    <div class="mb-3">
+                        <label for="attachment">Attachment</label>
+                        <input class="form-control form-control-sm" type="file" id="attachment" accept="image/jpeg,image/jpg,image/gif,image/png,application/pdf">
+                    </div>
                     <div class="mb-3">
                         <label for="concern">Priority Level</label>
                         <select class="form-select form-select-sm" id="level" name="level" aria-label=".form-select-sm example">

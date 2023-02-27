@@ -57,6 +57,7 @@ class SolutionManagement extends CI_Controller
         $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
         $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
         $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+        $data['ticketAttachmentCount'] = $this->solution->ticketAttachment($ticketNo);
         $this->load->view('partials/__header');
         $this->load->view('main/view_ticket', $data);
         $this->load->view('partials/__footer');
@@ -68,6 +69,7 @@ class SolutionManagement extends CI_Controller
         $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
         $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
         $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
+        $data['ticketAttachmentCount'] = $this->solution->ticketAttachment($ticketNo);
         $this->load->view('partials/__header');
         $this->load->view('main/view_closed_ticket', $data);
         $this->load->view('partials/__footer');
@@ -453,9 +455,11 @@ class SolutionManagement extends CI_Controller
 
     public function addTicket()
     {
+
         $message = '';
         $date_created = date('Y-m-d H:i:s');
         $generatedTicket = 'TN-' . date('my') . rand(10, 1000);
+        
 
         $add_notif = array(
             'user_id' => $this->input->post('empID'),
@@ -488,6 +492,7 @@ class SolutionManagement extends CI_Controller
         );
 
         if ($this->db->insert('ticketing', $insert_ticket)) {
+            $last_id = $this->db->insert_id();
             //Insert Concern List
             $tableConcern = $this->input->post('data_table');
             for ($i = 0; $i < count($tableConcern); $i++) {
@@ -506,8 +511,28 @@ class SolutionManagement extends CI_Controller
 
         $output = array(
             'message' => $message,
+            'ticket' => $generatedTicket,
+            'ticket_id' => $last_id,
         );
         echo json_encode($output);
+    }
+
+    public function addTicket_attachment()
+    {
+        $dt = Date('His');
+        $extension = explode('.', $_FILES['file']['name']);
+        $new_name = rand() . '_' . $dt . '.' . $extension[1];
+        $destination = 'uploaded_file/attachment/' . $new_name;
+        move_uploaded_file($_FILES['file']['tmp_name'], $destination);
+
+        $ticket = $this->input->post('ticket_no');
+
+        $insert = array(
+            'ticket_id' => $this->input->post('ticket_id'),
+            'ticket_no' => $ticket,
+            'attachment' => $new_name,
+        );
+        $this->db->insert('ticket_attachment', $insert);
     }
 
     public function get_ticket()
@@ -931,4 +956,14 @@ class SolutionManagement extends CI_Controller
         $output['message'] = $message;
         echo json_encode($output);
     }
+
+    public function downloadAttachment()
+	{
+		$this->load->helper('url');
+		$this->load->helper('download');
+		$ticket_no = $this->uri->segment(3);
+        $fileinfo = $this->solution->downloadAttachment($ticket_no);
+        $file = 'uploaded_file/attachment/'.$fileinfo['attachment'];
+        force_download($file, NULL);
+	}
 }

@@ -503,5 +503,10 @@
             });
         });
 
+        $(document).on('click', '.download_attachment', function(){
+            var ticketNo = $(this).attr('id');
+            window.location.href = "<?= base_url('SolutionManagement/downloadAttachment/');?>" + ticketNo;
+        });
+
     });
 </script>
