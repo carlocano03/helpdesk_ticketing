@@ -813,9 +813,8 @@ class SolutionManagement extends CI_Controller
     {
         $date_created = date('Y-m-d H:i:s');
         $message = '';
-        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('
-        ', array('concern_level' => $this->input->post('level')))) {
-            $this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('date_last_update' => $date_created));
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('concern_level' => $this->input->post('level'), 'date_last_update' => $date_created))) {
+            // $this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', array('date_last_update' => $date_created));
             $message = 'Success';
         } else {
             $message = 'Error';

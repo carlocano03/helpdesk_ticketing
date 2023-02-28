@@ -152,6 +152,16 @@ class TicketModel extends CI_Model
         $query = $this->db->get('ticketing');
         return $query->num_rows();
     }
+    function getPostedClosed()
+    {
+        $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
+        $this->db->group_start();
+        $this->db->where('concern_status', 'Posted');
+        $this->db->or_where('concern_status', 'Closed');
+        $this->db->group_end();
+        $query = $this->db->get('ticketing');
+        return $query->num_rows();
+    }
 
     function getOngoingStatus($ticketNo)
     {

@@ -46,7 +46,7 @@
         <h1>Solutions Management</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="i<?= base_url('main')?>">Home</a></li>
                 <li class="breadcrumb-item active">Solutions Management</li>
             </ol>
         </nav>

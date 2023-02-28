@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="card-text">
                                             <h5>POSTED TICKETS</h5>
-                                            <h3 class="text-white"><?= $finish; ?></h3>
+                                            <h3 class="text-white"><?= $posted; ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -173,13 +173,13 @@
                     </div>
                     <div class="card-body">
                         <div class="card-breakdown mt-2">
-                            <span><b>Total Accomplished:</b> <?= $finish; ?></span>
+                            <span><b>Total Closed Tickets:</b> <?= $posted; ?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Ongoing:</b> <?= $ongoing; ?></span>
                             <hr class="mt-1 mb-1">
                             <span><b>Total Pending:</b> <?= $pending; ?></span>
                             <hr class="mt-1 mb-1">
-                            <span><b>Total Backlogs:</b> <?= $pending + $ongoing + $posted; ?></span>
+                            <span><b>Total Backlogs:</b> <?= $pending + $ongoing; ?></span>
                             <hr class="mt-1 mb-1">
 
                         </div>
