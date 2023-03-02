@@ -526,6 +526,7 @@ class SolutionManagement extends CI_Controller
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
 
+            $date_accomplished = '';
             if ($concern->service_start != NULL) {
                 if ($concern->date_accomplished != NULL) {
                     $date_accomplished = date('M j, Y H:i:s a', strtotime($concern->date_accomplished));
@@ -552,11 +553,19 @@ class SolutionManagement extends CI_Controller
                 $days = '';
             }
             
-            if ($days == '1') {
+            // if ($days == '1') {
+            //     $countDays = $days. ' day';
+            // } else {
+            //     $countDays = $days. ' days';
+            // }
+
+            if ($days == '') {
+                $countDays = '';
+             } elseif ($days == '1') {
                 $countDays = $days. ' day';
-            } else {
+             } else {
                 $countDays = $days. ' days';
-            }
+             }
 
             $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
 
@@ -587,7 +596,8 @@ class SolutionManagement extends CI_Controller
             $row[] = $concern->request_department;
             $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
             $row[] = $concern->concern_status;
-
+            
+            $date_accomplished = '';
             if ($concern->service_start != NULL) {
                 if ($concern->date_accomplished != NULL) {
                     $date_accomplished = date('M j, Y H:i:s a', strtotime($concern->date_accomplished));
@@ -614,11 +624,18 @@ class SolutionManagement extends CI_Controller
                 $days = '';
             }
             
-            if ($days == '1') {
+            // if ($days == '1') {
+            //     $countDays = $days. ' day';
+            // } else {
+            //     $countDays = $days. ' days';
+            // }
+            if ($days == '') {
+                $countDays = '';
+             } elseif ($days == '1') {
                 $countDays = $days. ' day';
-            } else {
+             } else {
                 $countDays = $days. ' days';
-            }
+             }
 
             $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
             
