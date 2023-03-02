@@ -10,7 +10,7 @@
         <h1>Ticket Automation & SLA Monitoring</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item active">Ticket Trail</li>
             </ol>
         </nav>

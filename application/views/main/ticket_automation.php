@@ -44,11 +44,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Ticket Automation & SLA Monitoring</h1>
+        <h1>Ticketing System - My Ticket Request</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Ticket Automation</li>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Ticketing System</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -72,9 +72,11 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
+                    <h5>Filtering Section</h5>
                         <div class="row">
+                    
                             <div class="col-md-4">
-                                <div class="input-group input-group-sm mb-3">
+                                                              <div class="input-group input-group-sm mb-3">
                                     <label class="input-group-text" for="filter_status">From</label>
                                     <input type="date" class="form-control form-control-sm" id="from">
                                 </div>

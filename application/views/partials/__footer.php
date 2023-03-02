@@ -1,7 +1,7 @@
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
     <div class="copyright">
-        &copy; Copyright 2022 <strong><span>Tom's World Philippines</span></strong>. All Rights Reserved
+        &copy; Copyright 2023 <strong><span>Tom's World Philippines</span></strong>. All Rights Reserved - Powered by <b>VAG</b>
     </div>
 </footer><!-- End Footer -->
 
