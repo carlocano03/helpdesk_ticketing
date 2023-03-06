@@ -47,7 +47,7 @@
         <h1>Ticketing System - My Ticket Request</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url('main')?>">Home</a></li>
                 <li class="breadcrumb-item active">Ticketing System</li>
             </ol>
         </nav>
@@ -155,7 +155,6 @@
                         <?php endforeach;?>
                     </select>
                 </div>
-
                 <div class="mb-3">
                     <label for="concern">Assignee</label>
                     <input type="hidden" name="department" id="department">
@@ -164,7 +163,6 @@
 
                     </select>
                 </div>
-
                 <!-- <div class="mb-3" id="form">
                     <label for="form_list">Form</label>
                     <select class="form-select form-select-sm" id="form_list" name="form_list" aria-label=".form-select-sm example">
@@ -198,8 +196,8 @@
                     <button class="btn btn-danger btn-sm add_row"><i class="bi bi-plus-square-fill me-2"></i>Add Concern</button>
                     <hr>
                     <div class="mb-3">
-                        <label for="remarks">Remarks</label>
-                        <textarea name="remarks" id="remarks" class="form-control"></textarea>
+                        <label for="attachment">Attachment</label>
+                        <input class="form-control form-control-sm" type="file" id="attachment" accept="image/jpeg,image/jpg,image/gif,image/png,application/pdf">
                     </div>
                     <div class="mb-3">
                         <label for="concern">Priority Level</label>
@@ -218,7 +216,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal"><i class="bi bi-x-square me-2"></i>Close</button>
-                <button type="button" class="btn btn-outline-warning text-white" id="createTicket"><i class="bi bi-save me-2"></i>Save Ticket</button>
+                <button type="button" class="btn btn-outline-warning text-white" id="createTicket"><i class="bi bi-save me-2"></i>Send Ticket</button>
             </div>
         </div>
     </div>

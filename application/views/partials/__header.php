@@ -76,7 +76,7 @@
     </style>
 </head>
 
-<body onload="startTime()">
+<body>
     <div id="__loading" class="mx-auto" style="display: none;">
         <img src="<?= base_url('assets/img/loader.gif'); ?>" id="loading-image">
     </div>

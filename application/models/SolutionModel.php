@@ -36,6 +36,18 @@ class SolutionModel extends CI_Model
         return $this->db->get('ticketing')->result();
     }
 
+    function ticketAttachment($ticketNo)
+    {
+        $this->db->where('ticket_no', $ticketNo);
+        return $this->db->get('ticket_attachment');
+    }
+
+    function downloadAttachment($ticket_no)
+    {
+        $this->db->where('ticket_no', $ticket_no);
+        return $this->db->get('ticket_attachment')->row_array();
+    }
+
     public function get_solution()
     {
         $this->get_solution_query();
@@ -315,8 +327,10 @@ class SolutionModel extends CI_Model
     {
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
+        $this->db->group_start();
         $this->db->where('concern_status', 'Posted');
         $this->db->or_where('concern_status', 'Closed');
+        $this->db->group_end();
         return $this->db->count_all_results();
     }
 
@@ -334,8 +348,10 @@ class SolutionModel extends CI_Model
         }
         $this->db->from($this->ticket);
         $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
+        $this->db->group_start();
         $this->db->where('concern_status', 'Posted');
         $this->db->or_where('concern_status', 'Closed');
+        $this->db->group_end();
         $i = 0;
         foreach ($this->ticket_search as $item) // loop column 
         {
