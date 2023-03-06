@@ -84,7 +84,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo-main d-flex align-items-center">
+            <a href="#" class="logo-main d-flex align-items-center">
                 <img src="<?= base_url('assets/img/logoTW.png') ?>" alt="">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -167,7 +167,7 @@
             <li class="nav-item">
                 <a class="nav-link <?= ($this->uri->segment(2) == '' ? 'active' : 'collapsed') ?>" href="<?= base_url('main') ?>">
                     <i class="bi bi-speedometer2"></i>
-                    <span>Dashboard</span>
+                    <span>My Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
@@ -282,23 +282,23 @@
 
             <?php else : ?>
                 <a class="nav-link collapsed" data-bs-target="#ticket-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticket Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-ticket-detailed-fill"></i><span>Ticketing System</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="ticket-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="<?= base_url('solutionmanagement/ticketing') ?>">
-                            <i class="bi bi-circle"></i><span>Create New Ticket</span>
+                            <i class="bi bi-circle"></i><span>My Created Tickets</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= base_url('main/ticketMonitoring') ?>">
-                            <i class="bi bi-circle"></i><span>Ticket Monitoring Request</span>
+                            <i class="bi bi-circle"></i><span>Ticket Monitoring</span>
                         </a>
                     </li>
                 </ul>
             <?php endif ?>
 
-            <li class="nav-heading">Pages</li>
+            <li class="nav-heading">Pages Under Development</li>
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#analytics-nav" data-bs-toggle="collapse" href="#">
@@ -326,27 +326,27 @@
             </li>
             <!-- End Analytics Nav -->
 
-            <li class="nav-item">
+           <!--  <li class="nav-item">
                 <a class="nav-link <?= ($this->uri->segment(2) == 'forms' ? 'active' : 'collapsed') ?>" href="<?= base_url('main/forms') ?>">
                     <i class="bi bi-files"></i>
                     <span>Supplementary Forms</span>
                 </a>
             </li>
-            <!-- End supplementary forms Nav -->
+            End supplementary forms Nav -->
 
-            <li class="nav-item">
+            <!-- End <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url('../toms-world/user/maintenance') ?>">
                     <i class="bi bi-download"></i>
                     <span>Export Files</span>
                 </a>
-            </li><!-- End export file Nav -->
+            </li>export file Nav -->
 
-            <li class="nav-item">
+           <!--  <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url('../toms-world/user/maintenance') ?>">
                     <i class="bi bi-hdd-rack-fill"></i>
-                    <span>Backup Database</span>
+                    <span>Backup Databasea</span>
                 </a>
-            </li><!-- End backup db Nav -->
+            </li>End backup db Nav -->
 
         </ul>
 
