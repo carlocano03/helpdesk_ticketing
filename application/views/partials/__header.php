@@ -84,7 +84,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="#" class="logo-main d-flex align-items-center">
+            <a href="<?= base_url('main')?>" class="logo-main d-flex align-items-center">
                 <img src="<?= base_url('assets/img/logoTW.png') ?>" alt="">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -95,7 +95,7 @@
 
                 <li class="nav-item dropdown">
 
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-icon notif" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
                         <span class="badge bg-danger badge-number count"></span>
                     </a><!-- End Notification Icon -->
