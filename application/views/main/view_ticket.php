@@ -87,7 +87,7 @@
                 <div class="card">
                     <div class="card-header"><i class="bi bi-list-columns-reverse me-2"></i>Ticket Trail</div>
                     <div class="card-body">
-                        <h5>Tircket Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h5>
+                        <h5>Ticket  Trail for <span><?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no . ' - ' : '' ?><span class="badge bg-danger"><?= isset($ticketInfo->concern_status) ? $ticketInfo->concern_status : '' ?></span></span></h5>
                         <div class="container">
 
                             <?php foreach ($ticketTrail as $row) : ?>
