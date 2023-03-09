@@ -66,7 +66,7 @@
                         <thead>
                             <tr>
                                 <th>Concern</th>
-                                <th>Evaluate Concern</th>
+                                <!--<th>Evaluate Concern</th>-->
                                 <th>Solutions</th>
                             </tr>
                         </thead>
