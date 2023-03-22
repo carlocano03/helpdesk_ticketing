@@ -16,7 +16,7 @@ class Ticket extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('TicketModel');
         $this->load->model('SolutionModel', 'solution');
-        $this->load->library('encrypt');
+        $this->load->library('cipher');
         $this->load->database();
         if (!isset($_SESSION['loggedIn'])) {
             redirect('../toms-world');
@@ -34,8 +34,10 @@ class Ticket extends CI_Controller
 
     public function ticketInformation()
     {
-        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        // $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $ticketNo = $this->cipher->decrypt($_GET['ticketNo']);
         $ongoing = $this->TicketModel->getOngoingStatus($ticketNo);
+        
         if ($ongoing >= 1) {
             $data['count_solutions'] = $this->solution->getCountSolutions($ticketNo);
             $data['count_concern'] = $this->solution->getCountConcern($ticketNo);
@@ -80,7 +82,9 @@ class Ticket extends CI_Controller
         $no = $_POST['start'];
         $date_accomplished = '';
         foreach ($list as $ticket) {
-            $ticketNo = $this->encrypt->encode($ticket->ticket_no);
+            // $ticketNo = $this->encrypt->encode($ticket->ticket_no);
+
+            $ticketNo = $this->cipher->encrypt($ticket->ticket_no);
             $no++;
             $row = array();
 

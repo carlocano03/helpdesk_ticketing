@@ -63,6 +63,9 @@
                 <hr>
                 <label><b>Remarks:</b></label><br>
                 <small><?= isset($ticketInfo->remarks) ? $ticketInfo->remarks : '' ?></small>
+                <hr>
+                <label><b>Feedback:</b></label><br>
+                <small><?= isset($ticketInfo->feedback) ? $ticketInfo->feedback : '' ?></small>
             </div>
             <div class="col-md-5">
                 <!-- <div>

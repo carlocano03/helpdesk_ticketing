@@ -4,6 +4,15 @@
         font-size: 13px;
         height: 70px;
     }
+    .cbx{
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(1); /* IE */
+        -moz-transform: scale(1); /* FF */
+        -webkit-transform: scale(1); /* Safari and Chrome */
+        -o-transform: scale(1); /* Opera */
+        transform: scale(1);
+        padding: 10px;
+    }
 </style>
 <main id="main" class="main">
 
@@ -56,6 +65,9 @@
                 <hr>
                 <label><b>Remarks:</b></label><br>
                 <small><?= isset($ticketInfo->remarks) ? $ticketInfo->remarks : '' ?></small>
+                <hr>
+                <label><b>Feedback:</b></label><br>
+                <small><?= isset($ticketInfo->feedback) ? $ticketInfo->feedback : '' ?></small>
             </div>
             <div class="col-md-5">
                 <div class="table-reponsive">
@@ -63,7 +75,7 @@
                         <thead>
                             <tr>
                                 <th>Concern</th>
-                                <th>Evaluate Concern</th>
+                                <!-- <th>Evaluate Concern</th> -->
                                 <th>Solutions</th>
                             </tr>
                         </thead>
@@ -123,10 +135,22 @@
                 <textarea name="feedback" id="feedback" rows="5" class="form-control"></textarea>
                 <input type="hidden" id="ticketNo" value="<?= isset($ticketInfo->ticket_no) ? $ticketInfo->ticket_no : '' ?>">
                 <input type="hidden" id="conernID" value="<?= isset($ticketInfo->concern_personID) ? $ticketInfo->concern_personID : '' ?>">
+                <div class="mt-2 text-danger">
+                    <small>
+                        <i><b>Note: </b>If the solution is not worked please checked the unresolved to notify the concern person.</i>
+                    </small>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input cbx" type="checkbox" value="1" id="unresolved">
+                    <label class="form-check-label mt-1 ms-2" for="unresolved">
+                        Unresolved
+                    </label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary text-white" data-bs-dismiss="modal"><i class="bi bi-x-square me-2"></i>Close</button>
                 <button type="button" class="btn btn-outline-warning text-white" id="closeTicket"><i class="bi bi-save me-2"></i>Close Ticket</button>
+                <button style="display:none;" type="button" class="btn btn-outline-warning text-white" id="unresolveTicket"><i class="bi bi-save me-2"></i>Returned Ticket</button>
             </div>
         </div>
     </div>

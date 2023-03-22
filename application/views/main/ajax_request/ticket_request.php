@@ -468,5 +468,72 @@
             var ticketNo = $(this).attr('id');
             window.location.href = "<?= base_url('SolutionManagement/downloadAttachment/');?>" + ticketNo;
         });
+
+        $(document).on('click', '#unresolved', function(){
+            if($(this).prop('checked')) {
+                $('#closeTicket').hide(200);
+                $('#unresolveTicket').show(200);
+            } else {
+                $('#closeTicket').show(200);
+                $('#unresolveTicket').hide(200);
+            }
+        });
+
+        $(document).on('click', '#unresolveTicket', function() {
+            var feedback = $('#feedback').val();
+            var ticketNo = $('#ticketNo').val();
+            var empID = $('#conernID').val();
+
+            if (feedback != '') {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, proceed'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "<?= base_url('SolutionManagement/unresolveTicket') ?>",
+                            method: "POST",
+                            data: {
+                                ticketNo: ticketNo,
+                                feedback: feedback,
+                                empID: empID
+                            },
+                            dataType: "json",
+                            beforeSend: function() {
+                                $('#__loading').show();
+                            },
+                            success: function(data) {
+                                if (data.message == 'Success') {
+                                    Swal.fire(
+                                        'Thank you!',
+                                        'Ticket successfully submitted.',
+                                        'success'
+                                    );
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 2000);
+                                } else {
+                                    Swal.fire('Error!', 'Failed to submit ticket. Please contact system administrator', 'error');
+                                }
+                            },
+                            complete: function() {
+                                $('#__loading').hide();
+                            },
+                            error: function() {
+                                $('#__loading').hide();
+                                Swal.fire('Error!', 'Something went wrong. Please contact system administrator', 'error');
+                            }
+                        });
+                    }
+                })
+            } else {
+                Swal.fire('Warning!', 'Please input some feedbacks. Thank you!', 'warning');
+            }
+        });
     });
 </script>

@@ -2,7 +2,9 @@
     #table_ticket td:nth-child(5),
     #table_ticket td:nth-child(6),
     #table_support_posted td:nth-child(5),
-    #table_support_posted td:nth-child(6) {
+    #table_support_posted td:nth-child(6),
+    #table_support_department td:nth-child(6),
+    #table_support_department td:nth-child(7) {
         text-align: center;
     }
 
@@ -55,6 +57,11 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">My Posted Tickets</button>
                     </li>
+                    <?php if($access > 0) :?>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-department-tab" data-bs-toggle="pill" data-bs-target="#pills-department" type="button" role="tab" aria-controls="pills-department" aria-selected="false">My Department Tickets</button>
+                        </li>
+                    <?php endif;?>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -194,6 +201,76 @@
                         </div>
                     </div>
                     <!-- End of 2nd Tab -->
+
+                    <div class="tab-pane fade" id="pills-department" role="tabpanel" aria-labelledby="pills-department-tab">
+                        <hr>
+                        <div class="row g-3 mb-2">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-secondary btn-sm" title="Export data">
+                                    <i class="bi bi-download me-2"></i>Export Data
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">From</label>
+                                            <input type="date" class="form-control form-control-sm" id="filter_from_department">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <label class="input-group-text" for="filter_status">To</label>
+                                            <input type="date" class="form-control form-control-sm" id="filter_to_department">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm mb-3">
+                                    <label class="input-group-text" for="filter_dept">Department</label>
+                                    <select class="form-select form-select-sm" id="filter_dept_support">
+                                        <option value="">Select All</option>
+                                        <?php foreach ($department as $row) : ?>
+                                            <option value="<?= $row->department ?>"><?= $row->department ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm mb-3">
+                                    <label class="input-group-text" for="filter_status">Status</label>
+                                    <select class="form-select form-select-sm" id="filter_status_department">
+                                        <option value="">Select All</option>
+                                        <?php foreach ($status as $row) : ?>
+                                            <option value="<?= $row->concern_status ?>"><?= $row->concern_status ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped" id="table_support_department" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket No.</th>
+                                        <th>Concern Person</th>
+                                        <th>Request By</th>
+                                        <th>Department</th>
+                                        <th>Date Request</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Days Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End of 3rd Tab -->
                 </div>
 
 

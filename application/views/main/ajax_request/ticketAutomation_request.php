@@ -99,7 +99,7 @@
             tableSupportPosted.draw();
         });
         $('#filter_from').on('change', function() {
-            if ($('#filter_from').val() > $('#to').val() && $('#filter_to').val() != '') {
+            if ($('#filter_from').val() > $('#filter_to').val() && $('#filter_to').val() != '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -121,6 +121,77 @@
             } else {
                 tableSupportPosted.draw();
             }
+        });
+
+        //Posted Ticket
+        var tableSupportDepartment = $('#table_support_department').DataTable({
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, asd) {
+                if (aData[5] == 'Pending') {
+                    $('td', nRow).css('background-color', 'rgba(255, 214, 214, 0.59)');
+                } else {
+                    $('td', nRow).css('background-color', 'rgba(209, 253, 208, 0.59)');
+                }
+            },
+            language: {
+                search: '',
+                searchPlaceholder: "Search Here...",
+                paginate: {
+                    next: '<i class="bi bi-chevron-right"></i>',
+                    previous: '<i class="bi bi-chevron-left"></i>'
+                }
+            },
+            "ordering": false,
+            "serverSide": true,
+            "processing": true,
+            "pageLength": 25,
+            "bDestroy": true,
+            "ajax": {
+                "url": "<?= base_url('solutionmanagement/get_ticketDepartment') ?>",
+                "type": "POST",
+                "data": function(data) {
+                    data.department = $('#filter_dept_support').val();
+                    data.status = $('#filter_status_department').val();
+                    data.filter_from = $('#filter_from_department').val();
+                    data.filter_to = $('#filter_to_department').val();
+                }
+            },
+        });
+        $('#filter_dept_support').on('change', function() {
+            tableSupportDepartment.draw();
+        });
+        $('#filter_status_department').on('change', function() {
+            tableSupportDepartment.draw();
+        });
+        $('#filter_from_department').on('change', function() {
+            if ($('#filter_from_department').val() > $('#filter_to_department').val() && $('#filter_to_department').val() != '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#filter_from_department').val('');
+            } else {
+                tableSupportDepartment.draw();
+            }
+        });
+        $('#filter_to').on('change', function() {
+            if ($('#filter_to_department').val() < $('#filter_from_department').val()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Invalid Date Range,Please Check the date. Thank you!',
+                });
+                $('#filter_to_department').val('');
+            } else {
+                tableSupportDepartment.draw();
+            }
+        });
+
+        $(document).on('click', '.view_ticket_department', function() {
+            var ticketNo = $(this).attr('id');
+            var url = "<?= base_url('SolutionManagement/ticketInfo?ticketNo=') ?>" + ticketNo;
+            // window.location.href = "<?= base_url('SolutionManagement/ticketInfo?ticketNo=') ?>" + ticketNo;
+            window.open(url, '_blank');
         });
 
         $(document).on('click', '.view_ticketInfo', function() {

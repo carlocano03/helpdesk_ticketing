@@ -15,8 +15,9 @@ class SolutionManagement extends CI_Controller
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('SolutionModel', 'solution');
+        $this->load->library('cipher');
         $this->load->database();
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
         if (!isset($_SESSION['loggedIn'])) {
             redirect('../toms-world');
         }
@@ -54,7 +55,8 @@ class SolutionManagement extends CI_Controller
 
     public function ticketInfo()
     {
-        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        // $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $ticketNo = $this->cipher->decrypt($_GET['ticketNo']);
         $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
         $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
         $data['ticketAttachmentCount'] = $this->solution->ticketAttachment($ticketNo);
@@ -66,7 +68,8 @@ class SolutionManagement extends CI_Controller
 
     public function closedTicket()
     {
-        $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        // $ticketNo = $this->encrypt->decode($_GET['ticketNo']);
+        $ticketNo = $this->cipher->decrypt($_GET['ticketNo']);
         $data['ticketInfo'] = $this->solution->getTicketInfo($ticketNo);
         $data['ticketTrail'] = $this->solution->getTicketTrail($ticketNo);
         $data['ticketAttachmentCount'] = $this->solution->ticketAttachment($ticketNo);
@@ -455,12 +458,9 @@ class SolutionManagement extends CI_Controller
 
     public function addTicket()
     {
-
         $message = '';
         $date_created = date('Y-m-d H:i:s');
         $generatedTicket = 'TN-' . date('my') . rand(10, 1000);
-        
-
         $add_notif = array(
             'user_id' => $this->input->post('empID'),
             'notif_title' => 'Ticket Automation',
@@ -477,7 +477,6 @@ class SolutionManagement extends CI_Controller
             'concern_personID' => $this->input->post('empID'),
             'concern_level' => $this->input->post('level'),
             'concern_status' => 'Pending',
-            // 'remarks' => $this->input->post('remarks'),
             'request_by' => $_SESSION['loggedIn']['name'],
             'request_byID' => $_SESSION['loggedIn']['id'],
             'request_department' => $_SESSION['loggedIn']['department'],
@@ -519,20 +518,22 @@ class SolutionManagement extends CI_Controller
 
     public function addTicket_attachment()
     {
-        $dt = Date('His');
-        $extension = explode('.', $_FILES['file']['name']);
-        $new_name = rand() . '_' . $dt . '.' . $extension[1];
-        $destination = 'uploaded_file/attachment/' . $new_name;
-        move_uploaded_file($_FILES['file']['tmp_name'], $destination);
-
-        $ticket = $this->input->post('ticket_no');
-
-        $insert = array(
-            'ticket_id' => $this->input->post('ticket_id'),
-            'ticket_no' => $ticket,
-            'attachment' => $new_name,
-        );
-        $this->db->insert('ticket_attachment', $insert);
+        if(isset($_FILES['file'])) {
+            $dt = Date('His');
+            $extension = explode('.', $_FILES['file']['name']);
+            $new_name = rand() . '_' . $dt . '.' . $extension[1];
+            $destination = 'uploaded_file/attachment/' . $new_name;
+            move_uploaded_file($_FILES['file']['tmp_name'], $destination);
+    
+            $ticket = $this->input->post('ticket_no');
+    
+            $insert = array(
+                'ticket_id' => $this->input->post('ticket_id'),
+                'ticket_no' => $ticket,
+                'attachment' => $new_name,
+            );
+            $this->db->insert('ticket_attachment', $insert);
+        }
     }
 
     public function get_ticket()
@@ -542,7 +543,8 @@ class SolutionManagement extends CI_Controller
         $no = $_POST['start'];
         $date_accomplished = '';
         foreach ($list as $concern) {
-            $ticketNo = $this->encrypt->encode($concern->ticket_no);
+            // $ticketNo = $this->encrypt->encode($concern->ticket_no);
+            $ticketNo = $this->cipher->encrypt($concern->ticket_no);
             $no++;
             $row = array();
 
@@ -607,7 +609,9 @@ class SolutionManagement extends CI_Controller
         $no = $_POST['start'];
         $date_accomplished = '';
         foreach ($list as $concern) {
-            $ticketNo = $this->encrypt->encode($concern->ticket_no);
+            // $ticketNo = $this->encrypt->encode($concern->ticket_no);
+
+            $ticketNo = $this->cipher->encrypt($concern->ticket_no);
             $no++;
             $row = array();
 
@@ -790,7 +794,7 @@ class SolutionManagement extends CI_Controller
                           <span class="text-danger"><small><b>Evaluated by:</b> ' . $concern->update_by . '</small></span>';
             }
 
-            $row[] = $concern->evaluate_concern;
+            // $row[] = $concern->evaluate_concern;
 
             if ($concern->support_system == NULL) {
                 $row[] = $concern->solutions;
@@ -956,6 +960,42 @@ class SolutionManagement extends CI_Controller
         echo json_encode($output);
     }
 
+    public function unresolveTicket()
+    {
+        $date_created = date('Y-m-d H:i:s');
+        $message = '';
+        $returnTicket = array(
+            'feedback' => $this->input->post('feedback'),
+            'remarks' => 'Unresolved',
+            'concern_status' => 'Returned',
+        );
+        $insert_trail = array(
+            'ticket_no' => $this->input->post('ticketNo'),
+            'ticket_status' => 'Returned ticket.',
+            'remarks' => 'Unresolved',
+            'date_added' => $date_created,
+        );
+
+        $add_notif = array(
+            'user_id' => $this->input->post('empID'),
+            'notif_title' => 'Returned ticket',
+            'notif_message' => 'unresolved ticket ' . $this->input->post('ticketNo'),
+            'added_by' => $_SESSION['loggedIn']['name'],
+            'added_by_userID' => $_SESSION['loggedIn']['id'],
+            'date_added' => $date_created,
+        );
+
+        if ($this->db->where('ticket_no', $this->input->post('ticketNo'))->update('ticketing', $returnTicket)) {
+            $this->db->insert('tickettrail', $insert_trail);
+            $this->db->insert('tomsworld.notification', $add_notif);
+            $message = 'Success';
+        } else {
+            $message = 'Error';
+        }
+        $output['message'] = $message;
+        echo json_encode($output);
+    }
+
     public function downloadAttachment()
 	{
 		$this->load->helper('url');
@@ -965,4 +1005,73 @@ class SolutionManagement extends CI_Controller
         $file = 'uploaded_file/attachment/'.$fileinfo['attachment'];
         force_download($file, NULL);
 	}
+
+    //Table Support Department
+    public function get_ticketDepartment()
+    {
+        $list = $this->solution->get_ticketDepartment();
+        $data = array();
+        $no = $_POST['start'];
+        $date_accomplished = '';
+        foreach ($list as $concern) {
+            // $ticketNo = $this->encrypt->encode($concern->ticket_no);
+
+            $ticketNo = $this->cipher->encrypt($concern->ticket_no);
+            $no++;
+            $row = array();
+
+            $row[] = '<div>' . $concern->ticket_no . '</div>
+                      <span class="edit-span view_ticket_department" id="' . $ticketNo . '" title="View Ticket"><i class="bi bi-eye-fill me-1"></i>View Ticket</span>';
+            $row[] = $concern->concern_person;
+            $row[] = $concern->request_by;
+            $row[] = $concern->request_department;
+            $row[] = date('D M j, Y h:i a', strtotime($concern->date_added));
+            $row[] = $concern->concern_status;
+
+            if ($concern->service_start != NULL) {
+                if ($concern->date_accomplished != NULL) {
+                    $date_accomplished = date('M j, Y H:i:s a', strtotime($concern->date_accomplished));
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d', strtotime($concern->date_accomplished));
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                } else {
+                    $date_accomplished = '';
+                    $start_date = date('Y-m-d', strtotime($concern->service_start));
+                    $end_date = date('Y-m-d');
+                    $days = 0;
+                    for ($date = $start_date; $date <= $end_date; $date = date('Y-m-d', strtotime($date . ' +1 day'))) {
+                        if (!in_array(date('w', strtotime($date)), array(0, 6))) {
+                            $days++;
+                        }
+                    }
+                }
+            } else {
+                $days = '';
+            }
+            
+            if ($days == '1') {
+                $countDays = $days. ' day';
+            } elseif ($days == '') {
+                $countDays = '';
+            } else {
+                $countDays = $days. ' days';
+            }
+
+            $row[] = '<span class="badge bg-danger">'.$countDays.'</span><br>'.$date_accomplished.'';
+            
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->solution->count_all_ticketDepartment(),
+            "recordsFiltered" => $this->solution->count_filtered_ticketDepartment(),
+            "data" => $data
+        );
+        echo json_encode($output);
+    }
 }

@@ -169,10 +169,13 @@ class TicketModel extends CI_Model
         $this->db->from('tickettrail');
         $this->db->where($where);
         return $this->db->count_all_results();
+    }
 
-        // $this->db->from($this->ticket);
-        // $this->db->where('concern_personID', $_SESSION['loggedIn']['id']);
-        // return $this->db->count_all_results();
+    function get_access()
+    {
+        $this->db->where('user_id', $_SESSION['loggedIn']['id']);
+        $this->db->where('perm_id', 5);
+        return $this->db->get('tomsworld.roles_permissions')->num_rows();
     }
 
 }

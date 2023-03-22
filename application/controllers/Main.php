@@ -76,6 +76,7 @@ class Main extends CI_Controller
     public function ticketMonitoring()
     {
         $data['department'] = $this->db->order_by('department', 'ASC')->get('tomsworld.department')->result();
+        $data['access'] = $this->TicketModel->get_access();
         $data['status'] = $this->solution->getStatus();
         $this->load->view('partials/__header');
         $this->load->view('main/ticket_monitoring', $data);
